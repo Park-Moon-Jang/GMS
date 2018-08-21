@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+  <mapper namespace="com.bit.app">
+
+	<select id="checkuser" resultType="com.bit.app.vo.MemberVO">
+		SELECT * FROM MEMBER WHERE ID = #{id} AND PW = #{pw}
+	</select>
+	
+	<insert id="joinuser">
+		INSERT INTO MEMBER VALUES (#{id}, #{pw}, #{name}, #{email})
+    </insert>
+
+    <update id="updateuser">
+        UPDATE MEMBER SET pw = #{pw}, email = #{email} WHERE id = #{id}
+    </update>
+    
+    <delete id="deleteuser">
+        DELETE FROM MEMBER WHERE id = #{id}
+    </delete>
+    
+    <select id="viewuser" resultType="com.bit.app.vo.MemberVO">
+		SELECT * FROM MEMBER WHERE ID = #{id}
+	</select>
+
+</mapper>
