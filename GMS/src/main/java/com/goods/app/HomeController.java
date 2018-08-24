@@ -32,7 +32,9 @@ public class HomeController {
 		String formattedDate = dateFormat.format(date);
 		
 		model.addAttribute("serverTime", formattedDate );
-		//PARK BRANCH GOGO
+		
+		//PARK 
+		
 		return "home";
 	}
 	
