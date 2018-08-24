@@ -1,3 +1,4 @@
+
 package com.goods.app;
 
 import java.text.DateFormat;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 /**
  * Handles requests for the application home page.
  */
+
 @Controller
 public class HomeController {
 	
@@ -32,8 +34,10 @@ public class HomeController {
 		String formattedDate = dateFormat.format(date);
 		
 		model.addAttribute("serverTime", formattedDate );
-		System.out.println("아아아아아아아아아아ㅏ");
+		
+		
 		return "home";
 	}
 	
 }
+

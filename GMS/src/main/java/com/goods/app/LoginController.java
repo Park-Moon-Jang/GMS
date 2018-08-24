@@ -4,11 +4,12 @@ public class LoginController
 {
 	
 	public void logout(){
-		System.out.println("¿¬ºÀ¸¹ÀÌÁÖ¼¼¿ä");
+		System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½");
+		System.out.println("master merge");
 	}
 	
 	
 	public void login(){
-		System.out.println("Á» µÇ¼¼¿ä");
+		System.out.println("ï¿½ï¿½ ï¿½Ç¼ï¿½ï¿½ï¿½");
 	}
 }
