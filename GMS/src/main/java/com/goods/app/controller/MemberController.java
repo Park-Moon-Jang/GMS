@@ -1,4 +1,4 @@
-package com.goods.app;
+package com.goods.app.controller;
 
 public class MemberController {
 
