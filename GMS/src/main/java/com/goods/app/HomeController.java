@@ -33,7 +33,8 @@ public class HomeController {
 		
 		model.addAttribute("serverTime", formattedDate );
 		
-		//PARK 
+		//PARK
+		//merge 해보자
 		
 		return "home";
 	}
