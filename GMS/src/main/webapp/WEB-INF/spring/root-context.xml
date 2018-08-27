@@ -13,7 +13,7 @@
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<!-- root-context.xml은 웹과 관련되지 않은 자원들에 대한 설정을 입력하는 곳  -->
-		
+<!-- 		12.0.0.1 -->
 		<!-- DataSource와 SqlSessionFactoryBean을 설정  -->
 <!-- 		project-gms.cyf6bo7y7dcb.ap-northeast-2.rds.amazonaws.com -->
 		    <!-- MySQL dataSource -->
@@ -22,17 +22,17 @@
         class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"></property>
         <property name="url"
-            value="jdbc:mysql://127.0.0.1:3306/gms_project?useSSL=false&amp;serverTimezone=UTC">
+            value="jdbc:mysql://project-gms.cyf6bo7y7dcb.ap-northeast-2.rds.amazonaws.com:3306/gms_project?useSSL=false&amp;serverTimezone=UTC">
         </property>
         <property name="username" value="admin"></property>
         <property name="password" value="asdxcv1541"></property>
     </bean>     
        
-       		<!-- transactionManager -->
-       	<bean id= "transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-       		<property name="dataSource" ref="dataSource"></property>
+<!--        		transactionManager -->
+<!--        	<bean id= "transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"> -->
+<!--        		<property name="dataSource" ref="dataSource"></property> -->
        	
-       	</bean>
+<!--        	</bean> -->
 
        
        		<!--  Mybatis SessionFactory -->
