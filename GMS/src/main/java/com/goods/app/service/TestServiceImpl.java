@@ -1,5 +1,7 @@
 package com.goods.app.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,23 @@ public class TestServiceImpl implements TestService {
 	public void insert(TestVO vo) {
 		// TODO Auto-generated method stub
 		tdao.insert(vo);
+	}
+
+
+	@Override
+	public List<TestVO> getList() {
+		// TODO Auto-generated method stub
+		return tdao.getList();
+	}
+
+
+	@Override
+	public int delete(int category_no) {
+		// TODO Auto-generated method stub
+		
+		
+		
+		return tdao.delete(category_no);
 	}
 
 }
