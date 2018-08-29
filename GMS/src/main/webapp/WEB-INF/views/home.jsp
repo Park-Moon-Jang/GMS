@@ -47,6 +47,8 @@
 				</table>
 		</c:forEach>			
 		
+		
+		
 		</form>
 		<p>---------------------------------------</p>
 		<form  name="updateform" action="${pageContext.servletContext.contextPath}/test/update" method="post">
