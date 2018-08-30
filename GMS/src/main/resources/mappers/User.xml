@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+  <mapper namespace="com.bit.app">
+  
+    <!-- 전체 목록 -->
+<!--     <select id="boardlistAll" resultType="com.bit.app.vo.BoardVO"> -->
+<!--         SELECT * FROM BOARD1 ORDER BY no desc, writedate desc -->
+<!--     </select> -->
+
+<!--    <insert id="join" parameterType="com.goods.app.vo.MemberVO" >
+    INSERT INTO item_category (category_no, category_name) VALUES (#{category_no}, #{category_name})
+   </insert> -->
+   
+   <select id="login" resultType="int" parameterType="com.goods.app.vo.UserVO">
+   SELECT USER_ID,USER_PW FROM USER WHERE USER_ID=#{user_id} and USER_PW=#{user_pw}
+   </select>
+
+ </mapper>

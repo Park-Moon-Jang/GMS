@@ -9,16 +9,12 @@
 <!--         SELECT * FROM BOARD1 ORDER BY no desc, writedate desc -->
 <!--     </select> -->
 
-   <insert id="insert" parameterType="com.goods.app.vo.TestVO" >
+<!--    <insert id="join" parameterType="com.goods.app.vo.MemberVO" >
     INSERT INTO item_category (category_no, category_name) VALUES (#{category_no}, #{category_name})
-   </insert>
+   </insert> -->
    
-   <select id="tListAll" resultType="com.goods.app.vo.TestVO">
-   SELECT * FROM item_category ORDER BY category_no
+   <select id="login" resultType="int" parameterType="com.goods.app.vo.UserVO">
+   SELECT USER_ID,USER_PW FROM USER WHERE USER_ID=#{user_id} and USER_PW=#{user_pw}
    </select>
-   
-   <delete id="deleteOne" parameterType="int">
-   delete from item_category where category_no = #{category_no}
-   </delete>
-   
+
  </mapper>
