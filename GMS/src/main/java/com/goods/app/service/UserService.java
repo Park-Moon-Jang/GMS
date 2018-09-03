@@ -1,5 +1,5 @@
 package com.goods.app.service;
 
-public interface MemberService {
+public interface UserService {
 
 }

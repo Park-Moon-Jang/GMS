@@ -1,5 +1,5 @@
 package com.goods.app.service;
 
-public class MemberServiceImpl {
+public class UserServiceImpl {
 
 }

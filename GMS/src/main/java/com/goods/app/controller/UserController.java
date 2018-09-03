@@ -13,7 +13,7 @@ import com.goods.app.vo.TestVO;
 
 @Controller
 @RequestMapping("/user")
-public class MemberController {
+public class UserController {
 
 	@RequestMapping("/test")
 	public String test(Model model) {
