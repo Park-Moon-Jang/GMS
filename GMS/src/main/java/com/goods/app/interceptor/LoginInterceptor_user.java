@@ -30,7 +30,7 @@ public class LoginInterceptor_user extends HandlerInterceptorAdapter {
 			return false;
 		}
 		HttpSession session = request.getSession();
-		session.setAttribute("session_id", vo.getUser_id());
+		session.setAttribute("session_user", vo.getUser_id());
 		System.out.println("로그인성공");
 		response.sendRedirect(request.getContextPath()+"/user/login");
 		

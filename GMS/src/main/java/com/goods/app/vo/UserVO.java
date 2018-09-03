@@ -1,5 +1,6 @@
 package com.goods.app.vo;
 
+
 public class UserVO 
 {
 	private String user_id;
@@ -65,5 +66,4 @@ public class UserVO
 	public void setBirth(int birth) {
 		this.birth = birth;
 	}
-	
 }
