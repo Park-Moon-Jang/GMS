@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public void join(UserVO vo) throws Exception {
-		// TODO Auto-generated method stub
+		dao.join(vo);
 		
 	}
 		

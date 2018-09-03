@@ -6,6 +6,7 @@ public class UserVO
 	private String user_id;
 	private String user_pw;
 	private String user_nickname;
+	private String user_name;
 	private int user_phon;
 	private String user_email;
 	private int birth;
@@ -18,12 +19,13 @@ public class UserVO
 		this.user_id=user_id;
 		this.user_pw=user_pw;
 	}
-	public UserVO(String user_id,String user_pw,String user_nickname,int user_phon,String user_email,int birth)
+	public UserVO(String user_id,String user_pw,String user_nickname,String user_name,int user_phon,String user_email,int birth)
 	{
 		super();
 		this.user_id=user_id;
 		this.user_pw=user_pw;
 		this.user_nickname=user_nickname;
+		this.user_name=user_name;
 		this.user_phon=user_phon;
 		this.user_email=user_email;
 		this.birth=birth;
@@ -65,5 +67,13 @@ public class UserVO
 	}
 	public void setBirth(int birth) {
 		this.birth = birth;
+	}
+
+	public String getUser_name() {
+		return user_name;
+	}
+
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
 	}
 }

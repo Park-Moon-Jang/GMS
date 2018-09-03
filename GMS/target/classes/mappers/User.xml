@@ -14,7 +14,9 @@
    </insert> -->
    
    <select id="checkUser"  resultType="com.goods.app.vo.UserVO">
-   SELECT USER_ID,USER_PW FROM USER WHERE USER_ID=#{user_id} and USER_PW=#{user_pw}
+   		SELECT USER_ID,USER_PW FROM USER WHERE USER_ID=#{user_id} and USER_PW=#{user_pw}
    </select>
-
+	<insert id="joinUser">
+		INSERT INTO USER VALUES (#{user_id},#{user_pw},#{user_nickname},#{user_name},#{user_phon},#{user_email},#{birth})
+	</insert>
  </mapper>

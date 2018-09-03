@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+
 import com.goods.app.service.UserService;
 import com.goods.app.vo.UserVO;
 import java.util.HashMap;
@@ -31,8 +33,17 @@ public class UserController {
 	@RequestMapping(value="/loginPost", method = RequestMethod.POST)
 	public void loginPost(@ModelAttribute UserVO vo, HttpSession session, Model model) {
 	}
+	@RequestMapping(value="/joinPost",method=RequestMethod.POST)
+	public String joinPost(@ModelAttribute UserVO vo)throws Exception {
+		ser.join(vo);
+		return "home";
+	}
 	
-
+	@RequestMapping(value="/join", method=RequestMethod.GET)
+	public String join() {
+		return "join";
+	}
+	
 	@RequestMapping(value ="/main" )
 	public String test(Model model) {
 		

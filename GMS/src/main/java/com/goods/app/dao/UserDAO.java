@@ -13,13 +13,12 @@ public class UserDAO
 	@Autowired
 	SqlSession ss;
 	
-	public void join(UserVO vo)
+	public void join(UserVO vo)throws Exception
 	{
-		ss.insert("joinuser",vo);
+		ss.insert("joinUser",vo);
 	}
 
 	public UserVO login(UserVO vo) throws Exception {
-		System.out.println("DAO");
 		return ss.selectOne("checkUser",vo);
 	}
 	
