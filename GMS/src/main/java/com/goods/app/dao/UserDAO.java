@@ -17,9 +17,12 @@ public class UserDAO
 		ss.insert("joinuser",vo);
 	}
 
-	public UserVO login(UserVO vo) {
-		return ss.selectOne("checkuser",vo);
+	public UserVO login(UserVO vo) throws Exception {
+		System.out.println("DAO");
+		return ss.selectOne("checkUser",vo);
 	}
+	
+	
 	
 	
 }
