@@ -15,11 +15,11 @@ import com.goods.app.vo.TestVO;
 @RequestMapping("/user")
 public class UserController {
 
-	@RequestMapping("/test")
+	@RequestMapping("/main")
 	public String test(Model model) {
 		
 
-		return "/user/userHeader";
+		return "/user/userMain";
 	}
 	
 	@RequestMapping("/item")
