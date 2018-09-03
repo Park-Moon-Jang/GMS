@@ -8,18 +8,17 @@
 </head>
 <link href="${pageContext.servletContext.contextPath}/resources/css/userPage.css" rel="stylesheet" type="text/css">
 <body>
-	<header>
-<!-- 	<div><a class="mainLink" href="#">GMS(Goods-Mangement-Service)</a><a class="logOut" href="#" >로그아웃</a></div> -->
-	</header>
-	<div>
-		<nav id="topMenu">
+	
+	<div id="header">
+	<a class="mainLink" href="#">GMS(Goods-Mangement-Service)</a><a class="logOut" href="#" >로그아웃</a>
+	</div>
+	<div id="topMenu">
 		<ul>
-			<li><a class="menuLink" id="userItem" href="#">물품현황</a></li>
-			<li><a class="menuLink" id="userLast" href="#">최근본목록</a></li>
-			<li><a class="menuLink" id="userScrape" href="#">my Scrape</a></li>
-			<li><a class="menuLink" id="userPage" href="#">my Page</a></li>
+			<li><a class="menuLink" id="userItem" href="${pageContext.servletContext.contextPath}/user/item">물품현황</a></li>
+			<li><a class="menuLink" id="userLast" href="${pageContext.servletContext.contextPath}/user/last">최근본목록</a></li>
+			<li><a class="menuLink" id="userScrape" href="${pageContext.servletContext.contextPath}/user/scrape">my Scrape</a></li>
+			<li><a class="menuLink" id="userPage" href="${pageContext.servletContext.contextPath}/user/page">my Page</a></li>
 		</ul>
-		</nav>
 	</div>
 </body>
 </html>

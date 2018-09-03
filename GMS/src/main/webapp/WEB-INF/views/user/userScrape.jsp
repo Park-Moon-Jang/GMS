@@ -7,6 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<jsp:include page="userHeader.jsp"></jsp:include>
 Scrape
+	<jsp:include page="userFooter.jsp"></jsp:include>
 </body>
 </html>

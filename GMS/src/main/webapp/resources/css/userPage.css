@@ -10,16 +10,16 @@ width: 1700px;
 
 #topMenu ul li { 
 list-style: none; 
-color: white; 
-background-color: #2d2d2d; 
+color: black; 
+background-color: #B2EBF4; 
 float: left; 
 line-height: 30px; 
-vertical-align: middle; 
+/* vertical-align: middle;  */
 text-align: center; 
 }
 #topMenu .menuLink { 
 	text-decoration:none; 
-	color: white; 
+	color: black; 
 	display: block; 
 	width: 300px; 
 	font-size: 12px; 
@@ -27,6 +27,13 @@ text-align: center;
 	font-family: "Trebuchet MS", Dotum, Arial; 
 }	
 #topMenu .menuLink:hover { 
-	color: red; 
-	background-color: #4d4d4d; 
+	color: black; 
+	background-color: #3DB7CC; 
+}
+
+#header .mainLink {
+}
+
+#header .logOut {
+	text-align:right;
 }

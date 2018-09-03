@@ -19,6 +19,31 @@ public class MemberController {
 	public String test(Model model) {
 		
 
-		return "/user/userMain";
+		return "/user/userHeader";
+	}
+	
+	@RequestMapping("/item")
+	public String item(Model model) {
+		
+
+		return "/user/userItem";
+	}
+	@RequestMapping("/last")
+	public String last(Model model) {
+		
+
+		return "/user/userLast";
+	}
+	@RequestMapping("/scrape")
+	public String scrape(Model model) {
+		
+
+		return "/user/userScrape";
+	}
+	@RequestMapping("/page")
+	public String page(Model model) {
+		
+
+		return "/user/userPage";
 	}
 }
