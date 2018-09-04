@@ -14,8 +14,7 @@ import com.goods.app.vo.UserVO;
 public class LoginInterceptor_user extends HandlerInterceptorAdapter {
 	@Inject
 	UserService ser;
-/*	@Inject
-	ManagerService ser2;*/
+
 	
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception
 	{

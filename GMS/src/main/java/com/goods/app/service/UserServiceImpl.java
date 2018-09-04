@@ -11,8 +11,6 @@ public class UserServiceImpl implements UserService{
 	@Autowired
 	UserDAO dao;
 
-
-
 	@Override
 	public UserVO checkUser(String user_id, String user_pw) throws Exception {
 		
