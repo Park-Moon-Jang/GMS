@@ -25,6 +25,7 @@ public class LoginInterceptor_user extends HandlerInterceptorAdapter {
 		if (vo==null)
 		{
 			response.sendRedirect(request.getContextPath()+"/");
+			
 			return false;
 		}
 		HttpSession session = request.getSession();

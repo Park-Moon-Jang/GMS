@@ -43,12 +43,23 @@ public class UserController {
 	public String join() {
 		return "join";
 	}
-	@RequestMapping(value="/find")
+	@RequestMapping(value="/find", method=RequestMethod.GET)
 	public String find()
 	{
 		return "/find";
 	}
 	
+	
+	@RequestMapping(value="/findID", method=RequestMethod.POST)
+	public String findID()
+	{
+		return "/findID";
+	}
+	@RequestMapping(value="/findPW", method=RequestMethod.POST)
+	public String findPW()
+	{
+		return "/findPW";
+	}
 	
 	@RequestMapping(value ="/main" )
 	public String test(Model model) {

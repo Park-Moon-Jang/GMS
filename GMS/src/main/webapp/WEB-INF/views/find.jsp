@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회원가입</title>
+<title>ID/PW 찾기</title>
 
 <script type="text/javascript">
 
@@ -37,7 +37,7 @@ window.onload = function(){
 </tr>
 <tr id="on" style="display:'';">
 <td>
-<form name =userfindid action="${pageContext.servletContext.contextPath}/user/findid" method="post">
+<form name =userfindid action="${pageContext.servletContext.contextPath}/user/findID" method="post">
 찾으시는 계정의 이름과 이메일을 적어주세요<br>
 이름<input type="text" name="user_name"><br>
 이메일<input type="email" name="user_emails">
@@ -47,7 +47,7 @@ window.onload = function(){
 </tr>
 <tr id="off" style="display:'none';">
 <td>
-<form name ="userfindpw" action="${pageContext.servletContext.contextPath}/user/findpw" method="post">
+<form name ="userfindpw" action="${pageContext.servletContext.contextPath}/user/findPW" method="post">
 찾으시는 계정의 아이디와 이메일을 적어주세요<br>
 아이디<input type="text" name="user_id"><br>
 이메일<input type="email" name="user_email">
