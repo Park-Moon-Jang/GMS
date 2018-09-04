@@ -29,7 +29,7 @@ public class LoginInterceptor_manager extends HandlerInterceptorAdapter {
 			return false;
 		}
 		HttpSession session = request.getSession();
-		session.setAttribute("manager_id", vo.getManager_id());
+		session.setAttribute("session_manager", vo.getManager_id());
 		response.sendRedirect(request.getContextPath()+"/manager/login");
 		
 		return false;
