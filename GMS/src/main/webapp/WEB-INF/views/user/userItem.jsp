@@ -12,15 +12,18 @@
 	$(document).ready(function(){
 	brandSel();
 	categorySel();
+	storeSel();
 	
 	function brandSel(){
 		$.ajax({
 			type:"POST",
 			url:"/app/user/brandSel",
 			success: function(data){
+				
 				$("#brand").find("option").remove().end().append("<option value=''>브랜드</option>");
 				$.each(data, function(i){
-					$("#brand").append("<option value='"+data[i].comPany_Name+"'>"+data[i].comPany_Name+"</option>")
+// 					console.log(data[i].comPany_No)
+					$("#brand").append("<option value='"+data[i].comPany_No+"'>"+data[i].comPany_Name+"</option>")
 				})
 			},
 			error: function (jqXHR, Status, error){
@@ -36,8 +39,8 @@
 			success: function(data){
 				$("#category").find("option").remove().end().append("<option value=''>상품유형</option>");
 				$.each(data, function(i){
-					console.log(data[i].category_Name)
-					$("#category").append("<option value='"+data[i].category_Name+"'>"+data[i].category_Name+"</option>")
+// 					console.log(data[i].category_No)
+					$("#category").append("<option value='"+data[i].category_No+"'>"+data[i].category_Name+"</option>")
 				})
 			},
 			error: function (jqXHR, Status, error){
@@ -45,7 +48,35 @@
 			}
 		}); 
 	}
+	
+	function storeSel(){
+		$.ajax({
+			type:"POST",
+			url:"/app/user/storeSel",
+			success: function(data){
+				
+				$("#store").find("option").remove().end().append("<option value=''>매장</option>");
+				$.each(data, function(i){
+// 					console.log(data[i].store_No)
+					$("#store").append("<option value='"+data[i].store_No+"'>"+data[i].store_Name+"</option>")
+				})
+			},
+			error: function (jqXHR, Status, error){
+				console.log("store Error!");
+			}
+		})
+	}
+	
 	})
+	function selBtn(){
+		ComPany_No = $("#brand").val()
+		Category_No = $("#category").val();
+		Store_No = $("#store").val()
+		
+		source = {"ComPany_No":ComPany_No,"Category_No":Category_No,"Store_No":Store_No}
+	
+		alert(source)
+	}
 </script>
 	<jsp:include page="userHeader.jsp"></jsp:include>
 	<div id="content">
@@ -59,10 +90,10 @@
 			<select id="category">
 				<option>상품유형</option>
 			</select>
-			<select>
+			<select id="store">
 				<option>매장</option>
 			</select>
-			<input type="button" value="검색">
+			<button id="selBtn" onclick="selBtn()">검색</button>
 			</td>
 			</tr>
 			<tr>

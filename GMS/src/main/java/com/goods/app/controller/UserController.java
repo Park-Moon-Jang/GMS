@@ -27,12 +27,23 @@ public class UserController {
 	UserService ser;
 	
 	@ResponseBody
+	@RequestMapping(value="/storeSel" , method = RequestMethod.POST)
+	public List<ItemVO> storeSel(Model model, ItemVO IVO) {
+		
+		List<ItemVO> IList = ser.storeSel();
+		for(ItemVO a : IList) {
+			System.out.println("브랜드 : " + a.getStore_Name());
+		}
+		return IList;
+	}
+	
+	@ResponseBody
 	@RequestMapping(value="/brandSel" , method = RequestMethod.POST)
 	public List<ItemVO> brandSel(Model model, ItemVO IVO) {
 		
 		List<ItemVO> IList = ser.brandSel();
 		for(ItemVO a : IList) {
-			System.out.println("브랜드 : " + a.getComPany_Name());
+//			System.out.println("브랜드 : " + a.getComPany_Name());
 		}
 		return IList;
 	}
@@ -43,7 +54,7 @@ public class UserController {
 		
 		List<ItemVO> IList = ser.categorySel();
 		for(ItemVO a : IList) {
-			System.out.println("브랜드 : " + a.getCategory_Name());
+//			System.out.println("브랜드 : " + a.getCategory_Name());
 		}
 		return IList;
 	}

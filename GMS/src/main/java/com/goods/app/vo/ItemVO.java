@@ -7,6 +7,8 @@ public class ItemVO {
 	private String itemName;
 	private String Category_No;
 	private String Category_Name;
+	private String Store_No;
+	private String Store_Name;
 	
 	public String getComPany_No() {
 		return ComPany_No;
@@ -37,6 +39,18 @@ public class ItemVO {
 	}
 	public void setCategory_Name(String category_Name) {
 		Category_Name = category_Name;
+	}
+	public String getStore_No() {
+		return Store_No;
+	}
+	public void setStore_No(String store_No) {
+		Store_No = store_No;
+	}
+	public String getStore_Name() {
+		return Store_Name;
+	}
+	public void setStore_Name(String store_Name) {
+		Store_Name = store_Name;
 	}
 	
 	

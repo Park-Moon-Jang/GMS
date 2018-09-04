@@ -44,6 +44,12 @@ public class UserServiceImpl implements UserService{
 		// TODO Auto-generated method stub
 		return dao.categorySel();
 	}
+
+	@Override
+	public List<ItemVO> storeSel() {
+		// TODO Auto-generated method stub
+		return dao.storeSel();
+	}
 		
 }
 

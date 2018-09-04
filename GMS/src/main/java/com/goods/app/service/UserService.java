@@ -11,7 +11,7 @@ import com.goods.app.vo.UserVO;
 @Service
 public interface UserService 
 {
-	
+	public List<ItemVO> storeSel();
 	public List<ItemVO> brandSel();
 	public List<ItemVO> categorySel();
 	public UserVO checkUser(String user_id,String user_pw) throws Exception;
