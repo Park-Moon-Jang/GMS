@@ -13,12 +13,6 @@ public class UserVO
 	
 	public UserVO() {}
 	
-	public UserVO(String user_id,String user_pw)
-	{
-		super();
-		this.user_id=user_id;
-		this.user_pw=user_pw;
-	}
 	public UserVO(String user_id,String user_pw,String user_nickname,String user_name,int user_phon,String user_email,int birth)
 	{
 		super();

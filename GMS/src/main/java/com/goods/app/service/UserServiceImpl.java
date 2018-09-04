@@ -11,16 +11,12 @@ public class UserServiceImpl implements UserService{
 	@Autowired
 	UserDAO dao;
 
-
-
 	@Override
 	public UserVO checkUser(String user_id, String user_pw) throws Exception {
 		
 		UserVO vo = new UserVO();
 		vo.setUser_id(user_id);
 		vo.setUser_pw(user_pw);
-		System.out.println(vo.getUser_id());
-		System.out.println(vo.getUser_pw());
 		return dao.login(vo);
 	}
 
@@ -28,6 +24,13 @@ public class UserServiceImpl implements UserService{
 	public void join(UserVO vo) throws Exception {
 		dao.join(vo);
 		
+	}
+
+	@Override
+	public void update(UserVO vo) throws Exception {
+		dao.update(vo);
+		
+
 	}
 		
 }

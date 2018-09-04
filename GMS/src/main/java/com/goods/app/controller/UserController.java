@@ -43,6 +43,12 @@ public class UserController {
 	public String join() {
 		return "join";
 	}
+	@RequestMapping(value="/find")
+	public String find()
+	{
+		return "/find";
+	}
+	
 	
 	@RequestMapping(value ="/main" )
 	public String test(Model model) {

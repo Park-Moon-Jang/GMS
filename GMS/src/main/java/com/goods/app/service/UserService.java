@@ -10,5 +10,5 @@ public interface UserService
 {
 	public UserVO checkUser(String user_id,String user_pw) throws Exception;
 	public void join(UserVO vo) throws Exception;
-	
+	public void update(UserVO vo) throws Exception;
 }
