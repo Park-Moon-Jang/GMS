@@ -61,7 +61,7 @@ public class ManagerController {
 		mav.setViewName("manager/managerboard");  
 		return mav;
 		
-	}
+	} 
 	
 	@RequestMapping("/viewmanageuser")
 	public String viewitemreturned (Model model) {
