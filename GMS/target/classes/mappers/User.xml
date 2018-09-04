@@ -12,6 +12,13 @@
 <!--    <insert id="join" parameterType="com.goods.app.vo.MemberVO" >
     INSERT INTO item_category (category_no, category_name) VALUES (#{category_no}, #{category_name})
    </insert> -->
+   <select id="SelectCategory" resultType="com.goods.app.vo.ItemVO">
+   		SELECT CATEGORY_NAME FROM ITEM_CATEGORY
+   </select>
+   
+   <select id="SelectBrand" resultType="com.goods.app.vo.ItemVO">
+   		SELECT COMPANY_NAME FROM MANUFACTURER
+   </select>
    
    <select id="checkUser"  resultType="com.goods.app.vo.UserVO">
    		SELECT USER_ID,USER_PW FROM USER WHERE USER_ID=#{user_id} and USER_PW=#{user_pw}

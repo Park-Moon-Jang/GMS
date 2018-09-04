@@ -8,9 +8,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.goods.app.service.UserService;
+import com.goods.app.vo.ItemVO;
 import com.goods.app.vo.UserVO;
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +25,29 @@ public class UserController {
 	
 	@Inject
 	UserService ser;
+	
+	@ResponseBody
+	@RequestMapping(value="/brandSel" , method = RequestMethod.POST)
+	public List<ItemVO> brandSel(Model model, ItemVO IVO) {
+		
+		List<ItemVO> IList = ser.brandSel();
+		for(ItemVO a : IList) {
+			System.out.println("브랜드 : " + a.getComPany_Name());
+		}
+		return IList;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/categorySel" , method = RequestMethod.POST)
+	public List<ItemVO> categorySel(Model model, ItemVO IVO) {
+		
+		List<ItemVO> IList = ser.categorySel();
+		for(ItemVO a : IList) {
+			System.out.println("브랜드 : " + a.getCategory_Name());
+		}
+		return IList;
+	}
+	
 	
 	@RequestMapping(value = "/login" , method = RequestMethod.GET )
 	public String login(Model model) 

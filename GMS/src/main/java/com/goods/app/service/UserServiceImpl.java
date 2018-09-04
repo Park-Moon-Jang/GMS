@@ -1,9 +1,12 @@
 package com.goods.app.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.goods.app.dao.UserDAO;
+import com.goods.app.vo.ItemVO;
 import com.goods.app.vo.UserVO;
 
 @Service
@@ -28,6 +31,18 @@ public class UserServiceImpl implements UserService{
 	public void join(UserVO vo) throws Exception {
 		dao.join(vo);
 		
+	}
+
+	@Override
+	public List<ItemVO> brandSel() {
+		// TODO Auto-generated method stub
+		return dao.brandSel();
+	}
+
+	@Override
+	public List<ItemVO> categorySel() {
+		// TODO Auto-generated method stub
+		return dao.categorySel();
 	}
 		
 }
