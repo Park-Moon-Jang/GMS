@@ -30,7 +30,7 @@ public class ManagerController {
 	@RequestMapping(value = "/login" , method = RequestMethod.GET )
 	public String login(Model model) 
 	{
-		return "/managerhome"; 
+		return "redirect:/manager/managerhome";
 	}
 	@RequestMapping(value="/loginPost", method = RequestMethod.POST)
 	public void loginPost(@ModelAttribute UserVO vo, HttpSession session, Model model) {
@@ -45,7 +45,7 @@ public class ManagerController {
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("map", map);
-		mav.setViewName("managerhome");  //managerhome.jsp 로 간다
+		mav.setViewName("manager/managerhome");  //managerhome.jsp 로 간다
 		return mav;
 		
 	}
@@ -58,7 +58,7 @@ public class ManagerController {
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("map", map);
-		mav.setViewName("managerboard");  //managerhome.jsp 로 간다
+		mav.setViewName("manager/managerboard");  
 		return mav;
 		
 	}
@@ -66,9 +66,8 @@ public class ManagerController {
 	@RequestMapping("/viewmanageuser")
 	public String viewitemreturned (Model model) {
 		
-		return "itemreturned";
+		return "manager/itemreturned";
 	}
-	
 	
 }
 

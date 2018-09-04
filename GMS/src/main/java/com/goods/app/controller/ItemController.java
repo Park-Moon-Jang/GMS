@@ -11,21 +11,21 @@ public class ItemController {
 	@RequestMapping("/viewitemlist")
 	public String viewitemlist (Model model) {
 		
-		return "itemlist";
+		return "manager/itemlist";
 	}
 	@RequestMapping("/viewitemstored")
 	public String viewitemstored (Model model) {
 		
-		return "itemstored";
+		return "manager/itemstored";
 	}
 	@RequestMapping("/viewitemreleased")
 	public String viewitemreleased (Model model) {
 		
-		return "itemreleased";
+		return "manager/itemreleased";
 	}
 	@RequestMapping("/viewitemreturned")
 	public String viewitemreturned (Model model) {
 		
-		return "itemreturned";
+		return "manager/itemreturned";
 	}
 }
