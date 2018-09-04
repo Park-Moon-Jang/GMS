@@ -1,7 +1,7 @@
 package com.goods.app.vo;
 
 public class ItemVO {
-
+ 
 	private String ComPany_No;
 	private String ComPany_Name;
 	private String itemName;

@@ -15,7 +15,7 @@
    <select id="SelectStore" resultType="com.goods.app.vo.ItemVO">
    		SELECT STORE_NO, STORE_NAME FROM STORE
    </select>
-   
+    
    <select id="SelectCategory" resultType="com.goods.app.vo.ItemVO">
    		SELECT CATEGORY_NO, CATEGORY_NAME FROM ITEM_CATEGORY
    </select>

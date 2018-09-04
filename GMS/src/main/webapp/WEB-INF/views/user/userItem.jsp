@@ -13,7 +13,7 @@
 	brandSel();
 	categorySel();
 	storeSel();
-	
+	 
 	function brandSel(){
 		$.ajax({
 			type:"POST",
@@ -31,7 +31,7 @@
 			}
 		}); 
 	}
-	
+	 
 	function categorySel(){
 		$.ajax({
 			type:"POST",

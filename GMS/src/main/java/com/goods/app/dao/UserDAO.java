@@ -18,7 +18,7 @@ public class UserDAO
 {
 	@Autowired
 	SqlSession ss;
-	
+	 
 	public List<ItemVO> storeSel(){
 		return ss.selectList("SelectStore");
 	}
