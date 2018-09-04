@@ -21,6 +21,11 @@ public class UserDAO
 	public UserVO login(UserVO vo) throws Exception {
 		return ss.selectOne("checkUser",vo);
 	}
+
+	public void update(UserVO vo) {
+		
+		ss.insert("updateUser",vo);
+	}
 	
 	
 	

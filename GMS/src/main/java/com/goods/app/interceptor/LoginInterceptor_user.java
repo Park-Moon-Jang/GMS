@@ -25,13 +25,11 @@ public class LoginInterceptor_user extends HandlerInterceptorAdapter {
 		UserVO vo = ser.checkUser(id, pw);
 		if (vo==null)
 		{
-			System.out.println("로그인실패");
 			response.sendRedirect(request.getContextPath()+"/");
 			return false;
 		}
 		HttpSession session = request.getSession();
 		session.setAttribute("session_user", vo.getUser_id());
-		System.out.println("로그인성공");
 		response.sendRedirect(request.getContextPath()+"/user/login");
 		
 		return false;

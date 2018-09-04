@@ -11,6 +11,7 @@
 	
 	<div id="header">
 	<a class="mainLink" href="#">GMS(Goods-Mangement-Service)</a><a class="logOut" href="#" >·Î±×¾Æ¿ô</a>
+	
 	</div>
 	<div id="topMenu">
 		<ul>
