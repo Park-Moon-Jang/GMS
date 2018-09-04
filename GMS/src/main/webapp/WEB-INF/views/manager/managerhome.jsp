@@ -32,6 +32,7 @@
 				
 			</thead>
 			<tbody>
+			
 			<c:forEach items="${map.list}" var="vo" > 
 				<tr>
 								<td>${vo.item_no}</td>

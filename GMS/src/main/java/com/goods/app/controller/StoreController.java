@@ -11,13 +11,13 @@ public class StoreController {
 	@RequestMapping("/viewstore")
 	public String viewstore (Model model) {
 		
-		return "storelist";
+		return "manager/storelist";
 	}
 	
 	@RequestMapping("/statistics")
 	public String statistics (Model model) {
 		
-		return "statistics";
+		return "manager/statistics";
 	}
 	
 }
