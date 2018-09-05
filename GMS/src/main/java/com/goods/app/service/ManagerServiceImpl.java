@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.goods.app.dao.ManagerDAO;
 import com.goods.app.vo.ItemVO;
+import com.goods.app.vo.ManagerVO;
 
 @Service
 public class ManagerServiceImpl implements ManagerService {
@@ -19,6 +20,15 @@ public class ManagerServiceImpl implements ManagerService {
 		// TODO Auto-generated method stub
 		
 		return mdao.getList();
+	}
+
+	@Override
+	public ManagerVO checkManager(String manager_id, String manager_pw) throws Exception {
+		ManagerVO vo = new ManagerVO();
+		vo.setManager_id(manager_id);
+		vo.setManager_pw(manager_pw);
+		
+		return mdao.login(vo);
 	}
 
 }

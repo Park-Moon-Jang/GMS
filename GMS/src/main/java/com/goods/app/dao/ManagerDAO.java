@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.goods.app.vo.ItemVO;
+import com.goods.app.vo.ManagerVO;
+
 
 @Repository
 public class ManagerDAO {
@@ -30,4 +32,7 @@ public class ManagerDAO {
 		System.out.println("dao!");
 		return ss.delete("deleteOne", vo);
 	}
+	public ManagerVO login(ManagerVO vo) throws Exception {
+		return ss.selectOne("checkManager",vo);
+	} 
 }

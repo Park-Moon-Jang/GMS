@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+  <mapper namespace="com.bit.app">
+  
+    <!-- 전체 목록 -->
+<!--     <select id="boardlistAll" resultType="com.bit.app.vo.BoardVO"> -->
+<!--         SELECT * FROM BOARD1 ORDER BY no desc, writedate desc -->
+<!--     </select> -->
+    
+
+
+   <insert id="insert" parameterType="com.goods.app.vo.TestVO" >
+    INSERT INTO test (num, name) VALUES (#{num}, #{name})
+   </insert>
+ </mapper>

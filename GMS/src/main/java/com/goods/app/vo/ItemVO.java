@@ -1,5 +1,6 @@
 package com.goods.app.vo;
 
+
 import java.util.Date;
 
 public class ItemVO {
@@ -55,6 +56,7 @@ public class ItemVO {
 	public void setCarry_date(Date carry_date) {
 		this.carry_date = carry_date;
 	}
+
 
 	
 }

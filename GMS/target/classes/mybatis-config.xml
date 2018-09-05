@@ -6,7 +6,7 @@
 <!--  SQL Mapping정보등 스프링의 설정과 별도의 MyBatis의 설정 기능을 저장하는 용도의 파일 -->
   <mappers>
 
-
+    <mapper resource="/mappers/User.xml"/>
     <mapper resource="/mappers/manager.xml"/>
   </mappers>
   
