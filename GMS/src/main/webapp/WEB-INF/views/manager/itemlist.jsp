@@ -44,6 +44,34 @@ $(document).ready(function(){
 <body>
 <p>item list page</p>
 
+	<div id="content">
+		<table>
+			<tr><td colspan="4">물품현황</td></tr>
+			<tr>
+			<td colspan="4">
+			<select id="company">
+				<option>생산업체</option>
+			</select>
+			<select id="category">
+				<option>상품유형</option>
+			</select>
+			<select id="store">
+				<option>매장</option>
+			</select>
+			<button id="selBtn" onclick="selBtn()">검색</button>
+			</td>
+			</tr>
+			<tr>
+				<td>상품유형</td>
+				<td>상품명</td>
+				<td>수량</td>
+				<td>가격</td>
+			</tr>
+			<tr>
+				<td></td>
+			</tr>
+		</table>
+	</div>
 
 </body>
 </html>
