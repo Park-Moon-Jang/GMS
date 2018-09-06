@@ -50,6 +50,12 @@ public class UserServiceImpl implements UserService{
 		// TODO Auto-generated method stub
 		return dao.storeSel();
 	}
+
+	@Override
+	public List<ItemVO> selBtn(int company_No,int category_No, String store_Name) {
+		// TODO Auto-generated method stub
+		return dao.selBtn(company_No,category_No,store_Name);
+	}
 		
 }
 

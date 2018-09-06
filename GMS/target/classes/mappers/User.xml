@@ -12,6 +12,15 @@
 <!--    <insert id="join" parameterType="com.goods.app.vo.MemberVO" >
     INSERT INTO item_category (category_no, category_name) VALUES (#{category_no}, #{category_name})
    </insert> -->
+   <select id="SelectBtn" resultType="com.goods.app.vo.ItemVO" parameterType="Map">
+		SELECT t1.item_no,t1.item_name,t1.amount,t1.company_no,t1.price,t1.carry_Date, t2.category_no, t2.category_name
+		FROM (select * from gms_pj.item where item.item_no like CONCAT(#{item_No},"%") and item.item_no = 
+		(select store.item_no from gms_pj.store where store_name = #{store_Name})) t1
+		INNER JOIN 
+		(SELECT * from gms_pj.item_category where item_category.category_no = #{category_No}) t2
+		on t1.category_no = t2.category_no 
+   </select>
+   
    <select id="SelectStore" resultType="com.goods.app.vo.ItemVO">
    		SELECT STORE_NO, STORE_NAME FROM STORE
    </select>

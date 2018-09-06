@@ -23,7 +23,7 @@
 				$("#brand").find("option").remove().end().append("<option value=''>브랜드</option>");
 				$.each(data, function(i){
 // 					console.log(data[i].comPany_No)
-					$("#brand").append("<option value='"+data[i].comPany_No+"'>"+data[i].comPany_Name+"</option>")
+					$("#brand").append("<option value='"+data[i].company_No+"'>"+data[i].company_Name+"</option>")
 				})
 			},
 			error: function (jqXHR, Status, error){
@@ -58,7 +58,7 @@
 				$("#store").find("option").remove().end().append("<option value=''>매장</option>");
 				$.each(data, function(i){
 // 					console.log(data[i].store_No)
-					$("#store").append("<option value='"+data[i].store_No+"'>"+data[i].store_Name+"</option>")
+					$("#store").append("<option value='"+data[i].store_Name+"'>"+data[i].store_Name+"</option>")
 				})
 			},
 			error: function (jqXHR, Status, error){
@@ -69,13 +69,27 @@
 	
 	})
 	function selBtn(){
-		ComPany_No = $("#brand").val()
-		Category_No = $("#category").val();
-		Store_No = $("#store").val()
+		company_No = $("#brand").val()
+		category_No = $("#category").val();
+		store_Name = $("#store").val()
 		
-		source = {"ComPany_No":ComPany_No,"Category_No":Category_No,"Store_No":Store_No}
-	
-		alert(source)
+		source = {"company_No":company_No,"category_No":category_No,"store_Name":store_Name}
+		
+		$.ajax({
+			type:"POST",
+			url:"/app/user/selBtn",
+			dataType:"json",
+			data:source,
+			success: function(data){
+				
+				$.each(data, function(i){
+					alert(data[i].category_Name+","+data[i].item_Name+","+data[i].amount+","+data[i].price)
+				})
+			},
+			error: function (jqXHR, Status, error){
+				console.log("selBtn Error!");
+			}
+		})
 	}
 </script>
 	<jsp:include page="userHeader.jsp"></jsp:include>

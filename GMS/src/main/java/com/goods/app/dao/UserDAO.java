@@ -4,7 +4,9 @@ package com.goods.app.dao;
 
 
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +42,14 @@ public class UserDAO
 		return ss.selectOne("checkUser",vo);
 	}
 	
-	
+	public List<ItemVO> selBtn(int company_no,int category_No, String store_Name){
+		Map<String,String> map = new HashMap();
+		map.put("item_No", company_no+""+category_No);
+		map.put("category_No", String.valueOf(category_No));
+		map.put("store_Name", store_Name);
+		
+		return ss.selectList("SelectBtn",map);
+	}
 	
 	
 }
