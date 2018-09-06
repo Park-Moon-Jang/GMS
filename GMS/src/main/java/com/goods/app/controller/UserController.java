@@ -25,6 +25,7 @@ public class UserController {
 	@Inject
 	UserService ser;
 	
+	
 	@RequestMapping(value = "/login" , method = RequestMethod.GET )
 	public String login() 
 	{
@@ -34,6 +35,11 @@ public class UserController {
 	public void loginPost(@ModelAttribute UserVO vo, HttpSession session, Model model) 
 	{
 	}
+	@RequestMapping(value="/logout", method=RequestMethod.GET)
+	public String logout() {
+		return "home";
+	}
+	
 	@RequestMapping(value="/joinPost",method=RequestMethod.POST)
 	public String joinPost(@ModelAttribute UserVO vo)throws Exception 
 	{

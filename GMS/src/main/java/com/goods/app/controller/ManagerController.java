@@ -69,5 +69,10 @@ public class ManagerController {
 		return "manager/itemreturned";
 	}
 	
+	@RequestMapping(value="/logout", method=RequestMethod.GET)
+	public String logout() {
+		return "home";
+	}
+	
 }
 

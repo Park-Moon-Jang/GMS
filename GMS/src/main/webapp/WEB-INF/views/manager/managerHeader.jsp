@@ -20,22 +20,15 @@
 
 		<div class="util">
 			<ul class="menu">
-				<c:set var="id" value="${session_id}" />
-<%-- 				<c:choose> --%>
-<%-- 					<c:when test="${empty id}"> --%>
-<!-- 						<li><a -->
-<%-- 							href="${pageContext.servletContext.contextPath}/home">login</a></li> --%>
-<%-- 					</c:when> --%>
-<%-- 					<c:otherwise> --%>
-						<li>${session_id}님</li>
+
+						<li>${session_manager}님</li>
 						<li><a
 							href="${pageContext.servletContext.contextPath}/manager/userpage">userpage</a></li>
 						<li><a
 							href="${pageContext.servletContext.contextPath}/manager/viewmanageuser">회원관리</a></li>
 						<li><a
 							href="${pageContext.servletContext.contextPath}/manager/logout">logout</a></li>
-<%-- 					</c:otherwise> --%>
-<%-- 				</c:choose> --%>
+
 			</ul>
 		</div>
 
