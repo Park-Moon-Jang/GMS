@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
+import org.springframework.web.servlet.ModelAndView;
 
 import com.goods.app.service.UserService;
 import com.goods.app.vo.UserVO;
@@ -26,45 +26,59 @@ public class UserController {
 	UserService ser;
 	
 	@RequestMapping(value = "/login" , method = RequestMethod.GET )
-	public String login(Model model) 
+	public String login() 
 	{
 		return "/user/userMain"; 
 	}
 	@RequestMapping(value="/loginPost", method = RequestMethod.POST)
-	public void loginPost(@ModelAttribute UserVO vo, HttpSession session, Model model) {
+	public void loginPost(@ModelAttribute UserVO vo, HttpSession session, Model model) 
+	{
 	}
 	@RequestMapping(value="/joinPost",method=RequestMethod.POST)
-	public String joinPost(@ModelAttribute UserVO vo)throws Exception {
+	public String joinPost(@ModelAttribute UserVO vo)throws Exception 
+	{
 		ser.join(vo);
 		return "home";
 	}
-	
 	@RequestMapping(value="/join", method=RequestMethod.GET)
-	public String join() {
+	public String join() 
+	{
 		return "join";
 	}
 	@RequestMapping(value="/find", method=RequestMethod.GET)
 	public String find()
 	{
-		return "/find";
+		return "/find/find";
 	}
-	
-	
 	@RequestMapping(value="/findID", method=RequestMethod.POST)
-	public String findID()
-	{
-		return "/findID";
+	public void findID(@ModelAttribute UserVO vo,HttpSession session)throws Exception
+	{		
 	}
 	@RequestMapping(value="/findPW", method=RequestMethod.POST)
-	public String findPW()
-	{
-		return "/findPW";
+	public void findPW(@ModelAttribute UserVO vo,HttpSession session)throws Exception
+	{		
+	}
+	@RequestMapping(value="/result", method=RequestMethod.GET)
+	public String result()throws Exception
+	{		
+		return "/find/findID";
+	}
+	@RequestMapping(value="/resultPW", method=RequestMethod.GET)
+	public String resultPW()throws Exception
+	{		
+		return "/find/findPW";
+	}
+	@RequestMapping(value="/updatePW", method=RequestMethod.POST)
+	public String updatePW(@ModelAttribute UserVO vo,HttpSession session)throws Exception
+	{	
+		vo.setUser_id((session.getAttribute("find_id")).toString());
+		ser.updatePW(vo);
+		return "/home";
 	}
 	
 	@RequestMapping(value ="/main" )
-	public String test(Model model) {
-		
-
+	public String test(Model model)
+	{
 		return "/user/userMain";
 	}
 	

@@ -40,7 +40,7 @@ window.onload = function(){
 <form name =userfindid action="${pageContext.servletContext.contextPath}/user/findID" method="post">
 찾으시는 계정의 이름과 이메일을 적어주세요<br>
 이름<input type="text" name="user_name"><br>
-이메일<input type="email" name="user_emails">
+이메일<input type="email" name="user_email">
 <input type="submit" value="찾기">
 </form>
 </td>

@@ -26,8 +26,19 @@ public class UserDAO
 		
 		ss.insert("updateUser",vo);
 	}
+	public UserVO findID(UserVO vo) throws Exception
+	{
+		
+		return ss.selectOne("findID",vo);
+	}
 	
-	
-	
+	public UserVO findPW(UserVO vo)throws Exception
+	{
+		return ss.selectOne("findPW",vo);
+	}
+	public void updatePW(UserVO vo)
+	{
+		ss.update("updatePW",vo);
+	}
 	
 }
