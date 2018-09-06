@@ -27,7 +27,7 @@
 <%-- 							href="${pageContext.servletContext.contextPath}/home">login</a></li> --%>
 <%-- 					</c:when> --%>
 <%-- 					<c:otherwise> --%>
-						<li>${session_id}님</li>
+						<li>${session_manager}님</li>
 						<li><a
 							href="${pageContext.servletContext.contextPath}/manager/userpage">userpage</a></li>
 						<li><a
