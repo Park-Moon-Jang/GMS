@@ -20,7 +20,7 @@
 
 		<div class="util">
 			<ul class="menu">
-				<c:set var="id" value="${session_id}" />
+				<c:set var="id" value="${session_manager}" />
 <%-- 				<c:choose> --%>
 <%-- 					<c:when test="${empty id}"> --%>
 <!-- 						<li><a -->
