@@ -35,4 +35,8 @@ public class ManagerDAO {
 	public ManagerVO login(ManagerVO vo) throws Exception {
 		return ss.selectOne("checkManager",vo);
 	} 
+	public List<ItemVO> companySel(){
+		
+		return ss.selectList("companySel");
+	}
 }

@@ -10,5 +10,10 @@ public interface ManagerService {
 
 	public List<ItemVO> getItemlist();
 
+	public List<ItemVO> companySel();
+	
+	
 	public ManagerVO checkManager(String manager_id, String manager_pw) throws Exception;
+	
+	
 }

@@ -31,4 +31,11 @@ public class ManagerServiceImpl implements ManagerService {
 		return mdao.login(vo);
 	}
 
+	@Override
+	public List<ItemVO> companySel() {
+		// TODO Auto-generated method stub
+				
+		return mdao.companySel();
+	}
+
 }

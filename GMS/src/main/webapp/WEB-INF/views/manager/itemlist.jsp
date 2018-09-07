@@ -12,9 +12,9 @@ $(document).ready(function(){
 	
 	companySel();
 	categorySel();
-	document.getElementById('carry_date').valueAsDate = new Date();
 	
 	function companySel(){
+		
 		
 		$ajax({
 			type:"POST",
@@ -23,8 +23,9 @@ $(document).ready(function(){
 				
 				$("#company").find("option").remove().end().append("<option value=''>생산업체</option>");
 				$.each(data, function(i){
-					console.log(data[i].company_no)
-					$("#company").append("<option value='"+data[i].company_no+"'>"+data[i].comnany_name+"</option>")
+					console.log(data[i].company_No)
+					
+					$("#company").append("<option value='"+data[i].company_No+"'>"+data[i].company_Name+"</option>")
 					
 				})
 			},
@@ -45,7 +46,7 @@ $(document).ready(function(){
 				$("#category").find("option").remove().end().append("<option value=''>상품유형</option>");
 				$.each(data, function(i){
 					console.log(data[i].category_no)
-					$("#category").append("<option value='"+data[i].category_no+"'>"+data[i].category_name+"</option>")
+					$("#category").append("<option value='"+data[i].category_No+"'>"+data[i].category_Name+"</option>")
 				})
 			},
 			error: function (jqXHR, Status, error){
@@ -55,7 +56,7 @@ $(document).ready(function(){
 		});
 	}
 	
-	
+	document.getElementById('carry_date').valueAsDate = new Date();
 	
 })
 

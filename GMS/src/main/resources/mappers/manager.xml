@@ -20,6 +20,13 @@
    <delete id="deleteOne" parameterType="int">
    delete from item where item_no = #{item_no}
    </delete>
+   
+   <select id="companySel" resultType="com.goods.app.vo.ItemVO">
+   select * from gms_pj.manufacturer 
+   </select>
+   
+   
+   
    <select id="checkManager"  resultType="com.goods.app.vo.ManagerVO">
    		SELECT MANAGER_ID,MANAGER_PW FROM MANAGER WHERE MANAGER_ID=#{manager_id} and MANAGER_PW=#{manager_pw}
    </select>
