@@ -4,6 +4,7 @@ package com.goods.app.dao;
 
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,11 +45,38 @@ public class UserDAO
 	
 	public List<ItemVO> selBtn(int company_no,int category_No, String store_Name){
 		Map<String,String> map = new HashMap();
-		map.put("item_No", company_no+""+category_No);
+		if(company_no != 0 && category_No != 0) {
+			map.put("item_No", company_no+""+category_No);
+		}else if(company_no == 0 && category_No !=0) {
+			map.put("item_No", String.valueOf(category_No));
+		}else if(company_no != 0 && category_No ==0) {
+			map.put("item_No", String.valueOf(company_no));
+		}
 		map.put("category_No", String.valueOf(category_No));
-		map.put("store_Name", store_Name);
 		
-		return ss.selectList("SelectBtn",map);
+		if(!store_Name.equals(""))
+			map.put("store_Name", store_Name);
+		
+		List<ItemVO> List = new ArrayList();
+		if(!store_Name.equals("") && category_No != 0 && company_no != 0 ) {
+			List = ss.selectList("SelectBtn",map);
+		}else if(store_Name.equals("") && category_No != 0 && company_no != 0 ) {
+			List = ss.selectList("SelectBtn2",map);
+		}else if(store_Name.equals("") && category_No == 0 && company_no != 0) {
+			List = ss.selectList("SelectBtn3",map);
+		}else if(store_Name.equals("") && category_No == 0 && company_no == 0) {
+			List = ss.selectList("SelectBtn4",map);
+		}else if(store_Name.equals("") && category_No != 0 && company_no == 0) {
+			List = ss.selectList("SelectBtn5",map);
+		}else if(!store_Name.equals("") && category_No == 0 && company_no == 0) {
+			List = ss.selectList("SelectBtn6",map);
+		}else if(!store_Name.equals("") && category_No != 0 && company_no == 0) {
+			List = ss.selectList("SelectBtn7",map);
+		}else {
+			List = ss.selectList("SelectBtn8",map);
+		}
+		
+		return List;
 	}
 	
 	

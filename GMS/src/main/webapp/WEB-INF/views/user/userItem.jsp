@@ -13,14 +13,15 @@
 	brandSel();
 	categorySel();
 	storeSel();
-	 
+	
+	//브랜드 option 불러오기
 	function brandSel(){
 		$.ajax({
 			type:"POST",
 			url:"/app/user/brandSel",
 			success: function(data){
 				
-				$("#brand").find("option").remove().end().append("<option value=''>브랜드</option>");
+				$("#brand").find("option").remove().end().append("<option value='0'>브랜드</option>");
 				$.each(data, function(i){
 // 					console.log(data[i].comPany_No)
 					$("#brand").append("<option value='"+data[i].company_No+"'>"+data[i].company_Name+"</option>")
@@ -32,12 +33,13 @@
 		}); 
 	}
 	 
+	//상품유형 option 불러오기
 	function categorySel(){
 		$.ajax({
 			type:"POST",
 			url:"/app/user/categorySel",
 			success: function(data){
-				$("#category").find("option").remove().end().append("<option value=''>상품유형</option>");
+				$("#category").find("option").remove().end().append("<option value='0'>상품유형</option>");
 				$.each(data, function(i){
 // 					console.log(data[i].category_No)
 					$("#category").append("<option value='"+data[i].category_No+"'>"+data[i].category_Name+"</option>")
@@ -49,6 +51,7 @@
 		}); 
 	}
 	
+	//매장 option 불러오기
 	function storeSel(){
 		$.ajax({
 			type:"POST",
@@ -68,11 +71,12 @@
 	}
 	
 	})
+	
+	//검색버튼 클릭 이벤트
 	function selBtn(){
 		company_No = $("#brand").val()
 		category_No = $("#category").val();
 		store_Name = $("#store").val()
-		
 		source = {"company_No":company_No,"category_No":category_No,"store_Name":store_Name}
 		
 		$.ajax({
@@ -81,14 +85,28 @@
 			dataType:"json",
 			data:source,
 			success: function(data){
-				
+				var str = '<table id="selTab"><tr></tr><th>상품유형</th><th>상품명</th><th>수량</th><th>가격</th>';
 				$.each(data, function(i){
-					alert(data[i].category_Name+","+data[i].item_Name+","+data[i].amount+","+data[i].price)
+					str += "<tr id='"+i+"'>"
+					str += "<td>"+data[i].category_Name+"</td>";
+					str += '<td><a href="javscript:;" class="itemClick"><input type="text" class="item_No" hidden="hidden" value="'+data[i].item_No+'">'+data[i].item_Name+'</td>';
+					str += "<td>"+data[i].amount+"</td>";
+					str += "<td>"+data[i].price+"</td>";
+					str += "</tr>"
+// 					alert(data[i].category_Name+","+data[i].item_Name+","+data[i].amount+","+data[i].price)
+					
 				})
+				str += "<table>";
+				$("#selTab").html(str);
 			},
 			error: function (jqXHR, Status, error){
 				console.log("selBtn Error!");
 			}
+		})
+		
+		$(document).on("click",".itemClick",function(){
+			var item_No = $(this).find(".item_No").val()
+			window.open("${pageContext.servletContext.contextPath}/user/itemDetail?"+item_No);
 		})
 	}
 </script>
@@ -110,16 +128,15 @@
 			<button id="selBtn" onclick="selBtn()">검색</button>
 			</td>
 			</tr>
-			<tr>
-				<td>상품유형</td>
-				<td>상품명</td>
-				<td>수량</td>
-				<td>가격</td>
-			</tr>
-			<tr>
-				<td></td>
-			</tr>
-		</table>
+			<table id ="selTab">
+				<tr>
+					<th>상품유형</th>
+					<th>상품명</th>
+					<th>수량</th>
+					<th>가격</th>
+				</tr>
+			</table>
+		<table>
 	</div>
 	<jsp:include page="userFooter.jsp"></jsp:include>
 </body>
