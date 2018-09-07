@@ -15,7 +15,7 @@
     </style>
 </head>
 
-<%@include file="managerHeader.jsp"%>
+ <%@include file="managerHeader.jsp"%>
 
 <body>
 <h1>
