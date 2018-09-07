@@ -1,10 +1,13 @@
 
 package com.goods.app.controller;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -38,6 +42,30 @@ public class ManagerController {
 		
 		return "manager/itemlist";
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="/itemlist", method=RequestMethod.POST)
+	public Map<String, Object> itemlist(ModelAndView mav, @RequestParam Map<String,Object> map) {
+		
+		System.out.println("컨트롤러 온 map"+ map);
+//		mav.addObject("success", "success");
+		List<ItemVO> list = new ArrayList<ItemVO>();
+		ItemVO a = new ItemVO();
+		ItemVO b = new ItemVO();
+		a.setItem_Name("aa");
+		a.setCompany_No(10);
+		a.setCompany_No(10);
+		a.setAmount(100);
+		a.setCarry_Date(new Date());
+		list.add(a);
+		
+		Map<String, Object> retVal = new HashMap<String, Object>();
+		retVal.put("list", list);
+		retVal.put("code", "OK");
+		return retVal;
+	}
+	
+	
 	@RequestMapping("/viewitemstored")
 	public String viewitemstored (Model model) {
 		
@@ -50,9 +78,9 @@ public class ManagerController {
 	}
 
 	@RequestMapping(value = "/login" , method = RequestMethod.GET )
-	public String login(Model model, HttpSession session, ModelAndView mav) 
+	public String login(Model model, HttpSession session, HttpServletRequest req) 
 	{
-		
+		System.out.println("login: "+session.getAttribute("session_manager"));
 		return "forward:/manager/managerhome";
 	}
 	@RequestMapping(value="/loginPost", method = RequestMethod.POST)
@@ -60,19 +88,20 @@ public class ManagerController {
 	}
 
 	@RequestMapping("/managerhome")
-	public ModelAndView managerhome (Model model, HttpSession session) {
+	public String managerhome (Model model, HttpSession session) {
 	
 		
 		List<ItemVO> itemlist = ms.getItemlist();
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", itemlist);
-//		map.put("session_manager", session.getAttribute("session_manager"));
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("map", map);
-		System.out.println("managerhome session: " + session.getId()+ session.getAttribute("session_manager"));
-
-		mav.setViewName("manager/managerhome");  //managerhome.jsp 로 간다
-		return mav;
+		model.addAttribute("itemlist", itemlist);
+		model.addAttribute(session);
+//		ModelAndView mav = new ModelAndView();
+//		mav.addObject("map", map);
+//		System.out.println("managerhome session: " + session.getId()+ session.getAttribute("session_manager"));
+//		mav.addObject(session);
+//		mav.setViewName("manager/managerhome");  //managerhome.jsp 로 간다
+		return "manager/managerhome";
 		
 	}
 	@RequestMapping(value="/managerboard", method = RequestMethod.POST)

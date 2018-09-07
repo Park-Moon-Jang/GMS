@@ -58,22 +58,74 @@ $(document).ready(function(){
 		});
 	}
 	
-	document.getElementById('carry_date').valueAsDate = new Date();
+	alert("오늘날짜"+new Date());
+	var today = new Date();
+	
+	alert(today);
+
 	
 })
 
 function selBtn(){
 	
-	company_no = $("#company").val()
-	category_no = $("#category").val();
-	carry_date = $("#carry_date").val();
+	var company_no = $("#company").val();
+	var category_no = $("#category").val();
+	var date1 = $("#carry_date1").val();
+	var date2 = $("#carry_date2").val();
 	
-	source = {"company_no":company_no,"category_no":category_no,"carry_date":carry_date}
+	alert(company_no);
+	alert(category_no);
+	alert(date1);
+	alert(date2);
+// 	carry_date1 = date1.getYear()+"-"+date
+	
+	
+	var data = {"company_no":company_no, "category_no":category_no, "carry_date1":date1, "carry_date2":date2}
+	var source = JSON.stringify(data);
+	
+	var values = []; //ArrayList 값을 받을 변수를 선언
 
-	alert(source)
-	
+	//검색할 코드를 넘겨서 값을 가져온다.		
+	$.post(
+		"/app/manager/itemlist", 
+		data,
+		function(retVal) {
+			if(retVal.code == "OK") { //controller에서 넘겨준 성공여부 코드
+				
+				values = retVal.list; //java에서 정의한 ArrayList명을 적어준다.
+				
+				$.each(values, function() {
+				   console.log(values); //Book.java 의 변수명을 써주면 된다.
+				});
+				
+				alert("성공");
+			}
+			else {
+				alert("실패");
+			}					
+		}
+	);
 	// 리스트 가져올 ajax 만들 공간
-	
+// 	$.ajax({
+		
+// 		type:"post",
+// 		url:"/app/manager/itemlist",
+// 		dataType:"json",
+// 		data:{"company_no":company_no, "category_no":category_no, "carry_date1":date1, "carry_date2":date2},
+		
+// 		success:function(data){
+// 			console.log("성공");
+// 			$.each(data, function(){
+// 				console.log(data[i])
+// 			})
+// 		},
+// 		error: function (jqXHR, Status, error){
+// 			console.log("list Error!");
+// 		}
+		
+		
+		
+// 	});
 	//
 }
 
@@ -88,40 +140,54 @@ function selBtn(){
 
 
 </head>
+
 <%@include file="managerHeader.jsp"%>
+
+
 <body>
 <p>item list page</p>
 
 	<div id="content">
 		<table>
-			<tr>
-				<td colspan="4">물품현황</td>
-			</tr>
-			<tr>
-				<td colspan="4">
-					<select id="company">
-						<option>생산업체</option>
-					</select>
-					<select id="category">
-						<option>상품유형</option>
-					</select>
-					<input type="date" id="carry_date" >
-					
-					<button id="selBtn" onclick="selBtn()">검색</button>
-				</td>
-			</tr>
-			<tr>
-				<td>생산업체</td>
-				<td>상품유형</td>
-				<td>수량</td>
-				<td>가격</td>
-			</tr>
-			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
+			<thead>
+				<tr>
+					<th corspan="4" ">물품현황</th>
+				</tr>
+				<tr>
+		
+					<td>
+						<select id="company">
+							<option>생산업체</option>
+						</select>
+					</td>
+					<td>
+						<select id="category">
+							<option>상품유형</option>
+						</select>
+					</td>
+					<td>	
+						<input type="date" id="carry_date1" >
+					</td>
+					<td>	
+						<input type="date" id="carry_date2" >
+					</td>
+					<td>	
+						<button id="selBtn" onclick="selBtn()">검색</button>
+					</td>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach var = "vo" items= "${list}">
+					<tr>
+								<td>${vo.item_Name}</td>
+								<td>${vo.category_No}</td>
+								<td>${vo.company_No}</td>
+								<td>${vo.amount}</td>
+								<td>${vo.carry_Date}</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+			
 		</table>
 	</div>
 

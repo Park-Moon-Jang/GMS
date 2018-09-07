@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
+<%@ page session="true" %>
 <html>
 <head>
 	<title>ManagerHome</title>
@@ -15,7 +15,7 @@
     </style>
 </head>
 
- <%@include file="managerHeader.jsp"%>
+<%@include file="managerHeader.jsp"%>
 
 <body>
 <h1>
@@ -33,7 +33,7 @@
 			</thead>
 			<tbody>
 			
-			<c:forEach var="vo" items="${map.list}" > 
+			<c:forEach var="vo" items="${itemlist}" > 
 				<tr>
 								<td>${vo.item_No}</td>
 								<td>${vo.item_Name}</td>
