@@ -38,5 +38,9 @@ public class ManagerDAO {
 	public List<ItemVO> companySel(){
 		
 		return ss.selectList("companySel");
+	}	
+	public List<ItemVO> categorySel(){
+		
+		return ss.selectList("categorySel");
 	}
 }

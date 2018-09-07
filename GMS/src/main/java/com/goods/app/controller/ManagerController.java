@@ -50,23 +50,27 @@ public class ManagerController {
 	}
 
 	@RequestMapping(value = "/login" , method = RequestMethod.GET )
-	public String login(Model model) 
+	public String login(Model model, HttpSession session, ModelAndView mav) 
 	{
-		return "redirect:/manager/managerhome";
+		
+		return "forward:/manager/managerhome";
 	}
 	@RequestMapping(value="/loginPost", method = RequestMethod.POST)
 	public void loginPost(@ModelAttribute UserVO vo, HttpSession session, Model model) {
 	}
 
 	@RequestMapping("/managerhome")
-	public ModelAndView managerhome (Model model) {
+	public ModelAndView managerhome (Model model, HttpSession session) {
 	
+		
 		List<ItemVO> itemlist = ms.getItemlist();
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", itemlist);
-		
+//		map.put("session_manager", session.getAttribute("session_manager"));
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("map", map);
+		System.out.println("managerhome session: " + session.getId()+ session.getAttribute("session_manager"));
+
 		mav.setViewName("manager/managerhome");  //managerhome.jsp 로 간다
 		return mav;
 		
@@ -97,5 +101,19 @@ public class ManagerController {
 			return iList;
 		
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="/categorySel", method = RequestMethod.POST)
+	public List<ItemVO> categorySel(Model model, ItemVO vo){
+		
+		System.out.println("카테고리셀렉트");
+			List<ItemVO> iList = ms.categorySel();
+			for(ItemVO i : iList) {
+				System.out.println("상품유형 목록"+ i.getCategory_No()+i.getCategory_Name());
+			}
+			return iList;
+		
+	}
+	
 }
 

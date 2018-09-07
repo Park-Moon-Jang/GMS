@@ -12,7 +12,7 @@ public interface ManagerService {
 
 	public List<ItemVO> companySel();
 	
-	
+	public List<ItemVO> categorySel();
 	public ManagerVO checkManager(String manager_id, String manager_pw) throws Exception;
 	
 	

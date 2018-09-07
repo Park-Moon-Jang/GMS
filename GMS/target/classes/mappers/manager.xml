@@ -24,7 +24,9 @@
    <select id="companySel" resultType="com.goods.app.vo.ItemVO">
    select * from gms_pj.manufacturer 
    </select>
-   
+   <select id="categorySel" resultType="com.goods.app.vo.ItemVO">
+   select * from gms_pj.item_category
+   </select>
    
    
    <select id="checkManager"  resultType="com.goods.app.vo.ManagerVO">

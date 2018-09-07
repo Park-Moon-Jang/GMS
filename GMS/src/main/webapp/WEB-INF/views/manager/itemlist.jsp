@@ -10,17 +10,19 @@
 
 $(document).ready(function(){
 	
+	alert("페이지 준비되었다");
 	companySel();
 	categorySel();
 	
 	function companySel(){
 		
+		alert("companySel 함수 실행");
 		
-		$ajax({
+		$.ajax({
 			type:"POST",
 			url:"/app/manager/companySel",
 			success:function(data){
-				
+				alert("companySel ajax 성공");
 				$("#company").find("option").remove().end().append("<option value=''>생산업체</option>");
 				$.each(data, function(i){
 					console.log(data[i].company_No)
@@ -37,7 +39,7 @@ $(document).ready(function(){
 	
 	function categorySel(){
 		
-		$ajax({
+		$.ajax({
 			
 			type:"post",
 			url:"/app/manager/categorySel",
