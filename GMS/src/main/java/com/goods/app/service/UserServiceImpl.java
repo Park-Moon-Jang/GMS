@@ -52,9 +52,15 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public List<ItemVO> selBtn(int company_No,int category_No, String store_Name) {
+	public List<ItemVO> selBtn(int company_No,int category_No, String store_Name, int curPage) {
 		// TODO Auto-generated method stub
-		return dao.selBtn(company_No,category_No,store_Name);
+		return dao.selBtn(company_No,category_No,store_Name,curPage);
+	}
+
+	@Override
+	public int selectCount(ItemVO IVO) {
+		// TODO Auto-generated method stub
+		return dao.selectCount(IVO);
 	}
 		
 }

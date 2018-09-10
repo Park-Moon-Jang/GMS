@@ -3,6 +3,9 @@ package com.goods.app.controller;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -10,9 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
- 
+import org.springframework.web.servlet.ModelAndView;
+
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.goods.app.service.UserService;
 import com.goods.app.vo.ItemVO;
+import com.goods.app.vo.Paging;
 import com.goods.app.vo.UserVO;
 import java.util.HashMap;
 import java.util.List;
@@ -29,12 +35,28 @@ public class UserController {
 	
 	@ResponseBody
 	@RequestMapping(value="/selBtn" , method = RequestMethod.POST)
-	public List<ItemVO> selBtn(Model model, ItemVO IVO) {
-		List<ItemVO> IList = ser.selBtn(IVO.getCompany_No(),IVO.getCategory_No(),IVO.getStore_Name());
+	public Map selBtn(Model model, ItemVO IVO, @RequestParam("curPage") int curPage) {
+
+		if(curPage==0) {
+			curPage = 1;
+		}
+		
+		int count = ser.selectCount(IVO);
+		System.out.println(count);
+		
+		Paging sp = new Paging(count, curPage);
+		
+		List<ItemVO> IList = ser.selBtn(IVO.getCompany_No(),IVO.getCategory_No(),IVO.getStore_Name(), curPage);
+		Map map = new HashMap();
 //		for(ItemVO a : IList) {
 //			System.out.println("ºê·£µå : " + a.getItem_No());
 //		}
-		return IList;
+		map.put("IList", IList);
+		map.put("sp", sp);
+		map.put("count", count);
+		
+		return map;
+		
 	}
 	
 	@ResponseBody
@@ -119,7 +141,7 @@ public class UserController {
 		return "/user/userPage";
 	}
 	@RequestMapping(value="/itemDetail", method = RequestMethod.GET)
-	public String itemDetail(Model model, @RequestParam("item_No") int item_No) {
+	public String itemDetail(Model model, @RequestParam(value="item_No", required=false) int item_No) {
 		
 
 		return "/user/userItemDetail";

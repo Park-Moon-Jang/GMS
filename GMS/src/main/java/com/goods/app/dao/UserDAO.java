@@ -43,8 +43,8 @@ public class UserDAO
 		return ss.selectOne("checkUser",vo);
 	}
 	
-	public List<ItemVO> selBtn(int company_no,int category_No, String store_Name){
-		Map<String,String> map = new HashMap();
+	public List<ItemVO> selBtn(int company_no,int category_No, String store_Name, int curPage){
+		Map map = new HashMap();
 		if(company_no != 0 && category_No != 0) {
 			map.put("item_No", company_no+""+category_No);
 		}else if(company_no == 0 && category_No !=0) {
@@ -56,6 +56,9 @@ public class UserDAO
 		
 		if(!store_Name.equals(""))
 			map.put("store_Name", store_Name);
+		
+		curPage = (curPage - 1 ) * 2;
+		map.put("curPage", curPage);
 		
 		List<ItemVO> List = new ArrayList();
 		if(!store_Name.equals("") && category_No != 0 && company_no != 0 ) {
@@ -79,5 +82,26 @@ public class UserDAO
 		return List;
 	}
 	
-	
+	public int selectCount(ItemVO IVO) {
+		int count=0;
+		if(!IVO.getStore_Name().equals("") && IVO.getCategory_No() != 0 && IVO.getCompany_No() != 0 ) {
+			count = ss.selectOne("countSelectBtn",IVO);
+		}else if(IVO.getStore_Name().equals("") && IVO.getCategory_No() != 0 && IVO.getCompany_No() != 0 ) {
+			count = ss.selectOne("countSelectBtn2",IVO);
+		}else if(IVO.getStore_Name().equals("") && IVO.getCategory_No() == 0 && IVO.getCompany_No() != 0) {
+			count = ss.selectOne("countSelectBtn3",IVO);
+		}else if(IVO.getStore_Name().equals("") && IVO.getCategory_No() == 0 && IVO.getCompany_No() == 0) {
+			count = ss.selectOne("countSelectBtn4",IVO);
+		}else if(IVO.getStore_Name().equals("") && IVO.getCategory_No() != 0 && IVO.getCompany_No() == 0) {
+			count = ss.selectOne("countSelectBtn5",IVO);
+		}else if(!IVO.getStore_Name().equals("") && IVO.getCategory_No() == 0 && IVO.getCompany_No() == 0) {
+			count = ss.selectOne("countSelectBtn6",IVO);
+		}else if(!IVO.getStore_Name().equals("") && IVO.getCategory_No() != 0 && IVO.getCompany_No() == 0) {
+			count = ss.selectOne("countSelectBtn7",IVO);
+		}else {
+			count = ss.selectOne("countSelectBtn8",IVO);
+		}	
+		
+	return count;
+	}
 }

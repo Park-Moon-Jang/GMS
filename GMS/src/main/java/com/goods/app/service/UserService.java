@@ -11,7 +11,8 @@ import com.goods.app.vo.UserVO;
 @Service
 public interface UserService 
 {
-	public List<ItemVO> selBtn(int company_No,int category_No, String store_Name);
+	public int selectCount(ItemVO IVO);
+	public List<ItemVO> selBtn(int company_No,int category_No, String store_Name, int curPage);
 	public List<ItemVO> storeSel();
 	public List<ItemVO> brandSel();
 	public List<ItemVO> categorySel();
