@@ -58,5 +58,10 @@ window.onload = function(){
 </td>
 </tr>
 </table>
+<<<<<<< HEAD
+=======
+	
+ 
+>>>>>>> branch 'moon' of https://github.com/Park-Moon-Jang/GMS.git
 </body>
 </html>

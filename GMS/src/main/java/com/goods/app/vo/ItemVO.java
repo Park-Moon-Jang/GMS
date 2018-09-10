@@ -1,48 +1,70 @@
 package com.goods.app.vo;
 
 
+
 import java.util.Date;
 
-public class ItemVO {
 
-	private int item_no;
-	private String item_name;
-	private int amount;
-	private int category_no;
-	private int company_no;
+public class ItemVO {
+ 
+	private int company_No;
+	private String company_Name;
+	private String item_Name;
+	private int item_No;
+	private int category_No;
+	private String category_Name;
+	private int store_No;
+	private String store_Name;
 	private int price;
-	private Date carry_date;
-	
-	
-	public int getItem_no() {
-		return item_no;
+	private int amount;
+	private Date carry_Date;
+	public int getCompany_No() {
+		return company_No;
 	}
-	public void setItem_no(int item_no) {
-		this.item_no = item_no;
+	public void setCompany_No(int company_No) {
+		this.company_No = company_No;
 	}
-	public String getItem_name() {
-		return item_name;
+	public String getCompany_Name() {
+		return company_Name;
 	}
-	public void setItem_name(String item_name) {
-		this.item_name = item_name;
+	public void setCompany_Name(String company_Name) {
+		this.company_Name = company_Name;
 	}
-	public int getAmount() {
-		return amount;
+	public String getItem_Name() {
+		return item_Name;
 	}
-	public void setAmount(int amount) {
-		this.amount = amount;
+	public void setItem_Name(String item_Name) {
+		this.item_Name = item_Name;
 	}
-	public int getCategory_no() {
-		return category_no;
+	public int getItem_No() {
+		return item_No;
 	}
-	public void setCategory_no(int category_no) {
-		this.category_no = category_no;
+	public void setItem_No(int item_No) {
+		this.item_No = item_No;
 	}
-	public int getCompany_no() {
-		return company_no;
+	public int getCategory_No() {
+		return category_No;
 	}
-	public void setCompany_no(int company_no) {
-		this.company_no = company_no;
+	public void setCategory_No(int category_No) {
+		this.category_No = category_No;
+	}
+	public String getCategory_Name() {
+		return category_Name;
+	}
+	public void setCategory_Name(String category_Name) {
+		this.category_Name = category_Name;
+	}
+	public int getStore_No() {
+		return store_No;
+	}
+	public void setStore_No(int store_No) {
+		this.store_No = store_No;
+	}
+	public String getStore_Name() {
+		return store_Name;
+	}
+	public void setStore_Name(String store_Name) {
+		this.store_Name = store_Name;
 	}
 	public int getPrice() {
 		return price;
@@ -50,13 +72,20 @@ public class ItemVO {
 	public void setPrice(int price) {
 		this.price = price;
 	}
-	public Date getCarry_date() {
-		return carry_date;
+	public int getAmount() {
+		return amount;
 	}
-	public void setCarry_date(Date carry_date) {
-		this.carry_date = carry_date;
+	public void setAmount(int amount) {
+		this.amount = amount;
 	}
-
+	public Date getCarry_Date() {
+		return carry_Date;
+	}
+	public void setCarry_Date(Date carry_Date) {
+		this.carry_Date = carry_Date;
+	}
 
 	
+
 }
+	

@@ -1,5 +1,6 @@
 package com.goods.app.vo;
 
+
 import java.sql.Date;
 
 
