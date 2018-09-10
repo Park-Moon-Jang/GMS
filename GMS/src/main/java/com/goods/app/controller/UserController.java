@@ -112,5 +112,12 @@ public class UserController {
 
 		return "/user/userPage";
 	}
+	@RequestMapping("/updatePost")
+	public String updatePost(Model model) {
+		
+
+		return "/user/userPage";
+	}
+		
 }
 
