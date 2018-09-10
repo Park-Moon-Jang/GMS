@@ -1,6 +1,8 @@
 package com.goods.app.dao;
 
+import java.sql.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +29,20 @@ public class ManagerDAO {
 		//신상 3개만 출력
 		return ss.selectList("getnewItemlist");
 	}
-	public List<ItemVO> getItemlist(ItemVO vo){
-		return ss.selectList("getItemlist", vo);
+	
+	public List<ItemVO> getItemlist(Map<String, Object> map){
+		
+		if(!map.get("company_No").equals(0) && !map.get("category_No").equals(0)){
+			return ss.selectList("getItemlist", map);
+		}else if(!map.get("company_No").equals(0) && map.get("category_No").equals(0)){
+			return ss.selectList("getItemlistNOTCATE", map);
+		}else if(!map.get("company_No").equals(0) && map.get("category_No").equals(0)){
+			return ss.selectList("getItemlistNOTCOMP", map);
+		}else {
+			return ss.selectList("getItemlistNOT", map);
+		}
+		
+		
 	}
 	
 	

@@ -79,7 +79,7 @@ function selBtn(){
 	
 	if(!company_No){
 
-		alert("회사명 입력 ");
+		alert("회사명 입력 안했네");
 		company_No = 0;
 		}
 	if(!category_No){
@@ -131,7 +131,7 @@ function selBtn(){
 				str += "<td>"+values[i].amount+"</td>";
 				str += "<td>"+values[i].carry_Date+"</td>";
 				str += "</tr>"
-//					alert(data[i].category_Name+","+data[i].item_Name+","+data[i].amount+","+data[i].price)
+
 				
 			})
 			str += "</table>";
@@ -144,39 +144,8 @@ function selBtn(){
 		
 		
 	});
-	
-	///////////////////////
 
-	///////////////////////
-	
-	
-	
-// 	검색할 코드를 넘겨서 값을 가져온다.		
-// 	$.post(
-// 		"/app/manager/itemlist", 
-// 		data,
-// 		function(retVal) {
-// 			if(retVal.code == "OK") { //controller에서 넘겨준 성공여부 코드
-				
-// 				values = retVal.list; //java에서 정의한 ArrayList명을 적어준다.
-				
-// 				$.each(values, function() {
-// 				   console.log(values); //Book.java 의 변수명을 써주면 된다.
-// 				});
-				
-// 				alert("성공");
-// 			}
-// 			else {
-// 				alert("실패");
-// 			}					
-// 		}
-// 	);
-	// 리스트 가져올 ajax 만들 공간
-
-	//
 }
-
-
 
 
 </script>

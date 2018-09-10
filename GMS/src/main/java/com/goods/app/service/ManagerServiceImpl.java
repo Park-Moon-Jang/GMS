@@ -1,6 +1,8 @@
 package com.goods.app.service;
 
+import java.sql.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,13 @@ public class ManagerServiceImpl implements ManagerService {
 		// TODO Auto-generated method stub
 		
 		return mdao.getnewItemlist();
+	}
+	
+	
+	@Override
+	public List<ItemVO> getItemlist(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return mdao.getItemlist(map);
 	}
 
 	@Override
@@ -44,10 +53,6 @@ public class ManagerServiceImpl implements ManagerService {
 		return mdao.categorySel();
 	}
 
-	@Override
-	public List<ItemVO> getItemlist(ItemVO vo) {
-		// TODO Auto-generated method stub
-		return mdao.getItemlist(vo);
-	}
+
 
 }
