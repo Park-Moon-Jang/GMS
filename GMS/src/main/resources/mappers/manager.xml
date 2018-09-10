@@ -13,9 +13,13 @@
     INSERT INTO item (item_no, item_name, amount, category_no, company_no, price, carry_date) VALUES (#{item_no}, #{item_name}, #{amount}, #{category_no}, #{company_no}, #{price}, #{carry_date})
    </insert>
    
-   <select id="newitemList" resultType="com.goods.app.vo.ItemVO">
+   <select id="getnewItemlist" resultType="com.goods.app.vo.ItemVO">
    SELECT * FROM gms_pj.item order by carry_date desc limit 3
    </select>
+   <select id="getItemlist" parameterType="com.goods.app.vo.ItemVO" resultType="com.goods.app.vo.ItemVO">
+	SELECT * FROM gms_pj.item;
+   </select>
+   
    
    <delete id="deleteOne" parameterType="int">
    delete from item where item_no = #{item_no}

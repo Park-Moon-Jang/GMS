@@ -8,8 +8,10 @@ import com.goods.app.vo.ManagerVO;
 
 public interface ManagerService {
 
-	public List<ItemVO> getItemlist();
-
+	public List<ItemVO> getnewItemlist();
+	
+	public List<ItemVO> getItemlist(ItemVO vo);
+	
 	public List<ItemVO> companySel();
 	
 	public List<ItemVO> categorySel();

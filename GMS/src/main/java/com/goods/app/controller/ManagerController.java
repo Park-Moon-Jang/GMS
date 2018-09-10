@@ -24,13 +24,15 @@ import com.goods.app.service.ManagerService;
 import com.goods.app.vo.ItemVO;
 import com.goods.app.vo.UserVO;
 
+
+
 @Controller
 @RequestMapping("/manager")
 public class ManagerController {
 
 	@Autowired
 	ManagerService ms;
-	
+
 	
 	@RequestMapping("/viewmanageuser")
 	public String viewitemreturned (Model model) {
@@ -45,24 +47,18 @@ public class ManagerController {
 	
 	@ResponseBody
 	@RequestMapping(value="/itemlist", method=RequestMethod.POST)
-	public Map<String, Object> itemlist(ModelAndView mav, @RequestParam Map<String,Object> map) {
+	public Map<String, Object> itemlist(ItemVO vo, @RequestParam Map<String,Object> map, @RequestParam("from_Date") java.sql.Date from_Date, @RequestParam("to_Date") java.sql.Date to_Date) {
+		
 		
 		System.out.println("컨트롤러 온 map"+ map);
-//		mav.addObject("success", "success");
-		List<ItemVO> list = new ArrayList<ItemVO>();
-		ItemVO a = new ItemVO();
-		ItemVO b = new ItemVO();
-		a.setItem_Name("aa");
-		a.setCompany_No(10);
-		a.setCompany_No(10);
-		a.setAmount(100);
-		a.setCarry_Date(new Date());
-		list.add(a);
 		
-		Map<String, Object> retVal = new HashMap<String, Object>();
-		retVal.put("list", list);
-		retVal.put("code", "OK");
-		return retVal;
+		System.out.println(vo.getCategory_No()+":"+vo.getCompany_No()+":"+ from_Date+":"+to_Date);
+		
+		List<ItemVO> list = ms.getItemlist(vo); //여기서부터!!! 아이템 가져오는 거 시작하자!!!!
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("list", list);
+		return result;
 	}
 	
 	
@@ -77,6 +73,7 @@ public class ManagerController {
 		return "manager/itemreleased";
 	}
 
+	
 	@RequestMapping(value = "/login" , method = RequestMethod.GET )
 	public String login(Model model, HttpSession session, HttpServletRequest req) 
 	{
@@ -91,7 +88,7 @@ public class ManagerController {
 	public String managerhome (Model model, HttpSession session) {
 	
 		
-		List<ItemVO> itemlist = ms.getItemlist();
+		List<ItemVO> itemlist = ms.getnewItemlist();
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", itemlist);
 		model.addAttribute("itemlist", itemlist);
@@ -104,19 +101,19 @@ public class ManagerController {
 		return "manager/managerhome";
 		
 	}
-	@RequestMapping(value="/managerboard", method = RequestMethod.POST)
-	public ModelAndView mboard (Model model) {
-	
-		List<ItemVO> itemlist = ms.getItemlist();
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("list", itemlist);
-		
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("map", map);
-		mav.setViewName("manager/managerboard");  
-		return mav;
-		
-	}
+//	@RequestMapping(value="/managerboard", method = RequestMethod.POST)
+//	public ModelAndView mboard (Model model) {
+//	
+//		List<ItemVO> itemlist = ms.getItemlist();
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		map.put("list", itemlist);
+//		
+//		ModelAndView mav = new ModelAndView();
+//		mav.addObject("map", map);
+//		mav.setViewName("manager/managerboard");  
+//		return mav;
+//		
+//	}
 	
 	@ResponseBody
 	@RequestMapping(value="/companySel", method = RequestMethod.POST)

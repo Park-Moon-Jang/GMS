@@ -21,12 +21,16 @@ public class ManagerDAO {
 		ss.insert("insertItem", vo);
 	}
 
-	public List<ItemVO> getList() {
+	public List<ItemVO> getnewItemlist() {
 		// TODO Auto-generated method stub
 		
 		//신상 3개만 출력
-		return ss.selectList("newitemList");
+		return ss.selectList("getnewItemlist");
 	}
+	public List<ItemVO> getItemlist(ItemVO vo){
+		return ss.selectList("getItemlist", vo);
+	}
+	
 	
 	public int delete(ItemVO vo) {
 		System.out.println("dao!");

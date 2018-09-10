@@ -16,10 +16,10 @@ public class ManagerServiceImpl implements ManagerService {
 	ManagerDAO mdao;	
 	
 	@Override
-	public List<ItemVO> getItemlist() {
+	public List<ItemVO> getnewItemlist() {
 		// TODO Auto-generated method stub
 		
-		return mdao.getList();
+		return mdao.getnewItemlist();
 	}
 
 	@Override
@@ -42,6 +42,12 @@ public class ManagerServiceImpl implements ManagerService {
 	public List<ItemVO> categorySel() {
 		// TODO Auto-generated method stub
 		return mdao.categorySel();
+	}
+
+	@Override
+	public List<ItemVO> getItemlist(ItemVO vo) {
+		// TODO Auto-generated method stub
+		return mdao.getItemlist(vo);
 	}
 
 }
