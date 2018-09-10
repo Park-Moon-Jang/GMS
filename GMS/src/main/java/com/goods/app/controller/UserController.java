@@ -53,7 +53,6 @@ public class UserController {
 //		}
 		map.put("IList", IList);
 		map.put("sp", sp);
-		map.put("count", count);
 		
 		return map;
 		
