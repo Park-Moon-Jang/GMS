@@ -3,7 +3,6 @@ package com.goods.app.vo;
 
 public class UserVO 
 {
-	private int curPage;
 	private String user_id;
 	private String user_pw;
 	private String user_nickname;
