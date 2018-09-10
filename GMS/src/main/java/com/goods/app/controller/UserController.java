@@ -143,7 +143,7 @@ public class UserController {
 	}
 	@ResponseBody
 	@RequestMapping(value="/	" , method = RequestMethod.POST)
-	public List<ItemVO> itemDetalSel(Model model, HttpSession session) {
+	public List<ItemVO> itemDetalSel(Model model, HttpSession session) { 
 		
 //		System.out.println(session.getAttribute("item_No"));
 		int item_No = (Integer) session.getAttribute("item_No");
