@@ -5,20 +5,20 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>Insert title here</title>
-<script type="text/javascript">
-function click(getid){
-	 var id=document.getElementById(getid);
-	 alert(id);
-	 if(id="updateC")
-		 {
-		 document.getElementById("update").style.display="block";
-	 	 document.getElementById("delete").style.display="none";
-		 }
-	 else{
-	 	document.getElementById("update").style.display="none";
- 	 	document.getElementById("delete").style.display="block";
-	 }
-}
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script>
+$(function(){
+	$("#updateC").click(function(){
+		$("#update").show();
+		$("#delete").hide();
+		
+	});
+	$("#deleteC").click(function(){
+		$("#update").hide();
+		$("#delete").show();
+		
+	});
+})
 
 </script>
 </head>
@@ -27,10 +27,8 @@ function click(getid){
 	<br>
 	<button id="updateC" onclick="click('updateC');">정보변경</button><button id="deleteC" onclick="click('deleteC');">회원탈퇴</button>
 	<div id="update" style="display: none;">
-		<form
-			action="${pageContext.servletContext.contextPath}/user/updatePost"
-			method="post">
-			<input type="hidden" name="id" value="${session_id}" />
+		<form action="${pageContext.servletContext.contextPath}/user/updatePost" method="post">
+			<input type="hidden" name="user_id" value="${session_user}" />
 			<table>
 				<tr>
 					<td>패스워드</td>
@@ -63,12 +61,10 @@ function click(getid){
 		</form>
 	</div>
 	<div id="delete" style="display: none;">
-		<form
-			action="${pageContext.servletContext.contextPath}/user/deleteUser"
-			method="post">
-	<input type="hidden" id="user_id" value="${session_id}">
-	<input type="password" id="user_pw">
-	<input type="submit">
+		<form action="${pageContext.servletContext.contextPath}/user/deletePost" method="post">
+	<input type="hidden" name="user_id" value="${session_user}">
+	비밀번호 <input type="password" name="user_pw">
+	<input type="submit" value="탈퇴">
 	</form>
 	</div>
 	

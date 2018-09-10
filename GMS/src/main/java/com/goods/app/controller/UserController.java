@@ -82,6 +82,19 @@ public class UserController {
 		return "/home";
 	}
 	
+	@RequestMapping(value="/updatePost" , method=RequestMethod.POST)
+	public String updatePost(@ModelAttribute UserVO vo,HttpSession session) throws Exception {
+
+		ser.update(vo);
+		return "/user/userPage";
+	}
+	
+	@RequestMapping(value="/deletePost" , method=RequestMethod.POST)
+	public String deletePost(@ModelAttribute UserVO vo,HttpSession session) throws Exception {
+		session.invalidate();
+		ser.delete(vo);
+		return "redirect:/";
+	}
 	@RequestMapping(value ="/main" )
 	public String test(Model model)
 	{
@@ -112,12 +125,7 @@ public class UserController {
 
 		return "/user/userPage";
 	}
-	@RequestMapping("/updatePost")
-	public String updatePost(Model model) {
-		
-
-		return "/user/userPage";
-	}
+	
 		
 }
 

@@ -58,6 +58,12 @@ public class UserServiceImpl implements UserService{
 		
 		dao.updatePW(vo);
 	}
+
+	@Override
+	public void delete(UserVO vo) throws Exception {
+		dao.delete(vo);
+		
+	}
 		
 }
 

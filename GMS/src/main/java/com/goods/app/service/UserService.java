@@ -15,5 +15,6 @@ public interface UserService
 	public void join(UserVO vo) throws Exception;
 	public void update(UserVO vo) throws Exception;
 	public void updatePW(UserVO vo) throws Exception;
+	public void delete(UserVO vo)throws Exception ;
 	
 }

@@ -22,10 +22,7 @@ public class UserDAO
 		return ss.selectOne("checkUser",vo);
 	}
 
-	public void update(UserVO vo) {
-		
-		ss.insert("updateUser",vo);
-	}
+	
 	public UserVO findID(UserVO vo) throws Exception
 	{
 		
@@ -38,7 +35,16 @@ public class UserDAO
 	}
 	public void updatePW(UserVO vo)
 	{
+
 		ss.update("updatePW",vo);
+	}
+
+	public void delete(UserVO vo) {
+		ss.delete("deleteUser_",vo);
+	}
+	public void update(UserVO vo) {
+		
+		ss.update("updateUser_",vo);
 	}
 	
 }
