@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+  <mapper namespace="com.bit.app">
+  
+    <!-- 전체 목록 -->
+<!--     <select id="boardlistAll" resultType="com.bit.app.vo.BoardVO"> -->
+<!--         SELECT * FROM BOARD1 ORDER BY no desc, writedate desc -->
+<!--     </select> -->
+
+<!--    <insert id="join" parameterType="com.goods.app.vo.MemberVO" >
+    INSERT INTO item_category (category_no, category_name) VALUES (#{category_no}, #{category_name})
+   </insert> -->
+   
+   <select id="checkUser"  resultType="com.goods.app.vo.UserVO">
+   		SELECT USER_ID,USER_PW FROM USER WHERE USER_ID=#{user_id} and USER_PW=#{user_pw}
+   </select>
+	<insert id="joinUser">
+		INSERT INTO USER VALUES (#{user_id},#{user_pw},#{user_nickname},#{user_name},#{user_phon},#{user_email},#{birth})
+	</insert>
+	<select id="viewUser" resultType="com.goods.app.vo.UserVO">
+		SELECT * FROM USER WHERE USER_ID#{user_id}
+	</select>
+    <update id="updateUser">
+    	UPDATE USER SET USER_PW = #{user_pw},USER_NICKNAME=#{user_nickname},USER_PHON=#{user_phon}, user_email = #{user_email} WHERE USER_ID= #{user_id}
+    </update>
+    <select id="findid">
+    	SELECT USER_ID FROM USER WHERE USER_NAME=#{user_name} AND USER_EMAIL=#{user_email}
+    </select>
+    <select id="findpw">
+    	SELECT USER_ID,USER_PW FROM USER WHERE USER_id=#{user_id} AND USER_EMAIL=#{user_email}
+    </select>
+    <update id="updatePw">
+    	UPDATE USER SET USER_PW={user_pw} WHERE USER_ID=#{user_id}
+    </update>
+    
+ </mapper>

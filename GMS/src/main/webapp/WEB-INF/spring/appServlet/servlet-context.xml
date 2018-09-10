@@ -22,7 +22,24 @@
 	</beans:bean>
 	
 	<context:component-scan base-package="com.goods.app" />
+	<context:component-scan base-package="com.goods.app.controller"/>
+	<context:component-scan base-package="com.goods.app.dao"/>
+	<context:component-scan base-package="com.goods.app.interceptor"/>
+	<context:component-scan base-package="com.goods.app.service"/>
 	
 	
+	<beans:bean id="logininterceptor_user" class="com.goods.app.interceptor.LoginInterceptor_user"></beans:bean>
+	<beans:bean id="logininterceptor_manager" class="com.goods.app.interceptor.LoginInterceptor_manager"></beans:bean>
+	
+	<interceptors>
+		<interceptor>
+			<mapping path="/user/loginPost"/>
+			<beans:ref bean="logininterceptor_user"/>
+		</interceptor>
+		<interceptor>
+			<mapping path="/manager/loginPost"/>
+			<beans:ref bean="logininterceptor_manager"/>
+		</interceptor>
+	</interceptors>
 	
 </beans:beans>

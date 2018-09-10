@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+  <mapper namespace="com.bit.app">
+  
+    <!-- 전체 목록 -->
+<!--     <select id="boardlistAll" resultType="com.bit.app.vo.BoardVO"> -->
+<!--         SELECT * FROM BOARD1 ORDER BY no desc, writedate desc -->
+<!--     </select> -->
+
+   <insert id="insertItem" parameterType="com.goods.app.vo.ItemVO" >
+    INSERT INTO item (item_no, item_name, amount, category_no, company_no, price, carry_date) VALUES (#{item_no}, #{item_name}, #{amount}, #{category_no}, #{company_no}, #{price}, #{carry_date})
+   </insert>
+   
+   <select id="getnewItemlist" resultType="com.goods.app.vo.ItemVO">
+   SELECT * FROM gms_pj.item order by carry_date desc limit 3
+   </select>
+   <select id="getItemlist" parameterType="com.goods.app.vo.ItemVO" resultType="com.goods.app.vo.ItemVO">
+	SELECT * FROM gms_pj.item;
+   </select>
+   
+   
+   <delete id="deleteOne" parameterType="int">
+   delete from item where item_no = #{item_no}
+   </delete>
+   
+   <select id="companySel" resultType="com.goods.app.vo.ItemVO">
+   select * from gms_pj.manufacturer 
+   </select>
+   <select id="categorySel" resultType="com.goods.app.vo.ItemVO">
+   select * from gms_pj.item_category
+   </select>
+   
+   
+   <select id="checkManager"  resultType="com.goods.app.vo.ManagerVO">
+   		SELECT MANAGER_ID,MANAGER_PW FROM MANAGER WHERE MANAGER_ID=#{manager_id} and MANAGER_PW=#{manager_pw}
+   </select>
+ </mapper>

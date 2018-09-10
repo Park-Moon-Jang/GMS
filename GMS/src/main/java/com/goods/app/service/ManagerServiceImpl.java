@@ -1,0 +1,53 @@
+package com.goods.app.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.goods.app.dao.ManagerDAO;
+import com.goods.app.vo.ItemVO;
+import com.goods.app.vo.ManagerVO;
+
+@Service
+public class ManagerServiceImpl implements ManagerService {
+
+	@Autowired
+	ManagerDAO mdao;	
+	
+	@Override
+	public List<ItemVO> getnewItemlist() {
+		// TODO Auto-generated method stub
+		
+		return mdao.getnewItemlist();
+	}
+
+	@Override
+	public ManagerVO checkManager(String manager_id, String manager_pw) throws Exception {
+		ManagerVO vo = new ManagerVO();
+		vo.setManager_id(manager_id);
+		vo.setManager_pw(manager_pw);
+		
+		return mdao.login(vo);
+	}
+
+	@Override
+	public List<ItemVO> companySel() {
+		// TODO Auto-generated method stub
+				
+		return mdao.companySel();
+	}
+
+	@Override
+	public List<ItemVO> categorySel() {
+		// TODO Auto-generated method stub
+		return mdao.categorySel();
+	}
+
+	@Override
+	public List<ItemVO> getItemlist(ItemVO vo) {
+		// TODO Auto-generated method stub
+		return mdao.getItemlist(vo);
+	}
+
+}
