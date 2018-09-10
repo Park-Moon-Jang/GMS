@@ -62,6 +62,12 @@ public class UserServiceImpl implements UserService{
 		// TODO Auto-generated method stub
 		return dao.selectCount(IVO);
 	}
+
+	@Override
+	public List<ItemVO> itemDetalSel(int item_No) {
+		// TODO Auto-generated method stub
+		return dao.itemDetalSel(item_No);
+	}
 		
 }
 

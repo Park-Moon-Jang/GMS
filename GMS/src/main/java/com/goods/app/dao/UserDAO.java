@@ -104,4 +104,8 @@ public class UserDAO
 		
 	return count;
 	}
+	
+	public List<ItemVO> itemDetalSel(int item_No){
+		return ss.selectList("SelectItemDetal", item_No);
+	}
 }

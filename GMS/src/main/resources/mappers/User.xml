@@ -13,6 +13,19 @@
     INSERT INTO item_category (category_no, category_name) VALUES (#{category_no}, #{category_name})
    </insert> -->
    
+   <select id="SelectItemDetal" resultType="com.goods.app.vo.ItemVO" parameterType="int">
+	SELECT t1.item_no,t1.item_name,t1.amount,t1.company_no,
+	t3.company_name,t1.price,t1.carry_Date, t2.category_no,
+	t2.category_name
+	FROM (select * from gms_pj.item where item.item_no = #{item_No}) t1
+	inner JOIN
+	(SELECT * from gms_pj.item_category) t2
+	on t1.category_no = t2.category_no
+	INNER JOIN
+	(select * from gms_pj.manufacturer) t3
+	on t1.company_no = t3.company_no
+   </select>
+   
    <select id="countSelectBtn8" resultType="int" parameterType="com.goods.app.vo.ItemVO">
 		SELECT count(*)
 		FROM (select * from gms_pj.item where item.item_no like CONCAT(#{item_No},"%") and item.item_no = 

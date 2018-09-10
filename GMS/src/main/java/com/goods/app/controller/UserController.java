@@ -2,6 +2,8 @@ package com.goods.app.controller;
 
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.http.HttpStatus;
@@ -139,9 +141,23 @@ public class UserController {
 
 		return "/user/userPage";
 	}
-	@RequestMapping(value="/itemDetail", method = RequestMethod.GET)
-	public String itemDetail(Model model, @RequestParam(value="item_No", required=false) int item_No) {
+	@ResponseBody
+	@RequestMapping(value="/	" , method = RequestMethod.POST)
+	public List<ItemVO> itemDetalSel(Model model, HttpSession session) {
 		
+//		System.out.println(session.getAttribute("item_No"));
+		int item_No = (Integer) session.getAttribute("item_No");
+		List<ItemVO> IList = ser.itemDetalSel(item_No);
+//		for(ItemVO a : IList) {
+//			System.out.println("ºê·£µå : " + a.getCategory_Name());
+//		}
+		return IList;
+	}
+	
+	@RequestMapping(value="/itemDetail", method = RequestMethod.GET)
+	public String itemDetail(Model model, @RequestParam(value="item_No", required=false) int item_No, HttpServletResponse response, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		session.setAttribute("item_No", item_No);
 
 		return "/user/userItemDetail";
 	}
