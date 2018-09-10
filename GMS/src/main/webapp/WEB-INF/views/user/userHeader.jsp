@@ -25,16 +25,9 @@
 
 						<li>${session_user}´Ô</li>
 						<li><a
-							href="${pageContext.servletContext.contextPath}/manager/userpage">userpage</a></li>
-						<li><a
-							href="${pageContext.servletContext.contextPath}/user/viewmanageuser">È¸¿ø°ü¸®</a></li>
-						<li><a
 							href="${pageContext.servletContext.contextPath}/user/logout">logout</a></li>
 
 			</ul>
-	
-	
-	
 	</div>
 	<div id="topMenu">
 		<ul>

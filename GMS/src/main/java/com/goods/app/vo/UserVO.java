@@ -1,5 +1,7 @@
 package com.goods.app.vo;
 
+import java.sql.Date;
+
 
 public class UserVO 
 {
@@ -9,11 +11,11 @@ public class UserVO
 	private String user_name;
 	private int user_phon;
 	private String user_email;
-	private int birth;
+	private int user_age;
 	
 	public UserVO() {}
 	
-	public UserVO(String user_id,String user_pw,String user_nickname,String user_name,int user_phon,String user_email,int birth)
+	public UserVO(String user_id,String user_pw,String user_nickname,String user_name,int user_phon,String user_email,int user_age)
 	{
 		super();
 		this.user_id=user_id;
@@ -22,7 +24,7 @@ public class UserVO
 		this.user_name=user_name;
 		this.user_phon=user_phon;
 		this.user_email=user_email;
-		this.birth=birth;
+		this.user_age=user_age;
 	}
 	
 	
@@ -56,12 +58,7 @@ public class UserVO
 	public void setUser_email(String user_email) {
 		this.user_email = user_email;
 	}
-	public int getBirth() {
-		return birth;
-	}
-	public void setBirth(int birth) {
-		this.birth = birth;
-	}
+
 
 	public String getUser_name() {
 		return user_name;
@@ -69,5 +66,13 @@ public class UserVO
 
 	public void setUser_name(String user_name) {
 		this.user_name = user_name;
+	}
+
+	public int getUser_age() {
+		return user_age;
+	}
+
+	public void setUser_age(int user_age) {
+		this.user_age = user_age;
 	}
 }

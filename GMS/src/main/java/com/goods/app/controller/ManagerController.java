@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -37,14 +38,15 @@ public class ManagerController {
 	}
 
 	@RequestMapping("/managerhome")
-	public ModelAndView managerhome (Model model) {
-	
+	public ModelAndView managerhome (Model model, HttpSession session) 
+	{
 		List<ItemVO> itemlist = ms.getItemlist();
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", itemlist);
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("map", map);
+		
 		mav.setViewName("manager/managerhome");  //managerhome.jsp 로 간다
 		return mav;
 		
@@ -64,15 +66,27 @@ public class ManagerController {
 	} 
 	
 	@RequestMapping("/viewmanageuser")
-	public String viewitemreturned (Model model) {
-		
-		return "manager/itemreturned";
+	public ModelAndView viewitemreturned (Model model) {
+		List<UserVO> userlist = ms.getUserlist();
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("userlist", userlist);
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("map", map);
+		mav.setViewName("manager/viewmanageuser");  
+		return mav;
 	}
 	
 	@RequestMapping(value="/logout", method=RequestMethod.GET)
 	public String logout() {
 		return "home";
 	}
+
+	@RequestMapping(value="/deleteUser/{user_id}", method=RequestMethod.GET)
+	public String deleteUser(@PathVariable("user_id") String user_id) {
+		ms.delete(user_id);
+		return "redirect:/manager/viewmanageuser";
+	}
+	
 	
 }
 

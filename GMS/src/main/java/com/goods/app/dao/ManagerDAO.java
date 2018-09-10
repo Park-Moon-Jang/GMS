@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.goods.app.vo.ItemVO;
 import com.goods.app.vo.ManagerVO;
+import com.goods.app.vo.UserVO;
 
 
 @Repository
@@ -34,5 +35,18 @@ public class ManagerDAO {
 	}
 	public ManagerVO login(ManagerVO vo) throws Exception {
 		return ss.selectOne("checkManager",vo);
-	} 
+	}
+
+	public List<UserVO> getUserlist() {
+		return ss.selectList("userlist");
+	}
+
+
+
+	public void deleteUser(String user_id) {
+		ss.delete("deleteUser",user_id);
+		
+	}
+
+
 }

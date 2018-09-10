@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.goods.app.dao.ManagerDAO;
 import com.goods.app.vo.ItemVO;
 import com.goods.app.vo.ManagerVO;
+import com.goods.app.vo.UserVO;
 
 @Service
 public class ManagerServiceImpl implements ManagerService {
@@ -30,5 +31,21 @@ public class ManagerServiceImpl implements ManagerService {
 		
 		return mdao.login(vo);
 	}
+
+	@Override
+	public List<UserVO> getUserlist() {
+		// TODO Auto-generated method stub
+		return mdao.getUserlist();
+	}
+
+
+
+	@Override
+	public void delete(String user_id) {
+		mdao.deleteUser(user_id);
+		
+	}
+
+
 
 }
