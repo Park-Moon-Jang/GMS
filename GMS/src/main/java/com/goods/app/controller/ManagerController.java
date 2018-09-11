@@ -31,7 +31,6 @@ public class ManagerController {
 
 	@Autowired
 	ManagerService ms;
-
 	
 	@RequestMapping("/viewmanageuser")
 	public String viewitemreturned (Model model) {
