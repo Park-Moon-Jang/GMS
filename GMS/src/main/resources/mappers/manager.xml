@@ -17,49 +17,30 @@
    SELECT * FROM gms_pj.item order by carry_date desc limit 3
    </select>
    
-   
-<!--    SELECT * FROM gms_pj.item where category_no = #{category_No} and company_no = #{company_No} and carry_date between #{from_Date} and #{to_Date} -->
    <select id="getItemlist" parameterType="java.util.Map" resultType="com.goods.app.vo.ItemVO">
 	SELECT * FROM gms_pj.item
-		    <![CDATA[
-		 where category_no =  #{category_No} 
-		and	company_no = #{company_No}
-		and carry_date between date_add(#{from_Date}, interval 1 day) and  date_add(#{to_Date}, interval 1 day)
-		    ]]>
+	where
+		    <choose>
+		    	<when test="company_No == 0 and category_No == 0">
+					 carry_date between date_add(#{from_Date}, interval 1 day) and  date_add(#{to_Date}, interval 1 day)
+		    	</when>
+		    	<when test="company_No != 0 and category_No == 0">
+		    		company_no = #{company_No}
+					and carry_date between date_add(#{from_Date}, interval 1 day) and  date_add(#{to_Date}, interval 1 day)
+		    	</when>
+		    	<when test="company_No == 0 and category_No != 0">
+		    		category_no =  #{category_No} 
+					and carry_date between date_add(#{from_Date}, interval 1 day) and  date_add(#{to_Date}, interval 1 day)
+		    	</when>
+		    	<otherwise>
+		    		category_no =  #{category_No} 
+					and	company_no = #{company_No}
+					and carry_date between date_add(#{from_Date}, interval 1 day) and  date_add(#{to_Date}, interval 1 day)
+		    	</otherwise>
+		    </choose>
 	order by carry_date desc;
    </select>
-      <select id="getItemlistNOTCATE" parameterType="java.util.Map" resultType="com.goods.app.vo.ItemVO">
-	SELECT * 
-	FROM gms_pj.item
-	<![CDATA[
-	where
-		company_no = #{company_No} 
-	and 
-		 carry_date between date_add(#{from_Date}, interval 1 day) and  date_add(#{to_Date}, interval 1 day)
-	]]>	
-	order by carry_date desc
-   </select>
-<!--    carry_date >= #{from_Date} and carry_date <= #{to_Date} -->
-      <select id="getItemlistNOTCOMP" parameterType="java.util.Map" resultType="com.goods.app.vo.ItemVO">
-	SELECT * 
-	FROM gms_pj.item
-	<![CDATA[
-	where
-		category_no =  #{category_No}
-	and 
-		 carry_date between date_add(#{from_Date}, interval 1 day) and  date_add(#{to_Date}, interval 1 day)
-	]]>	
-	order by carry_date desc
-   </select>
-      <select id="getItemlistNOT" parameterType="java.util.Map" resultType="com.goods.app.vo.ItemVO">
-	SELECT * 
-	FROM gms_pj.item
-	<![CDATA[
-	where
-		 carry_date between date_add(#{from_Date}, interval 1 day) and  date_add(#{to_Date}, interval 1 day)
-	]]>	
-	order by carry_date desc
-   </select>
+
    
    <delete id="deleteOne" parameterType="int">
    delete from item where item_no = #{item_no}

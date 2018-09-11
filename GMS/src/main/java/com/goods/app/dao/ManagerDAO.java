@@ -32,23 +32,23 @@ public class ManagerDAO {
 	
 	public List<ItemVO> getItemlist(Map<String, Object> map){
 		
-		int comNo = (Integer) map.get("company_No");
-		int cateNo = (Integer) map.get("category_No");
-		System.out.println(comNo +" : " + cateNo);
+//		int comNo = (Integer) map.get("company_No");
+//		int cateNo = (Integer) map.get("category_No");
+//		System.out.println(comNo +" : " + cateNo);
+		return ss.selectList("getItemlist", map); 
 		
-		
-		if(comNo == 0 || cateNo == 0) {                       // 둘중 하나라도 0인 경우
-			
-			if( comNo==0 && cateNo== 0) {                     //둘다 0인 경우
-				return ss.selectList("getItemlistNOT", map);
-			}else if(comNo == 0) {                            //com은 0, cate 는 0이 아닌 경우
-				return ss.selectList("getItemlistNOTCOMP", map);
-			}else {                                           //cate 는 0, com은 0이 아닌 경우
-				return ss.selectList("getItemlistNOTCATE", map);
-			}
-		}else {                                               // 둘다 0이 아닌 경우
-			return ss.selectList("getItemlist", map);  
-		}
+//		if(comNo == 0 || cateNo == 0) {                       // 둘중 하나라도 0인 경우
+//			
+//			if( comNo==0 && cateNo== 0) {                     //둘다 0인 경우
+//				return ss.selectList("getItemlistNOT", map);
+//			}else if(comNo == 0) {                            //com은 0, cate 는 0이 아닌 경우
+//				return ss.selectList("getItemlistNOTCOMP", map);
+//			}else {                                           //cate 는 0, com은 0이 아닌 경우
+//				return ss.selectList("getItemlistNOTCATE", map);
+//			}
+//		}else {                                               // 둘다 0이 아닌 경우
+//			return ss.selectList("getItemlist", map);  
+//		}
 	}
 	
 	

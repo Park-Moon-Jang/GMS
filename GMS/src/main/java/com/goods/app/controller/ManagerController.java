@@ -1,7 +1,6 @@
 
 package com.goods.app.controller;
 
-import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,8 +47,6 @@ public class ManagerController {
 	public Map<String, Object> itemlist(@RequestParam Map<String,Object> map, ItemVO vo, @RequestParam("from_Date") java.sql.Date from_Date, @RequestParam("to_Date") java.sql.Date to_Date) {
 //		변수 생략 : ItemVO vo, @RequestParam("from_Date") java.sql.Date from_Date, @RequestParam("to_Date") java.sql.Date to_Date
 		
-		System.out.println("컨트롤러 온 map"+ map);
-		
 		Map<String, Object> selInfo = new HashMap<String, Object>();
 		
 		selInfo.put("company_No", vo.getCompany_No());
@@ -57,14 +54,6 @@ public class ManagerController {
 		selInfo.put("from_Date", from_Date);
 		selInfo.put("to_Date", to_Date);
 
-		
-		Set<String> key = selInfo.keySet();
-		
-		for(String i : key) {
-			
-			System.out.println(selInfo.get(i)+":"+selInfo.get(i).getClass());
-		}
-		
 		List<ItemVO> list = ms.getItemlist(selInfo); //여기서부터!!! 아이템 가져오는 거 시작하자!!!!
 		
 		Map<String, Object> result = new HashMap<String, Object>();
