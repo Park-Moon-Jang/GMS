@@ -8,29 +8,29 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.goods.app.service.UserService;
-import com.goods.app.vo.ManagerVO;
 import com.goods.app.vo.UserVO;
 
-public class LoginInterceptor_user extends HandlerInterceptorAdapter {
+public class FindInterceptor extends HandlerInterceptorAdapter {
 	@Inject
 	UserService ser;
 
 	
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception
 	{
-		String id = request.getParameter("user_id");
-		String pw = request.getParameter("user_pw");
+		String user_name = request.getParameter("user_name");
+		String user_email = request.getParameter("user_email");
 		
-		UserVO vo = ser.checkUser(id, pw);
+		UserVO vo = ser.findID(user_name, user_email);
 		if (vo==null)
 		{
-			response.sendRedirect(request.getContextPath()+"/");
+			response.sendRedirect(request.getContextPath()+"/user/find");
 			
 			return false;
 		}
+		
 		HttpSession session = request.getSession();
-		session.setAttribute("session_user", vo.getUser_id());
-		response.sendRedirect(request.getContextPath()+"/user/login");
+		session.setAttribute("find_user", vo.getUser_id());
+		response.sendRedirect(request.getContextPath()+"/user/result");
 		
 		return false;
 	}

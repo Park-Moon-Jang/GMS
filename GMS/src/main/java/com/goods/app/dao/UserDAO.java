@@ -42,7 +42,28 @@ public class UserDAO
 	public UserVO login(UserVO vo) throws Exception {
 		return ss.selectOne("checkUser",vo);
 	}
+
+	public void update(UserVO vo) {
+		
+		ss.insert("updateUser",vo);
+	}
+	public UserVO findID(UserVO vo) throws Exception
+	{
+		
+		return ss.selectOne("findID",vo);
+	}
 	
+
+	public UserVO findPW(UserVO vo)throws Exception
+	{
+		return ss.selectOne("findPW",vo);
+	}
+	public void updatePW(UserVO vo)
+	{
+		ss.update("updatePW",vo);
+	}
+	
+
 	public List<ItemVO> selBtn(int company_no,int category_No, String store_Name, int curPage){
 		Map map = new HashMap();
 		if(company_no != 0 && category_No != 0) {
@@ -108,4 +129,5 @@ public class UserDAO
 	public List<ItemVO> itemDetalSel(int item_No){
 		return ss.selectList("SelectItemDetal", item_No);
 	}
+
 }

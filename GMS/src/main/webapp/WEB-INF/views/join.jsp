@@ -22,9 +22,11 @@
 </tr><tr>
 <td>이메일</td><td><input type="email" name="user_email"></td>
 </tr><tr>
-<td>생년월일</td><td><input type="date" name="birth"></td>
+<td>나이</td>
+<td><input type="number" name="user_age"></td>
 </tr>
 </table>
+<button onclick="location='${pageContext.servletContext.contextPath}/'">뒤로가기</button>
 <input type="submit" value="가입하기">
 </form>
 </body>

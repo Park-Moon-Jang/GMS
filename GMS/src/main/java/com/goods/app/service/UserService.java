@@ -18,6 +18,10 @@ public interface UserService
 	public List<ItemVO> brandSel();
 	public List<ItemVO> categorySel();
 	public UserVO checkUser(String user_id,String user_pw) throws Exception;
+	public UserVO findID(String user_name,String user_email)throws Exception;
+	public UserVO findPW(String user_id,String user_email)throws Exception;
 	public void join(UserVO vo) throws Exception;
+	public void update(UserVO vo) throws Exception;
+	public void updatePW(UserVO vo) throws Exception;
 	
 }

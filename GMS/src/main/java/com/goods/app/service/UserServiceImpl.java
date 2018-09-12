@@ -1,5 +1,9 @@
 package com.goods.app.service;
 
+
+
+import javax.servlet.http.HttpSession;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,16 +18,12 @@ public class UserServiceImpl implements UserService{
 	@Autowired
 	UserDAO dao;
 
-
-
 	@Override
 	public UserVO checkUser(String user_id, String user_pw) throws Exception {
 		
 		UserVO vo = new UserVO();
 		vo.setUser_id(user_id);
 		vo.setUser_pw(user_pw);
-		System.out.println(vo.getUser_id());
-		System.out.println(vo.getUser_pw());
 		return dao.login(vo);
 	}
 
@@ -33,6 +33,35 @@ public class UserServiceImpl implements UserService{
 		
 	}
 
+	@Override
+	public void update(UserVO vo) throws Exception {
+		dao.update(vo);
+		
+
+	}
+
+	@Override
+	public UserVO findID(String user_name, String user_email) throws Exception {
+		UserVO vo = new UserVO();
+		vo.setUser_name(user_name);
+		vo.setUser_email(user_email);
+		return dao.findID(vo);
+	}
+
+	@Override
+	public UserVO findPW(String user_id, String user_email) throws Exception {
+		UserVO vo = new UserVO();
+		vo.setUser_name(user_id);
+		vo.setUser_email(user_email);
+		return dao.findPW(vo);
+	}
+
+	@Override
+	public void updatePW(UserVO vo) throws Exception 
+	{
+		
+		dao.updatePW(vo);
+	}
 	@Override
 	public List<ItemVO> brandSel() {
 		// TODO Auto-generated method stub
@@ -67,6 +96,7 @@ public class UserServiceImpl implements UserService{
 	public List<ItemVO> itemDetalSel(int item_No) {
 		// TODO Auto-generated method stub
 		return dao.itemDetalSel(item_No);
+
 	}
 		
 }

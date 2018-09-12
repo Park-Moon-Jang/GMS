@@ -18,7 +18,7 @@ $(document).ready(function(){
 			url:"/app/user/itemDetalSel",
 			success: function(data){
 				
-				
+				 
 				
 				$.each(data, function(i){
 					str = '<td id="brand">'+data[i].company_Name+'</td>';

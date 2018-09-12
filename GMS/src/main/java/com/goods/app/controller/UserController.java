@@ -13,11 +13,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import org.springframework.web.servlet.ModelAndView;
+
+
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.util.JSONPObject;
+
 import com.goods.app.service.UserService;
 import com.goods.app.vo.ItemVO;
 import com.goods.app.vo.Paging;
@@ -35,6 +40,7 @@ public class UserController {
 	@Inject
 	UserService ser;
 	
+
 	@ResponseBody
 	@RequestMapping(value="/selBtn" , method = RequestMethod.POST)
 	public Map selBtn(Model model, ItemVO IVO, @RequestParam("curPage") int curPage) {
@@ -51,7 +57,7 @@ public class UserController {
 		List<ItemVO> IList = ser.selBtn(IVO.getCompany_No(),IVO.getCategory_No(),IVO.getStore_Name(), curPage);
 		Map map = new HashMap();
 //		for(ItemVO a : IList) {
-//			System.out.println("ºê·£µå : " + a.getItem_No());
+//			System.out.println("ï¿½ê·£ï¿½ï¿½ : " + a.getItem_No());
 //		}
 		map.put("IList", IList);
 		map.put("sp", sp);
@@ -74,7 +80,7 @@ public class UserController {
 		
 		List<ItemVO> IList = ser.brandSel();
 //		for(ItemVO a : IList) {
-//			System.out.println("ºê·£µå : " + a.getComPany_Name());
+//			System.out.println("ï¿½ê·£ï¿½ï¿½ : " + a.getComPany_Name());
 //		}
 		return IList;
 	}
@@ -85,35 +91,71 @@ public class UserController {
 		
 		List<ItemVO> IList = ser.categorySel();
 //		for(ItemVO a : IList) {
-//			System.out.println("ºê·£µå : " + a.getCategory_Name());
+//			System.out.println("ï¿½ê·£ï¿½ï¿½ : " + a.getCategory_Name());
 //		}
 		return IList;
 	}
 	
-	
+
 	@RequestMapping(value = "/login" , method = RequestMethod.GET )
-	public String login(Model model) 
+	public String login() 
 	{
 		return "/user/userMain"; 
 	}
 	@RequestMapping(value="/loginPost", method = RequestMethod.POST)
-	public void loginPost(@ModelAttribute UserVO vo, HttpSession session, Model model) {
+	public void loginPost(@ModelAttribute UserVO vo, HttpSession session, Model model) 
+	{
 	}
-	@RequestMapping(value="/joinPost",method=RequestMethod.POST)
-	public String joinPost(@ModelAttribute UserVO vo)throws Exception {
-		ser.join(vo);
+	@RequestMapping(value="/logout", method=RequestMethod.GET)
+	public String logout() {
 		return "home";
 	}
 	
+	@RequestMapping(value="/joinPost",method=RequestMethod.POST)
+	public String joinPost(@ModelAttribute UserVO vo)throws Exception 
+	{
+		ser.join(vo);
+		return "home";
+	}
 	@RequestMapping(value="/join", method=RequestMethod.GET)
-	public String join() {
+	public String join() 
+	{
 		return "join";
+	}
+	@RequestMapping(value="/find", method=RequestMethod.GET)
+	public String find()
+	{
+		return "/find/find";
+	}
+	@RequestMapping(value="/findID", method=RequestMethod.POST)
+	public void findID(@ModelAttribute UserVO vo,HttpSession session)throws Exception
+	{		
+	}
+	@RequestMapping(value="/findPW", method=RequestMethod.POST)
+	public void findPW(@ModelAttribute UserVO vo,HttpSession session)throws Exception
+	{		
+	}
+	@RequestMapping(value="/result", method=RequestMethod.GET)
+	public String result()throws Exception
+	{		
+		return "/find/findID";
+	}
+	@RequestMapping(value="/resultPW", method=RequestMethod.GET)
+	public String resultPW()throws Exception
+	{		
+		return "/find/findPW";
+	}
+	@RequestMapping(value="/updatePW", method=RequestMethod.POST)
+	public String updatePW(@ModelAttribute UserVO vo,HttpSession session)throws Exception
+	{	
+		vo.setUser_id((session.getAttribute("find_id")).toString());
+		ser.updatePW(vo);
+		return "/home";
 	}
 	
 	@RequestMapping(value ="/main" )
-	public String test(Model model) {
-		
-
+	public String test(Model model)
+	{
 		return "/user/userMain";
 	}
 	
@@ -149,7 +191,7 @@ public class UserController {
 		int item_No = (Integer) session.getAttribute("item_No");
 		List<ItemVO> IList = ser.itemDetalSel(item_No);
 //		for(ItemVO a : IList) {
-//			System.out.println("ºê·£µå : " + a.getCategory_Name());
+//			System.out.println("ï¿½ê·£ï¿½ï¿½ : " + a.getCategory_Name());
 //		}
 		return IList;
 	}
