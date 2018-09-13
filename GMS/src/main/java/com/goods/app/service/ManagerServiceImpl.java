@@ -1,6 +1,5 @@
 package com.goods.app.service;
 
-import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -24,10 +23,15 @@ public class ManagerServiceImpl implements ManagerService {
 		return mdao.getnewItemlist();
 	}
 	
-	
+	@Override
+	public int getCount(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return mdao.getCount(map);
+	}
 	@Override
 	public List<ItemVO> getItemlist(Map<String, Object> map) {
 		// TODO Auto-generated method stub
+		
 		return mdao.getItemlist(map);
 	}
 
@@ -52,7 +56,5 @@ public class ManagerServiceImpl implements ManagerService {
 		// TODO Auto-generated method stub
 		return mdao.categorySel();
 	}
-
-
 
 }

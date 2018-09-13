@@ -13,6 +13,8 @@ public interface ManagerService {
 	
 	public List<ItemVO> getItemlist(Map<String, Object> map);
 	
+	public int getCount(Map<String, Object> map);
+	
 	public List<ItemVO> companySel();
 	
 	public List<ItemVO> categorySel();

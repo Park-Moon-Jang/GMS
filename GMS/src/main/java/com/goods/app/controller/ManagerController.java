@@ -4,7 +4,6 @@ package com.goods.app.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -20,8 +19,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.goods.app.service.ManagerService;
 import com.goods.app.vo.ItemVO;
+import com.goods.app.vo.Paging;
 import com.goods.app.vo.UserVO;
-
 
 
 @Controller
@@ -44,8 +43,12 @@ public class ManagerController {
 	
 	@ResponseBody
 	@RequestMapping(value="/itemlist", method=RequestMethod.POST)
-	public Map<String, Object> itemlist(@RequestParam Map<String,Object> map, ItemVO vo, @RequestParam("from_Date") java.sql.Date from_Date, @RequestParam("to_Date") java.sql.Date to_Date) {
-//		변수 생략 : ItemVO vo, @RequestParam("from_Date") java.sql.Date from_Date, @RequestParam("to_Date") java.sql.Date to_Date
+	public Map<String, Object> itemlist(@RequestParam Map<String,Object> map, 
+										ItemVO vo, 
+										@RequestParam("from_Date") java.sql.Date from_Date, 
+										@RequestParam("to_Date") java.sql.Date to_Date, 
+										@RequestParam(defaultValue = "1") int curPage) {
+
 		
 		Map<String, Object> selInfo = new HashMap<String, Object>();
 		
@@ -53,11 +56,18 @@ public class ManagerController {
 		selInfo.put("category_No", vo.getCategory_No());
 		selInfo.put("from_Date", from_Date);
 		selInfo.put("to_Date", to_Date);
+		
+		int count = ms.getCount(selInfo);
+		
+		Paging sp = new Paging(count, curPage);
 
-		List<ItemVO> list = ms.getItemlist(selInfo); //여기서부터!!! 아이템 가져오는 거 시작하자!!!!
+		selInfo.put("sp", sp);
+
+		List<ItemVO> list = ms.getItemlist(selInfo);
 		
 		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("list", list);
+		result.put("sp", sp);
 		return result;
 	}
 	
