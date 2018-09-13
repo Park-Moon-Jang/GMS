@@ -28,7 +28,6 @@ import com.goods.app.vo.ItemVO;
 import com.goods.app.vo.Paging;
 import com.goods.app.vo.UserVO;
 
-
 @Controller
 @RequestMapping("/manager")
 public class ManagerController {
@@ -36,11 +35,12 @@ public class ManagerController {
 	@Autowired
 	ManagerService ms;
 	
-	@RequestMapping("/viewmanageuser")
+	@RequestMapping("/viewitemreturned")
 	public String viewitemreturned (Model model) {
 		
 		return "manager/itemreturned";
 	}
+	
 	@RequestMapping("/viewitemlist")
 	public String viewitemlist (Model model) {
 		
@@ -54,7 +54,6 @@ public class ManagerController {
 										@RequestParam("from_Date") java.sql.Date from_Date, 
 										@RequestParam("to_Date") java.sql.Date to_Date, 
 										@RequestParam(defaultValue = "1") int curPage) {
-
 		
 		Map<String, Object> selInfo = new HashMap<String, Object>();
 		
@@ -122,6 +121,7 @@ public class ManagerController {
 		mav.addObject("map", map);
 		mav.setViewName("manager/viewmanageuser");  
 		return mav;
+		
 	}
 	
 	@RequestMapping(value="/logout", method=RequestMethod.GET)
@@ -161,7 +161,7 @@ public class ManagerController {
 	public List<ItemVO> categorySel(Model model, ItemVO vo){
 			
 			return ms.categorySel();
-		
+			
 	}
 	
 }

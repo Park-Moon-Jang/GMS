@@ -4,14 +4,8 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bit.app">
 
-
-   <insert id="insertItem" parameterType="com.goods.app.vo.ItemVO" >
-    INSERT INTO item (item_no, item_name, amount, category_no, company_no, price, carry_date) VALUES (#{item_no}, #{item_name}, #{amount}, #{category_no}, #{company_no}, #{price}, #{carry_date})
-   </insert>
    
-   <select id="newitemList" resultType="com.goods.app.vo.ItemVO">
-   SELECT * FROM gms_pj.item order by carry_date desc limit 3
-   </select>
+
    
     <select id="userlist" resultType="com.goods.app.vo.UserVO">
    SELECT * FROM USER
@@ -30,20 +24,13 @@
         DELETE FROM USER WHERE user_id = #{user_id}
     </delete>
 
-	<insert parameterType="com.goods.app.vo.ItemVO" id="insertItem">
-		INSERT INTO
-		item (item_no, item_name, amount, category_no, company_no, price,
-		carry_date) VALUES (#{item_no}, #{item_name}, #{amount},
-		#{category_no}, #{company_no}, #{price}, #{carry_date})
-	</insert>
-
 	<select id="getnewItemlist" resultType="com.goods.app.vo.ItemVO">
 		SELECT * FROM gms_pj.item
 		order by carry_date desc limit 3 
 	</select>
 
 
-	<select parameterType="java.util.Map" id="getCount" resultType="int">
+	<select id="getCount" parameterType="java.util.Map" resultType="int">
 		SELECT count(*)FROM gms_pj.item
 		where
 		<choose>
@@ -76,7 +63,7 @@
 	</select>
 
 
-	<select parameterType="java.util.Map" id="getItemlist" resultType="com.goods.app.vo.ItemVO">
+	<select id="getItemlist"  parameterType="java.util.Map" resultType="com.goods.app.vo.ItemVO">
 		<include refid="paging" />
 		SELECT * FROM gms_pj.item 
 		where
@@ -111,21 +98,12 @@
 		<include refid="paging2" />
 	</select>
 
-	<delete parameterType="int" id="deleteOne">
-		delete from item where item_no = #{item_no} 
-	</delete>
-
 	<select id="companySel" resultType="com.goods.app.vo.ItemVO">
 		select * from gms_pj.manufacturer 
 	</select>
 
 	<select id="categorySel" resultType="com.goods.app.vo.ItemVO">
 		select * from gms_pj.item_category 
-	</select>
-
-	<select id="checkManager" resultType="com.goods.app.vo.ManagerVO">
-		SELECT MANAGER_ID,MANAGER_PW FROM MANAGER 
-		WHERE MANAGER_ID=#{manager_id} and MANAGER_PW=#{manager_pw} 
 	</select>
 
 	<sql id="paging">

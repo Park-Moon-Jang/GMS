@@ -18,20 +18,9 @@
 
 		<div class="util">
 			<ul class="menu">
-<<<<<<< HEAD
 
 						<li>${session_manager}님</li>
-=======
-<%-- 				<c:set var="id" value="${session_manager}" /> --%>
-<%-- 				<c:choose> --%>
-<%-- 					<c:when test="${empty id}"> --%>
-<!-- 						<li><a -->
-<%-- 							href="${pageContext.servletContext.contextPath}/home">login</a></li> --%>
-<%-- 					</c:when> --%>
-<%-- 					<c:otherwise> --%>
-						<li> ${session_manager} 님</li>					
-						
->>>>>>> refs/heads/park
+
 						<li><a
 							href="${pageContext.servletContext.contextPath}/manager/userpage">userpage</a></li>
 						<li><a
