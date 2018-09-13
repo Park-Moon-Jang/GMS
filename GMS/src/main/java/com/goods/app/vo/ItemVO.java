@@ -1,11 +1,11 @@
 package com.goods.app.vo;
 
+import java.sql.Date;
 
-
-import java.util.Date;
 
 
 public class ItemVO {
+
  
 	private int company_No;
 	private String company_Name;
@@ -84,8 +84,9 @@ public class ItemVO {
 	public void setCarry_Date(Date carry_Date) {
 		this.carry_Date = carry_Date;
 	}
+	
 
 	
 
 }
-	
+

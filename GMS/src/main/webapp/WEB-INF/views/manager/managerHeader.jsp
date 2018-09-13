@@ -2,9 +2,8 @@
 <%@  taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c" %> <!-- 기본기능 -->
 <%@  taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt" %> <!-- 포멧 기능 (형식지정)-->
 <%@  taglib uri="http://java.sun.com/jsp/jstl/functions"  prefix="fn" %> <!-- 함수 기능 -->
+
 <div id="headwrap">
-
-
 
 	<header id="header">
 
@@ -17,11 +16,22 @@
 	.white a{color:#fff}
 </style>
 
-
 		<div class="util">
 			<ul class="menu">
+<<<<<<< HEAD
 
 						<li>${session_manager}님</li>
+=======
+<%-- 				<c:set var="id" value="${session_manager}" /> --%>
+<%-- 				<c:choose> --%>
+<%-- 					<c:when test="${empty id}"> --%>
+<!-- 						<li><a -->
+<%-- 							href="${pageContext.servletContext.contextPath}/home">login</a></li> --%>
+<%-- 					</c:when> --%>
+<%-- 					<c:otherwise> --%>
+						<li> ${session_manager} 님</li>					
+						
+>>>>>>> refs/heads/park
 						<li><a
 							href="${pageContext.servletContext.contextPath}/manager/userpage">userpage</a></li>
 						<li><a
@@ -39,13 +49,13 @@
 				<li class="gnb01"><a 
 					href="${pageContext.servletContext.contextPath}/manager/managerhome">HOME</a></li>
 				<li class="gnb02"><a
-					href="${pageContext.servletContext.contextPath}/item/viewitemlist">물품현황</a></li>
+					href="${pageContext.servletContext.contextPath}/manager/viewitemlist">물품현황</a></li>
 				<li class="gnb03"><a
-					href="${pageContext.servletContext.contextPath}/item/viewitemstored">입고관리</a></li>
+					href="${pageContext.servletContext.contextPath}/manager/viewitemstored">입고관리</a></li>
 				<li class="gnb03"><a
-					href="${pageContext.servletContext.contextPath}/item/viewitemreleased">출고관리</a></li>					
+					href="${pageContext.servletContext.contextPath}/manager/viewitemreleased">출고관리</a></li>					
 				<li class="gnb04"><a
-					href="${pageContext.servletContext.contextPath}/item/viewitemreturned">반납관리</a></li>
+					href="${pageContext.servletContext.contextPath}/manager/viewitemreturned">반납관리</a></li>
 				<li class="gnb05"><a
 					href="${pageContext.servletContext.contextPath}/store/viewstore">매장관리</a></li>
 				<li class="gnb06"><a

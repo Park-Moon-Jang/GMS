@@ -1,5 +1,9 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<<<<<<< HEAD
+=======
+<%@ page session="true" %>
+>>>>>>> refs/heads/park
 <html>
 <head>
 	<title>ManagerHome</title>
@@ -32,15 +36,15 @@
 			</thead>
 			<tbody>
 			
-			<c:forEach items="${map.list}" var="vo" > 
+			<c:forEach var="vo" items="${itemlist}" > 
 				<tr>
-								<td>${vo.item_no}</td>
-								<td>${vo.item_name}</td>
-								<td>${vo.category_no}</td>
-								<td>${vo.company_no}</td>
+								<td>${vo.item_No}</td>
+								<td>${vo.item_Name}</td>
+								<td>${vo.category_No}</td>
+								<td>${vo.company_No}</td>
 								<td>${vo.price}</td>
 								<td>${vo.amount}</td>
-								<td>${vo.carry_date}</td>
+								<td>${vo.carry_Date}</td>
 				</tr>
 			</c:forEach>
 				<tr>

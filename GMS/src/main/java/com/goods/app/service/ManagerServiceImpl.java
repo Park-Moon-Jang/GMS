@@ -1,6 +1,7 @@
 package com.goods.app.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,10 +18,22 @@ public class ManagerServiceImpl implements ManagerService {
 	ManagerDAO mdao;	
 	
 	@Override
-	public List<ItemVO> getItemlist() {
+	public List<ItemVO> getnewItemlist() {
 		// TODO Auto-generated method stub
 		
-		return mdao.getList();
+		return mdao.getnewItemlist();
+	}
+	
+	@Override
+	public int getCount(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return mdao.getCount(map);
+	}
+	@Override
+	public List<ItemVO> getItemlist(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		
+		return mdao.getItemlist(map);
 	}
 
 	@Override
@@ -46,6 +59,16 @@ public class ManagerServiceImpl implements ManagerService {
 		
 	}
 
+	public List<ItemVO> companySel() {
+		// TODO Auto-generated method stub
+				
+		return mdao.companySel();
+	}
 
+	@Override
+	public List<ItemVO> categorySel() {
+		// TODO Auto-generated method stub
+		return mdao.categorySel();
+	}
 
 }
