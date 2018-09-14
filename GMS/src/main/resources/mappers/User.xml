@@ -4,6 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
   <mapper namespace="com.bit.app">
   
+  
     <!-- 전체 목록 -->
 <!--     <select id="boardlistAll" resultType="com.bit.app.vo.BoardVO"> -->
 <!--         SELECT * FROM BOARD1 ORDER BY no desc, writedate desc -->
@@ -12,6 +13,31 @@
 <!--    <insert id="join" parameterType="com.goods.app.vo.MemberVO" >
     INSERT INTO item_category (category_no, category_name) VALUES (#{category_no}, #{category_name})
    </insert> -->
+   <select id="SelectMyScrap" parameterType="Map"  resultType="com.goods.app.vo.ItemVO">
+	select t1.item_no, t1.amount, t1.user_id, t2.item_name, t2.company_no,
+	t2.category_no, t2.price, t3.company_name from
+	(SELECT * FROM gms_pj.scrap where user_id = #{user_Id}) t1
+	inner Join
+	(select * from gms_pj.item) t2
+	on t1.item_No = t2.item_No
+	inner join
+	(select * from gms_pj.manufacturer) t3
+	on t2.company_no = t3.company_no
+	order by item_no
+	limit 10 offset #{curPage}
+   </select> 
+   
+   <select id="MyScrapCount" parameterType="String" resultType="int">
+	select count(*) from
+	(SELECT * FROM gms_pj.scrap where user_id = #{user_Id}) t1
+	inner Join
+	(select * from gms_pj.item) t2
+	on t1.item_No = t2.item_No
+	inner join
+	(select * from gms_pj.manufacturer) t3
+	on t2.company_no = t3.company_no
+   </select>
+   
    <delete id="deleteScrap" parameterType="Map">
    delete from gms_pj.scrap where item_No = #{item_No} and user_id = #{user_Id}
    </delete>

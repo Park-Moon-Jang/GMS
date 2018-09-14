@@ -99,7 +99,7 @@
 				})
 				
 				str += paging(data.sp)
-				str += "<table>";
+				str += "</table>";
 				$("#selTab").html(str);
 				
 			},

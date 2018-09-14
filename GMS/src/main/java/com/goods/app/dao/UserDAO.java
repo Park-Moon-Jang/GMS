@@ -77,7 +77,7 @@ public class UserDAO
 		map.put("category_No", category_No);
 		map.put("store_Name", store_Name);
 		
-		curPage = (curPage - 1 ) * 2;
+		curPage = (curPage - 1 ) * 10;
 		map.put("curPage", curPage);
 		
 		return ss.selectList("SelectBtn",map);
@@ -130,5 +130,17 @@ public class UserDAO
 		map.put("user_Id", user_Id);
 		
 		return ss.delete("deleteScrap", map);
+	}
+	public int myScrapCount(String user_Id) {
+		
+		return ss.selectOne("MyScrapCount",user_Id);
+	}
+	public List<ItemVO> myScrapSel(String user_Id, int curPage){
+		Map map = new HashMap();
+		curPage = (curPage - 1 ) * 10;
+		map.put("curPage", curPage);
+		map.put("user_Id", user_Id);
+		
+		return ss.selectList("SelectMyScrap",map);
 	}
 }

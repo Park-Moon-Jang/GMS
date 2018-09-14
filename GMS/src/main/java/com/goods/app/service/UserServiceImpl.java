@@ -116,6 +116,18 @@ public class UserServiceImpl implements UserService{
 		// TODO Auto-generated method stub
 		return dao.deleteScrap(user_Id, item_No);
 	}
+
+	@Override
+	public List<ItemVO> myScrapSel(String user_Id, int curPage) {
+		// TODO Auto-generated method stub
+		return dao.myScrapSel(user_Id, curPage);
+	}
+
+	@Override
+	public int myScrapCount(String user_Id) {
+		// TODO Auto-generated method stub
+		return dao.myScrapCount(user_Id);
+	}
 		
 }
 

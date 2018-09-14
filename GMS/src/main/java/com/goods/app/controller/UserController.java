@@ -220,5 +220,24 @@ public class UserController {
 		
 		return ser.deleteScrap(session.getAttribute("session_user").toString(), (Integer) session.getAttribute("session_Item_No"));
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="/myScrapSel" , method = RequestMethod.POST)
+	public Map myScrapSel(Model model, HttpSession session, @RequestParam("curPage") int curPage) { 
+		if(curPage==0) {
+			curPage = 1;
+		}
+		String user_Id = session.getAttribute("session_user").toString();
+		
+		int count = ser.myScrapCount(user_Id);
+		System.out.println(count);
+		Paging sp = new Paging(count, curPage); 
+		
+		List<ItemVO> IList = ser.myScrapSel(user_Id, curPage);
+		Map map = new HashMap();
+		map.put("IList", IList);
+		map.put("sp", sp);
+		return map;
+	}
 }
 
