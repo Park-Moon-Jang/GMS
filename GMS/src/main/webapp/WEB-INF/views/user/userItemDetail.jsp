@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core"      prefix="c"   %>
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -39,12 +40,51 @@ $(document).ready(function(){
 		}); 
 	}
 })
+
+function insertScrap(){
+	$.ajax({
+		type:"POST",
+		url:"/app/user/insertScrap",
+		success: function(data){
+			alert("스크랩 추가!")
+			location.reload();
+		},
+		error: function (jqXHR, Status, error){
+			console.log("insertScrap Error!");
+		}
+	}); 
+}
+
+function deleteScrap(){
+	$.ajax({
+		type:"POST",
+		url:"/app/user/deleteScrap",
+		success: function(data){
+			alert("스크랩 삭제!")
+			location.reload();
+		},
+		error: function (jqXHR, Status, error){
+			console.log("deleteScrap Error!");
+		}
+	}); 
+}
 </script>
 	<jsp:include page="userHeader.jsp"></jsp:include>
 	<div id="content" align="center">
 		
 		<table>
-			<tr><th colspan="3">detail</th><th><a href="javascript:;">☆</a>&nbsp;<button onclick="window.close()">닫기</button></th></tr>
+			<tr><th colspan="3">detail</th><th>
+			<c:choose>
+				<c:when test="${session_scrape == 'false' }">
+					<a href="javascript:;" onclick="insertScrap()">☆</a>
+				</c:when>
+				<c:otherwise>
+					<a href="javascript:;" onclick="deleteScrap()">★</a>
+				</c:otherwise>
+			</c:choose>
+			
+			
+			&nbsp;<button onclick="window.close()">닫기</button></th></tr>
 			<tr><td colspan="2" rowspan="6" id="itemImg"><img src="" width="200" height="200"></td><td colspan="2">상품정보</td></tr>
 			<tr><td>브랜드</td><td id="brand"></td></tr>
 			<tr><td>상품유형</td><td id="category"></td></tr>

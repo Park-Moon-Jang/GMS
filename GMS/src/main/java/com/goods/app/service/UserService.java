@@ -11,6 +11,10 @@ import com.goods.app.vo.UserVO;
 @Service
 public interface UserService 
 {
+	
+	public int insertScrap(String user_Id, int item_No);
+	public int deleteScrap(String user_Id, int item_No);
+	public boolean selectScrap(int item_No, String user_Id);
 	public List<ItemVO> itemDetalSel(int item_No);
 	public int selectCount(ItemVO IVO);
 	public List<ItemVO> selBtn(int company_No,int category_No, String store_Name, int curPage);

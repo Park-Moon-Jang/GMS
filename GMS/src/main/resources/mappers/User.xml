@@ -12,15 +12,15 @@
 <!--    <insert id="join" parameterType="com.goods.app.vo.MemberVO" >
     INSERT INTO item_category (category_no, category_name) VALUES (#{category_no}, #{category_name})
    </insert> -->
-   <delete id="deleteScrape" parameterType="Map">
+   <delete id="deleteScrap" parameterType="Map">
    delete from gms_pj.scrap where item_No = #{item_No} and user_id = #{user_Id}
    </delete>
-   <insert id="insertScrape" parameterType="Map">
+   <insert id="insertScrap" parameterType="Map">
    INSERT INTO gms_pj.scrap VALUES (#{item_No}, (select amount from gms_pj.item where item_No = #{item_No}), #{user_Id})
    </insert>
    
-   <select id="ChoiceScrape" resultType="boolean" parameterType="Map">
-   SELECT * FROM gms_pj.SCRAP WHERE ITEM_NO = #{item_No} and USER_ID = #{user_Id}
+   <select id="ChoiceScrap" resultType="boolean" parameterType="Map">
+   SELECT count(*) FROM gms_pj.SCRAP WHERE ITEM_NO = #{item_No} and USER_ID = #{user_Id}
    </select>
    <select id="SelectItemDetal" resultType="com.goods.app.vo.ItemVO" parameterType="int">
 	SELECT t1.item_no,t1.item_name,t1.amount,t1.company_no,

@@ -188,7 +188,7 @@ public class UserController {
 	public List<ItemVO> itemDetalSel(Model model, HttpSession session) { 
 		
 //		System.out.println(session.getAttribute("item_No"));
-		int item_No = (Integer) session.getAttribute("item_No");
+		int item_No = (Integer) session.getAttribute("session_Item_No");
 		List<ItemVO> IList = ser.itemDetalSel(item_No);
 //		for(ItemVO a : IList) {
 //			System.out.println("�귣�� : " + a.getCategory_Name());
@@ -199,9 +199,26 @@ public class UserController {
 	@RequestMapping(value="/itemDetail", method = RequestMethod.GET)
 	public String itemDetail(Model model, @RequestParam(value="item_No", required=false) int item_No, HttpServletResponse response, HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		session.setAttribute("item_No", item_No);
+		session.setAttribute("session_Item_No", item_No);
+		String user_Id = session.getAttribute("session_user").toString();
+		
+		session.setAttribute("session_scrape", ser.selectScrap(item_No, user_Id));
 
 		return "/user/userItemDetail";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/insertScrap" , method = RequestMethod.POST)
+	public int insertScrap(Model model, HttpSession session) { 
+		
+		return ser.insertScrap(session.getAttribute("session_user").toString(), (Integer) session.getAttribute("session_Item_No"));
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/deleteScrap" , method = RequestMethod.POST)
+	public int deleteScrap(Model model, HttpSession session) { 
+		
+		return ser.deleteScrap(session.getAttribute("session_user").toString(), (Integer) session.getAttribute("session_Item_No"));
 	}
 }
 

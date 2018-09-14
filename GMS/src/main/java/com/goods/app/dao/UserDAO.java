@@ -103,5 +103,32 @@ public class UserDAO
 	public List<ItemVO> itemDetalSel(int item_No){
 		return ss.selectList("SelectItemDetal", item_No);
 	}
+	
+	public boolean selectScrap(int item_No, String user_Id) {
+		Map map = new HashMap();
+		map.put("item_No", item_No);
+		map.put("user_Id", user_Id);
+		
+		if(ss.selectOne("ChoiceScrap",map)) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	public int insertScrap(String user_Id, int item_No) {
+		Map map = new HashMap();
+		map.put("item_No", item_No);
+		map.put("user_Id", user_Id);
+		
+		return ss.insert("insertScrap", map);
+	}
 
+	public int deleteScrap(String user_Id, int item_No) {
+		Map map = new HashMap();
+		map.put("item_No", item_No);
+		map.put("user_Id", user_Id);
+		
+		return ss.delete("deleteScrap", map);
+	}
 }

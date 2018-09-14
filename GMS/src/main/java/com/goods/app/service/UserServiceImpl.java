@@ -98,6 +98,24 @@ public class UserServiceImpl implements UserService{
 		return dao.itemDetalSel(item_No);
 
 	}
+
+	@Override
+	public boolean selectScrap(int item_No, String user_Id) {
+		// TODO Auto-generated method stub
+		return dao.selectScrap(item_No, user_Id);
+	}
+
+	@Override
+	public int insertScrap(String user_Id, int item_No) {
+		// TODO Auto-generated method stub
+		return dao.insertScrap(user_Id, item_No);
+	}
+
+	@Override
+	public int deleteScrap(String user_Id, int item_No) {
+		// TODO Auto-generated method stub
+		return dao.deleteScrap(user_Id, item_No);
+	}
 		
 }
 

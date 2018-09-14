@@ -162,7 +162,7 @@
 	})
 </script>
 	<jsp:include page="userHeader.jsp"></jsp:include>
-	<div id="content">
+	<div id="content" align="center">
 		<table>
 			<tr><td colspan="4">물품현황</td></tr>
 			<tr>
@@ -187,7 +187,6 @@
 					<th>가격</th>
 				</tr>
 			</table>
-		<table>
 			</div>
 	<jsp:include page="userFooter.jsp"></jsp:include>
 </body>
