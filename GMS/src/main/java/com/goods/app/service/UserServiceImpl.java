@@ -106,6 +106,12 @@ public class UserServiceImpl implements UserService{
 
 
 	}
+
+	@Override
+	public int checkid(String user_id) {
+		// TODO Auto-generated method stub
+		return dao.checkid(user_id);
+	}
 		
 }
 

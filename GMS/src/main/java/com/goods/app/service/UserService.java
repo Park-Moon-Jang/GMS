@@ -24,5 +24,6 @@ public interface UserService
 	public void update(UserVO vo) throws Exception;
 	public void updatePW(UserVO vo) throws Exception;
 	public void delete(UserVO vo)throws Exception ;
+	public int checkid(String user_id);
 	
 }

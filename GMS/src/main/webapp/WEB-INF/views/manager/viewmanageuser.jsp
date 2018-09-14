@@ -41,6 +41,7 @@ table, th, td {
 			<td>${vo.user_email }</td>
 			<td>${vo.user_age }</td>
 			<td>
+			<button onclick="location='${pageContext.servletContext.contextPath}/manager/up_User/${vo.user_id}'">변경</button>
 			<button onclick="location='${pageContext.servletContext.contextPath}/manager/deleteUser/${vo.user_id}'">삭제</button>
 			</td>
 		</tr>

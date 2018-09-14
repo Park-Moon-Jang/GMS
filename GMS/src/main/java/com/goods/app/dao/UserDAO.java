@@ -136,4 +136,11 @@ public class UserDAO
 		return ss.selectList("SelectItemDetal", item_No);
 	}
 
+	public int checkid(String user_id) {
+		return ss.selectOne("checkid",user_id);
+	}
+
+	
+	
+
 }
