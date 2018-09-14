@@ -184,7 +184,7 @@ public class UserController {
 		return "/user/userPage";
 	}
 	@ResponseBody
-	@RequestMapping(value="/	" , method = RequestMethod.POST)
+	@RequestMapping(value="/itemDetalSel" , method = RequestMethod.POST)
 	public List<ItemVO> itemDetalSel(Model model, HttpSession session) { 
 		
 //		System.out.println(session.getAttribute("item_No"));
