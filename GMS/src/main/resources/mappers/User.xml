@@ -240,7 +240,7 @@
     	 DELETE FROM USER WHERE USER_ID = #{user_id} AND USER_PW=#{user_pw}
     </delete>
     <delete id="deleteUser_scr">
-    	DELETE FROM 
+    	DELETE FROM SCRAP WHERE USER_ID=#{user_id}
     </delete>
     
     <select id="checkid" parameterType="String" resultType="Integer">

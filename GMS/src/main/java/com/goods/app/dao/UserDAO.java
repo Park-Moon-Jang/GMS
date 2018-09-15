@@ -157,4 +157,9 @@ public class UserDAO
 		return ss.selectList("SelectMyScrap",map);
 	}
 
+	public void delete_scr(String user_id) {
+		ss.delete("deleteUser_scr", user_id);
+		
+	}
+
 }

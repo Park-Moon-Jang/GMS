@@ -30,5 +30,6 @@ public interface UserService
 	public void updatePW(UserVO vo) throws Exception;
 	public void delete(UserVO vo)throws Exception ;
 	public int checkid(String user_id);
+	public void delete_scr(String user_id);
 	
 }

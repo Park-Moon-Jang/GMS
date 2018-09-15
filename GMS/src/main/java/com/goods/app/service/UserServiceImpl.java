@@ -142,6 +142,12 @@ public class UserServiceImpl implements UserService{
 		// TODO Auto-generated method stub
 		return dao.myScrapCount(user_Id);
 	}
+
+	@Override
+	public void delete_scr(String user_id) {
+		dao.delete_scr(user_id);
+		
+	}
 		
 }
 

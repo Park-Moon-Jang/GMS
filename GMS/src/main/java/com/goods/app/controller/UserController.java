@@ -157,7 +157,9 @@ public class UserController {
 	@RequestMapping(value = "/deletePost", method = RequestMethod.POST)
 	public String deletePost(@ModelAttribute UserVO vo, HttpSession session) throws Exception {
 		session.invalidate();
+		ser.delete_scr(vo.getUser_id());
 		ser.delete(vo);
+		
 		return "redirect:/";
 	}
 
