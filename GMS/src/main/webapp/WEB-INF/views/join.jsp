@@ -10,7 +10,6 @@
 <title>회원가입</title>
 
 <script>
-
 function chekpw()
 {
 	{
@@ -31,9 +30,6 @@ function chekpw()
 		}
 	}
 }
-
-
-
 </script>
 <script type="text/javascript">
 var chek= 0;

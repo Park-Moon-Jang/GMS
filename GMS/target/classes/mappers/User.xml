@@ -219,6 +219,10 @@
     <delete id="deleteUser_">
     	 DELETE FROM USER WHERE USER_ID = #{user_id} AND USER_PW=#{user_pw}
     </delete>
+    <delete id="deleteUser_scr">
+    	DELETE FROM 
+    </delete>
+    
     <select id="checkid" parameterType="String" resultType="Integer">
     	SELECT COUNT(*) FROM USER WHERE USER_ID=#{user_id}
     
