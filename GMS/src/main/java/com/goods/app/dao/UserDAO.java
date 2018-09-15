@@ -2,8 +2,6 @@ package com.goods.app.dao;
 
 
 
-
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -109,7 +107,7 @@ public class UserDAO
 	public List<ItemVO> itemDetalSel(int item_No){
 		return ss.selectList("SelectItemDetal", item_No);
 	}
-<<<<<<< HEAD
+
 
 	public int checkid(String user_id) {
 		return ss.selectOne("checkid",user_id);
@@ -118,7 +116,6 @@ public class UserDAO
 	
 	
 
-=======
 	
 	public boolean selectScrap(int item_No, String user_Id) {
 		Map map = new HashMap();
@@ -159,5 +156,5 @@ public class UserDAO
 		
 		return ss.selectList("SelectMyScrap",map);
 	}
->>>>>>> refs/remotes/origin/moon
+
 }
