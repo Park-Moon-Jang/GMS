@@ -74,67 +74,42 @@ public class UserDAO
 		Map map = new HashMap();
 		if(company_no != 0 && category_No != 0) {
 			map.put("item_No", company_no+""+category_No);
-		}else if(company_no == 0 && category_No !=0) {
-			map.put("item_No", String.valueOf(category_No));
 		}else if(company_no != 0 && category_No ==0) {
-			map.put("item_No", String.valueOf(company_no));
+			map.put("item_No", company_no);
+		}else {
+			map.put("item_No", category_No);
 		}
-		map.put("category_No", String.valueOf(category_No));
+		map.put("company_No", company_no);
+		map.put("category_No", category_No);
+		map.put("store_Name", store_Name);
 		
-		if(!store_Name.equals(""))
-			map.put("store_Name", store_Name);
-		
-		curPage = (curPage - 1 ) * 2;
+		curPage = (curPage - 1 ) * 10;
 		map.put("curPage", curPage);
 		
-		List<ItemVO> List = new ArrayList();
-		if(!store_Name.equals("") && category_No != 0 && company_no != 0 ) {
-			List = ss.selectList("SelectBtn",map);
-		}else if(store_Name.equals("") && category_No != 0 && company_no != 0 ) {
-			List = ss.selectList("SelectBtn2",map);
-		}else if(store_Name.equals("") && category_No == 0 && company_no != 0) {
-			List = ss.selectList("SelectBtn3",map);
-		}else if(store_Name.equals("") && category_No == 0 && company_no == 0) {
-			List = ss.selectList("SelectBtn4",map);
-		}else if(store_Name.equals("") && category_No != 0 && company_no == 0) {
-			List = ss.selectList("SelectBtn5",map);
-		}else if(!store_Name.equals("") && category_No == 0 && company_no == 0) {
-			List = ss.selectList("SelectBtn6",map);
-		}else if(!store_Name.equals("") && category_No != 0 && company_no == 0) {
-			List = ss.selectList("SelectBtn7",map);
-		}else {
-			List = ss.selectList("SelectBtn8",map);
-		}
-		
-		return List;
+		return ss.selectList("SelectBtn",map);
 	}
 	
 	public int selectCount(ItemVO IVO) {
-		int count=0;
-		if(!IVO.getStore_Name().equals("") && IVO.getCategory_No() != 0 && IVO.getCompany_No() != 0 ) {
-			count = ss.selectOne("countSelectBtn",IVO);
-		}else if(IVO.getStore_Name().equals("") && IVO.getCategory_No() != 0 && IVO.getCompany_No() != 0 ) {
-			count = ss.selectOne("countSelectBtn2",IVO);
-		}else if(IVO.getStore_Name().equals("") && IVO.getCategory_No() == 0 && IVO.getCompany_No() != 0) {
-			count = ss.selectOne("countSelectBtn3",IVO);
-		}else if(IVO.getStore_Name().equals("") && IVO.getCategory_No() == 0 && IVO.getCompany_No() == 0) {
-			count = ss.selectOne("countSelectBtn4",IVO);
-		}else if(IVO.getStore_Name().equals("") && IVO.getCategory_No() != 0 && IVO.getCompany_No() == 0) {
-			count = ss.selectOne("countSelectBtn5",IVO);
-		}else if(!IVO.getStore_Name().equals("") && IVO.getCategory_No() == 0 && IVO.getCompany_No() == 0) {
-			count = ss.selectOne("countSelectBtn6",IVO);
-		}else if(!IVO.getStore_Name().equals("") && IVO.getCategory_No() != 0 && IVO.getCompany_No() == 0) {
-			count = ss.selectOne("countSelectBtn7",IVO);
-		}else {
-			count = ss.selectOne("countSelectBtn8",IVO);
-		}	
 		
-	return count;
+		Map map = new HashMap();
+		if(IVO.getCompany_No() != 0 && IVO.getCategory_No() != 0) {
+			map.put("item_No", IVO.getCompany_No()+""+IVO.getCategory_No());
+		}else if(IVO.getCompany_No() != 0 && IVO.getCategory_No() ==0) {
+			map.put("item_No", IVO.getCompany_No());
+		}else {
+			map.put("item_No", IVO.getCategory_No());
+		}
+		map.put("company_No", IVO.getCompany_No());
+		map.put("category_No", IVO.getCategory_No());
+		map.put("store_Name", IVO.getStore_Name());
+		
+	return ss.selectOne("countSelectBtn",IVO);
 	}
 	
 	public List<ItemVO> itemDetalSel(int item_No){
 		return ss.selectList("SelectItemDetal", item_No);
 	}
+<<<<<<< HEAD
 
 	public int checkid(String user_id) {
 		return ss.selectOne("checkid",user_id);
@@ -143,4 +118,46 @@ public class UserDAO
 	
 	
 
+=======
+	
+	public boolean selectScrap(int item_No, String user_Id) {
+		Map map = new HashMap();
+		map.put("item_No", item_No);
+		map.put("user_Id", user_Id);
+		
+		if(ss.selectOne("ChoiceScrap",map)) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	public int insertScrap(String user_Id, int item_No) {
+		Map map = new HashMap();
+		map.put("item_No", item_No);
+		map.put("user_Id", user_Id);
+		
+		return ss.insert("insertScrap", map);
+	}
+
+	public int deleteScrap(String user_Id, int item_No) {
+		Map map = new HashMap();
+		map.put("item_No", item_No);
+		map.put("user_Id", user_Id);
+		
+		return ss.delete("deleteScrap", map);
+	}
+	public int myScrapCount(String user_Id) {
+		
+		return ss.selectOne("MyScrapCount",user_Id);
+	}
+	public List<ItemVO> myScrapSel(String user_Id, int curPage){
+		Map map = new HashMap();
+		curPage = (curPage - 1 ) * 10;
+		map.put("curPage", curPage);
+		map.put("user_Id", user_Id);
+		
+		return ss.selectList("SelectMyScrap",map);
+	}
+>>>>>>> refs/remotes/origin/moon
 }
