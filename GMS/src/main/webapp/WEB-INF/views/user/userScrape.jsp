@@ -27,7 +27,7 @@ $(document).ready(function(){
 					str += "<tr id='"+i+"'>"
 					str += '<td><input type="checkbox" name="mycheck" value="'+data.IList[i].item_No+'"></td>'
 					str += '<td id="img"></td>'
-					str += "<td>"+data.IList[i].item_Name+"</td>";
+					str += '<td><a href="javscript:;" class="itemClick"><input type="text" class="item_No" hidden="hidden" value="'+data.IList[i].item_No+'">'+data.IList[i].item_Name+'</td>';
 					str += '<td>'+data.IList[i].company_Name+'</td>';
 					str += "<td>"+data.IList[i].amount+"</td>";
 					str += "<td>"+data.IList[i].price+"</td>";
@@ -48,7 +48,7 @@ $(document).ready(function(){
 	
 	//페이징 함수
 	function paging(sp){
-		var str = '<tr><td colspan="4">';
+		var str = '<tr align="center"><td colspan="6">';
 		
 		if(sp.curPage > 1){
 			str += '<a href="javascript:;" class="paging">'
@@ -81,7 +81,7 @@ $(document).ready(function(){
 			str += '<input type="text" class="page" value="'+sp.totalPage+'" hidden="true">[끝]</a>';
 	
 		}
-		str += '</td></tr>';
+		str += '</td><td><button onclick="deleteScrapAll()">선택삭제</button></td></tr>';
 		return str;
 	}
 	
@@ -121,6 +121,31 @@ function deleteScrap(item_No){
 		}
 	}); 
 }
+
+function deleteScrapAll(){
+	var checkArrayValue = [];
+	$("input[name=mycheck]:checked").each(function(){
+		checkArrayValue.push($(this).val());
+	})
+	$.ajax({
+		type:"POST",
+		url:"/app/user/selectedScrapDelete",
+		dataType:"json",
+		data:{"checkArray":checkArrayValue},
+		success: function(data){
+			alert("선택된 스크랩 삭제!")
+			location.reload();
+		},
+		error: function (jqXHR, Status, error){
+			console.log("selectedScrapDelete Error!");
+		}
+	}); 
+}
+
+$(document).on("click",".itemClick",function(){
+	var item_No = $(this).find(".item_No").val()
+	window.open("${pageContext.servletContext.contextPath}/user/itemDetail?item_No="+item_No);
+})
 </script>
 	<jsp:include page="userHeader.jsp"></jsp:include>
 	<div id="content" align="center">

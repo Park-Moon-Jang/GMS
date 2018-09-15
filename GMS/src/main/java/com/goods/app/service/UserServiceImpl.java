@@ -128,6 +128,12 @@ public class UserServiceImpl implements UserService{
 		// TODO Auto-generated method stub
 		return dao.myScrapCount(user_Id);
 	}
+
+	@Override
+	public int selectedScrapDelete(List<String> checkArray, String user_Id) {
+		// TODO Auto-generated method stub
+		return dao.selectedScrapDelete(checkArray, user_Id);
+	}
 		
 }
 
