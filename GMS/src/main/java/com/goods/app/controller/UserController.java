@@ -222,6 +222,13 @@ public class UserController {
 	}
 	
 	@ResponseBody
+	@RequestMapping(value="/deleteMyScrap" , method = RequestMethod.POST)
+	public int deleteScrap(Model model, HttpSession session, ItemVO IVO) { 
+		
+		return ser.deleteScrap(session.getAttribute("session_user").toString(), IVO.getItem_No());
+	}
+	
+	@ResponseBody
 	@RequestMapping(value="/myScrapSel" , method = RequestMethod.POST)
 	public Map myScrapSel(Model model, HttpSession session, @RequestParam("curPage") int curPage) { 
 		if(curPage==0) {
@@ -231,12 +238,12 @@ public class UserController {
 		
 		int count = ser.myScrapCount(user_Id);
 		System.out.println(count);
-		Paging sp = new Paging(count, curPage); 
+		Paging sp2 = new Paging(count, curPage); 
 		
 		List<ItemVO> IList = ser.myScrapSel(user_Id, curPage);
 		Map map = new HashMap();
 		map.put("IList", IList);
-		map.put("sp", sp);
+		map.put("sp", sp2);
 		return map;
 	}
 }

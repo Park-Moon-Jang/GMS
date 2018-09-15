@@ -1,7 +1,7 @@
 package com.goods.app.vo;
 
 public class Paging {
-	public static final int PAGE_SCALE = 2;
+	public static final int PAGE_SCALE = 10;
 	public static final int BLOCK_SCALE = 5;
 	
 	private int curPage; 
