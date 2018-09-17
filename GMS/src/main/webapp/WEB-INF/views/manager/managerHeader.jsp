@@ -6,7 +6,15 @@
 <div id="headwrap">
 
 	<header id="header">
-
+<script type="text/javascript">
+	var id = <%=(String)session.getAttribute("session_manager")%>
+	if(id==null){
+		alert("로그인을 해주세요");
+		location.href="${pageContext.servletContext.contextPath}/"
+	}
+	
+	</script>
+	
 
 
 <style>
