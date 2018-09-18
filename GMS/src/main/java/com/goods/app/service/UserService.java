@@ -11,6 +11,7 @@ import com.goods.app.vo.UserVO;
 @Service
 public interface UserService 
 {
+	public int selectedScrapDelete(List<String> checkArray, String user_Id);
 	public int myScrapCount(String user_Id);
 	public List<ItemVO> myScrapSel(String user_Id, int curPage);
 	public int insertScrap(String user_Id, int item_No);

@@ -13,6 +13,14 @@
 <!--    <insert id="join" parameterType="com.goods.app.vo.MemberVO" >
     INSERT INTO item_category (category_no, category_name) VALUES (#{category_no}, #{category_name})
    </insert> -->
+   <delete id="SelectedScrapDelete" parameterType="map">
+   	delete from gms_pj.scrap where user_id = #{user_Id} and  
+   	
+   	<foreach collection="checkArray" item="item" separator="or" index="index">
+   	 item_no = #{item}
+   	</foreach>
+   </delete>
+   
    <select id="SelectMyScrap" parameterType="Map"  resultType="com.goods.app.vo.ItemVO">
 	select t1.item_no, t1.amount, t1.user_id, t2.item_name, t2.company_no,
 	t2.category_no, t2.price, t3.company_name from

@@ -146,7 +146,12 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public void delete_scr(String user_id) {
 		dao.delete_scr(user_id);
-		
+	}
+
+	public int selectedScrapDelete(List<String> checkArray, String user_Id) {
+		// TODO Auto-generated method stub
+		return dao.selectedScrapDelete(checkArray, user_Id);
+
 	}
 		
 }

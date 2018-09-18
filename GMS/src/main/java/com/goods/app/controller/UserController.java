@@ -255,6 +255,15 @@ public class UserController {
 	}
 	
 	@ResponseBody
+	@RequestMapping(value="/selectedScrapDelete" , method = RequestMethod.POST)
+	public int selectedScrapDelete(Model model, HttpSession session, @RequestParam(value = "checkArray[]") List<String> checkArray) { 
+		String user_Id = session.getAttribute("session_user").toString();
+		int count = ser.selectedScrapDelete(checkArray, user_Id);
+		
+		return 0;
+	}
+	
+	@ResponseBody
 	@RequestMapping(value="/myScrapSel" , method = RequestMethod.POST)
 	public Map myScrapSel(Model model, HttpSession session, @RequestParam("curPage") int curPage) { 
 		if(curPage==0) {
