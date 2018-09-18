@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.goods.app.dao.UserDAO;
 import com.goods.app.vo.ItemVO;
 import com.goods.app.vo.UserVO;
+import com.goods.app.vo.comentVO;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -133,6 +134,30 @@ public class UserServiceImpl implements UserService{
 	public int selectedScrapDelete(List<String> checkArray, String user_Id) {
 		// TODO Auto-generated method stub
 		return dao.selectedScrapDelete(checkArray, user_Id);
+	}
+
+	@Override
+	public int insertComent(int item_No, String user_Id, String coment) {
+		// TODO Auto-generated method stub
+		return dao.insertComent(item_No, user_Id, coment);
+	}
+
+	@Override
+	public List<comentVO> selectComent(int item_No, int curPage) {
+		// TODO Auto-generated method stub
+		return dao.selectComent(item_No, curPage);
+	}
+
+	@Override
+	public int selectComentCount(int item_No) {
+		// TODO Auto-generated method stub
+		return dao.selectComentCount(item_No);
+	}
+
+	@Override
+	public int deleteComent(int item_No, int coment_No) {
+		// TODO Auto-generated method stub
+		return dao.deleteComent(item_No, coment_No);
 	}
 		
 }

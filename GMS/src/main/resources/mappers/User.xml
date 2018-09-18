@@ -13,6 +13,27 @@
 <!--    <insert id="join" parameterType="com.goods.app.vo.MemberVO" >
     INSERT INTO item_category (category_no, category_name) VALUES (#{category_no}, #{category_name})
    </insert> -->
+   <delete id="DeleteComent" parameterType="map">
+   	delete from gms_pj.item_coment where item_no = #{item_No} and coment_no = #{coment_No}
+   </delete>
+   
+   <select id="SelectComentCount" parameterType="int" resultType="int">
+   	SELECT count(*) FROM gms_pj.item_coment where item_No = #{item_No}
+   </select>
+   
+   <select id="SelectComent" parameterType="int" resultType="com.goods.app.vo.comentVO">
+   	select t1.coment_no, t1.item_No, t1.content, t1.user_Id, t2.user_NickName, t1.write_Date from 
+	(SELECT * FROM gms_pj.item_coment where item_no = #{item_No}) t1
+	inner join 
+	(select * from gms_pj.user) t2
+	on t1.user_id = t2. user_id
+	order by write_date limit 10 offset #{curPage};
+   </select>
+   
+   <insert id="InsertComent" parameterType="map">
+   	insert into gms_pj.item_coment (item_coment.item_no, item_coment.content, item_coment.user_id, item_coment.write_date) values(#{item_No},#{coment},#{user_Id},DATE_FORMAT(now(), '%Y-%m-%d %H:%i:%s'))
+   </insert>
+   
    <delete id="SelectedScrapDelete" parameterType="map">
    	delete from gms_pj.scrap where user_id = #{user_Id} and  
    	

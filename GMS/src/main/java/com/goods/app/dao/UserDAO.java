@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 
 import com.goods.app.vo.ItemVO;
 import com.goods.app.vo.UserVO;
+import com.goods.app.vo.comentVO;
 
 @Repository
 public class UserDAO 
@@ -148,5 +149,34 @@ public class UserDAO
 		map.put("user_Id",user_Id);
 		map.put("checkArray", checkArray);
 		return ss.delete("SelectedScrapDelete", map);
+	}
+	
+	public int insertComent(int item_No, String user_Id, String coment) {
+		Map map = new HashMap();
+		map.put("item_No", item_No);
+		map.put("user_Id",user_Id);
+		map.put("coment", coment);
+		
+		return ss.insert("InsertComent",map);
+	}
+	
+	public List<comentVO> selectComent(int item_No, int curPage){
+		Map map = new HashMap();
+		curPage = (curPage - 1 ) * 10;
+		map.put("item_No", item_No);
+		map.put("curPage", curPage);
+		return ss.selectList("SelectComent",map);
+	}
+	
+	public int selectComentCount(int item_No) {
+		System.out.println(item_No);
+		return ss.selectOne("SelectComentCount", item_No);
+	}
+	
+	public int deleteComent(int item_No, int coment_No) {
+		Map map = new HashMap();
+		map.put("item_No", item_No);
+		map.put("coment_No", coment_No);
+		return ss.delete("DeleteComent",map);
 	}
 }

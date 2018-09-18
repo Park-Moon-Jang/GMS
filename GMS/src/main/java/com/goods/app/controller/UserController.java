@@ -27,6 +27,8 @@ import com.goods.app.service.UserService;
 import com.goods.app.vo.ItemVO;
 import com.goods.app.vo.Paging;
 import com.goods.app.vo.UserVO;
+import com.goods.app.vo.comentVO;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -254,6 +256,47 @@ public class UserController {
 		map.put("IList", IList);
 		map.put("sp", sp2);
 		return map;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/insertComent" , method = RequestMethod.POST)
+	public int insertComnet(Model model, HttpSession session, @RequestParam(value = "coment") String coment) { 
+		int item_No = (Integer) session.getAttribute("session_Item_No");
+		String user_Id = session.getAttribute("session_user").toString();
+		
+		
+		return ser.insertComent(item_No, user_Id, coment);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/comentSel" , method = RequestMethod.POST)
+	public Map comentSel(Model model, HttpSession session, @RequestParam("curPage") int curPage) { 
+		
+		
+		int item_No = (Integer) session.getAttribute("session_Item_No");
+		
+		if(curPage==0) {
+			curPage = 1;
+		}
+		
+		int count = ser.selectComentCount(item_No);
+		
+		Paging sp3 = new Paging(count, curPage);
+		List<comentVO> CList = ser.selectComent(item_No, curPage);
+		Map map = new HashMap();
+		map.put("sp", sp3);
+		map.put("CList",CList);
+		map.put("totalCount", count);
+		return map;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/deleteComent" , method = RequestMethod.POST)
+	public int deleteComent(Model model, HttpSession session, comentVO CVO) { 
+		int item_No = (Integer) session.getAttribute("session_Item_No");
+		int coment_No = CVO.getComent_No();
+		
+		return ser.deleteComent(item_No, coment_No);
 	}
 }
 

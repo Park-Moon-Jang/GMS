@@ -32,7 +32,7 @@
 	<div id="topMenu">
 		<ul>
 			<li><a class="menuLink" id="userItem" href="${pageContext.servletContext.contextPath}/user/item">물품현황</a></li>
-			<li><a class="menuLink" id="userLast" href="${pageContext.servletContext.contextPath}/user/last">최근본목록</a></li>
+			<li><a class="menuLink" id="userLast" href="${pageContext.servletContext.contextPath}/user/last">건의사항</a></li>
 			<li><a class="menuLink" id="userScrape" href="${pageContext.servletContext.contextPath}/user/scrape">my Scrape</a></li>
 			<li><a class="menuLink" id="userPage" href="${pageContext.servletContext.contextPath}/user/page">my Page</a></li>
 		</ul>

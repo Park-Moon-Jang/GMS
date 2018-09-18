@@ -18,6 +18,7 @@ public class ItemVO {
 	private int price;
 	private int amount;
 	private Date carry_Date;
+	
 	public int getCompany_No() {
 		return company_No;
 	}

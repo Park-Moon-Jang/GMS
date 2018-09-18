@@ -7,10 +7,15 @@ import org.springframework.stereotype.Service;
 
 import com.goods.app.vo.ItemVO;
 import com.goods.app.vo.UserVO;
+import com.goods.app.vo.comentVO;
 
 @Service
 public interface UserService 
 {
+	public int deleteComent(int item_No, int coment_No);
+	public int selectComentCount(int item_No);
+	public List<comentVO> selectComent(int item_No, int curPage);
+	public int insertComent(int item_No, String user_Id, String coment);
 	public int selectedScrapDelete(List<String> checkArray, String user_Id);
 	public int myScrapCount(String user_Id);
 	public List<ItemVO> myScrapSel(String user_Id, int curPage);
