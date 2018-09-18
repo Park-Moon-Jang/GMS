@@ -1,5 +1,3 @@
-
-
 package com.goods.app.controller;
 
 import java.util.HashMap;
@@ -57,17 +55,20 @@ public class ManagerController {
 		
 		Map<String, Object> selInfo = new HashMap<String, Object>();
 		
+		selInfo.put("item_Name", vo.getItem_Name());
 		selInfo.put("company_No", vo.getCompany_No());
 		selInfo.put("category_No", vo.getCategory_No());
 		selInfo.put("from_Date", from_Date);
 		selInfo.put("to_Date", to_Date);
 		
 		int count = ms.getCount(selInfo);
-		
+		System.out.println("카운트: " + count);
 		Paging sp = new Paging(count, curPage);
 
 		selInfo.put("sp", sp);
 
+		System.out.println("itemlist - vo info"+ vo.getItem_Name()+":"+vo.getCompany_No()+":"+vo.getCategory_No()+":"+from_Date+":"+to_Date);
+		
 		List<ItemVO> list = ms.getItemlist(selInfo);
 		
 		Map<String, Object> result = new HashMap<String, Object>();
@@ -81,6 +82,66 @@ public class ManagerController {
 		
 		return "manager/itemstored";
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="/itemstored", method=RequestMethod.POST)
+	public Map<String, Object> itemstored(@RequestParam Map<String,Object> map, 
+										ItemVO vo, 
+										@RequestParam("from_Date") java.sql.Date from_Date, 
+										@RequestParam("to_Date") java.sql.Date to_Date, 
+										@RequestParam(defaultValue = "1") int curPage) {
+		
+		System.out.println("현재 페이지 :"+curPage);
+		
+		Map<String, Object> selInfo = new HashMap<String, Object>();
+		
+		selInfo.put("item_Name", vo.getItem_Name());
+		selInfo.put("company_No", vo.getCompany_No());
+		selInfo.put("category_No", vo.getCategory_No());
+		selInfo.put("from_Date", from_Date);
+		selInfo.put("to_Date", to_Date);
+		
+		int count = ms.getCount(selInfo);
+		System.out.println("카운드 :"+ count);
+		Paging sp = new Paging(count, curPage);
+
+		selInfo.put("sp", sp);
+
+		System.out.println("itemstored - vo info"+ vo.getItem_Name()+":"+vo.getCompany_No()+":"+vo.getCategory_No()+":"+from_Date+":"+to_Date);
+		
+		List<ItemVO> list = ms.getItemlist(selInfo);
+		
+		for(ItemVO  v : list) {
+			
+			System.out.println(v.getItem_Name());
+			
+		}
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("list", list);
+		result.put("sp", sp);
+		return result;
+	}
+	
+	@RequestMapping("/viewitemregister")
+	public String viewitemregister(Model model) {
+		
+		return "manager/itemregister";
+		
+	}
+	
+	@ResponseBody
+	@RequestMapping("/itemregister")
+	public void itemregister(@RequestParam Map<String,Object> map, ItemVO vo) {
+		
+		System.out.println("등록하러 컨트롤러 왔다");
+		System.out.println(map);
+		
+		System.out.println(vo.getItem_Name()+":"+vo.getCompany_No()+":"+vo.getCategory_No()+":"+vo.getAmount()+":"+vo.getPrice()+":"+vo.getCarry_Date());
+		
+	}
+	
+	
 	@RequestMapping("/viewitemreleased")
 	public String viewitemreleased (Model model) {
 		

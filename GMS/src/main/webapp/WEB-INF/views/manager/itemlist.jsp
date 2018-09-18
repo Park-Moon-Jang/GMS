@@ -15,7 +15,6 @@ $(document).ready(function(){
 	companySel();
 	categorySel();
 	
-
 	function companySel(){
 		
 		$.ajax({
@@ -60,14 +59,14 @@ $(document).ready(function(){
 	
 })
 
-
 function selBtn(curPage){
-	
 	
 	var company_No = $("#company").val();
 	var category_No = $("#category").val();
-	var from_Date = $("#from_date").val();
-	var to_Date = $("#to_date").val();
+	var from_Date = $("#from_Date").val();
+	var to_Date = $("#to_Date").val();
+	var item_Name = $("#item_Name").val();
+
 	
 	
 	function my_curr_date() {      
@@ -79,7 +78,7 @@ function selBtn(curPage){
 	    
 	    return my_date;
 	}
-
+	
 	if(!company_No){
 
 		company_No = 0;
@@ -95,10 +94,13 @@ function selBtn(curPage){
 	if(!to_Date){
 
 		to_Date = my_curr_date();
-
+	}
+	if(item_Name =="" || item_Name == null || item_Name == '' ){
+		item_Name = null;
+		
 	}
 	
-	var source = {"company_No":company_No, "category_No":category_No, "from_Date":from_Date, "to_Date":to_Date, "curPage":curPage};
+	var source = {"item_Name":item_Name, "company_No":company_No, "category_No":category_No, "from_Date":from_Date, "to_Date":to_Date, "curPage":curPage};
 
 	
 	var values = []; //ArrayList 값을 받을 변수를 선언
@@ -112,17 +114,16 @@ function selBtn(curPage){
 		
 		success: function(data){
 			alert("success");
-			var str = '<table id="itemTab"><tr><td>상품명</td><td>생산업체 번호</td><td>카테고리 번호</td><td>수량</td><td>입고일</td></tr>';
+			var str = '<table id="itemTab"><tr><td>상품명</td><td>생산업체 명</td><td>카테고리 명</td><td>수량</td><td>입고일</td></tr>';
 			
 			values = data.list;
 			
-
 			$.each(values, function(i){
 				
 				str += "<tr id='"+i+"'>"
 				str += "<td>"+values[i].item_Name+"</td>";
-				str += "<td>"+values[i].company_No+"</td>";
-				str += "<td>"+values[i].category_No+"</td>";
+				str += "<td>"+values[i].company_Name+"</td>";
+				str += "<td>"+values[i].category_Name+"</td>";
 				str += "<td>"+values[i].amount+"</td>";				
 				str += "<td>"+moment(values[i].carry_Date).format('YYYY-MM-DD')+"</td>";
 
@@ -192,7 +193,6 @@ $(document).on("click",".paging",function(){
 
 </script>
 
-
 </head>
 
 <%@include file="managerHeader.jsp"%>
@@ -205,7 +205,7 @@ $(document).on("click",".paging",function(){
 		<table>
 			<thead>
 				<tr>
-					<th corspan="4" ">물품현황</th>
+					<th corspan="5">물품현황</th>
 				</tr>
 				<tr>
 		
@@ -220,10 +220,13 @@ $(document).on("click",".paging",function(){
 						</select>
 					</td>
 					<td>	
-						<input type="date" id="from_date" >
+						<input type="date" id="from_Date" >
 					</td>
 					<td>	
-						<input type="date" id="to_date" >
+						<input type="date" id="to_Date" >
+					</td>
+					<td>	
+						<input type="text" id="item_Name">
 					</td>
 					<td>	
 						<button id="selBtn" onclick="selBtn()">검색</button>
@@ -234,8 +237,8 @@ $(document).on("click",".paging",function(){
 				<table id="itemTab">
 					<tr>
 								<td>상품명</td>
-								<td>생산업체 번호</td>
-								<td>카테고리 번호</td>
+								<td>생산업체 명</td>
+								<td>카테고리 명</td>
 								<td>수량</td>
 								<td>입고일</td>
 					</tr>

@@ -30,6 +30,10 @@ public class ManagerDAO {
 		//신상 3개만 출력
 		return ss.selectList("getnewItemlist");
 	}
+	public List<ItemVO> getstoredlist(Map<String, Object> map){
+		return ss.selectList("getstoredlist", map);
+	}
+	
 	
 	public List<ItemVO> getItemlist(Map<String, Object> map){
 		

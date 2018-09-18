@@ -71,4 +71,10 @@ public class ManagerServiceImpl implements ManagerService {
 		return mdao.categorySel();
 	}
 
+	@Override
+	public List<ItemVO> getstoredlist(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return mdao.getstoredlist(map);
+	}
+
 }

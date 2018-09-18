@@ -13,8 +13,9 @@ public interface ManagerService {
 
 	public List<UserVO> getUserlist();
 
-
 	public List<ItemVO> getnewItemlist();
+	
+	public List<ItemVO> getstoredlist(Map<String, Object> map);
 	
 	public List<ItemVO> getItemlist(Map<String, Object> map);
 	
