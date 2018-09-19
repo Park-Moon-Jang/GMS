@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.goods.app.service.ManagerService;
 import com.goods.app.vo.ItemVO;
+import com.goods.app.vo.M_boardVO;
 import com.goods.app.vo.Paging;
 import com.goods.app.vo.UserVO;
 
@@ -55,17 +57,20 @@ public class ManagerController {
 		
 		Map<String, Object> selInfo = new HashMap<String, Object>();
 		
+		selInfo.put("item_Name", vo.getItem_Name());
 		selInfo.put("company_No", vo.getCompany_No());
 		selInfo.put("category_No", vo.getCategory_No());
 		selInfo.put("from_Date", from_Date);
 		selInfo.put("to_Date", to_Date);
 		
 		int count = ms.getCount(selInfo);
-		
+		System.out.println("카운트: " + count);
 		Paging sp = new Paging(count, curPage);
 
 		selInfo.put("sp", sp);
 
+		System.out.println("itemlist - vo info"+ vo.getItem_Name()+":"+vo.getCompany_No()+":"+vo.getCategory_No()+":"+from_Date+":"+to_Date);
+		
 		List<ItemVO> list = ms.getItemlist(selInfo);
 		
 		Map<String, Object> result = new HashMap<String, Object>();
@@ -79,6 +84,66 @@ public class ManagerController {
 		
 		return "manager/itemstored";
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="/itemstored", method=RequestMethod.POST)
+	public Map<String, Object> itemstored(@RequestParam Map<String,Object> map, 
+										ItemVO vo, 
+										@RequestParam("from_Date") java.sql.Date from_Date, 
+										@RequestParam("to_Date") java.sql.Date to_Date, 
+										@RequestParam(defaultValue = "1") int curPage) {
+		
+		System.out.println("현재 페이지 :"+curPage);
+		
+		Map<String, Object> selInfo = new HashMap<String, Object>();
+		
+		selInfo.put("item_Name", vo.getItem_Name());
+		selInfo.put("company_No", vo.getCompany_No());
+		selInfo.put("category_No", vo.getCategory_No());
+		selInfo.put("from_Date", from_Date);
+		selInfo.put("to_Date", to_Date);
+		
+		int count = ms.getCount(selInfo);
+		System.out.println("카운드 :"+ count);
+		Paging sp = new Paging(count, curPage);
+
+		selInfo.put("sp", sp);
+
+		System.out.println("itemstored - vo info"+ vo.getItem_Name()+":"+vo.getCompany_No()+":"+vo.getCategory_No()+":"+from_Date+":"+to_Date);
+		
+		List<ItemVO> list = ms.getItemlist(selInfo);
+		
+		for(ItemVO  v : list) {
+			
+			System.out.println(v.getItem_Name());
+			
+		}
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("list", list);
+		result.put("sp", sp);
+		return result;
+	}
+	
+	@RequestMapping("/viewitemregister")
+	public String viewitemregister(Model model) {
+		
+		return "manager/itemregister";
+		
+	}
+	
+	@ResponseBody
+	@RequestMapping("/itemregister")
+	public void itemregister(@RequestParam Map<String,Object> map, ItemVO vo) {
+		
+		System.out.println("등록하러 컨트롤러 왔다");
+		System.out.println(map);
+		
+		System.out.println(vo.getItem_Name()+":"+vo.getCompany_No()+":"+vo.getCategory_No()+":"+vo.getAmount()+":"+vo.getPrice()+":"+vo.getCarry_Date());
+		
+	}
+	
+	
 	@RequestMapping("/viewitemreleased")
 	public String viewitemreleased (Model model) {
 		
@@ -96,20 +161,42 @@ public class ManagerController {
 	}
 
 
-	@RequestMapping("/managerboard")
-	public ModelAndView mboard (Model model) {
+
+	
+	
+	@RequestMapping(value="/logout", method=RequestMethod.GET)
+	public String logout() {
+		return "home";
+	}
+
+	
+	
+	
+	
+	@RequestMapping("/managerhome")
+	public String managerhome (Model model, HttpSession session) {
 	
 		List<ItemVO> itemlist = ms.getnewItemlist();
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", itemlist);
+		model.addAttribute("itemlist", itemlist);
 		
+		return "manager/managerhome";
+		
+	}
+
+	@RequestMapping("/managerboard")
+	public ModelAndView managerboard (Model model) {
+		List<M_boardVO> boardlist = ms.getBoardlist();
+		Map<String, Object> map = new HashMap<String, Object>();
+	
+		map.put("boardlist", boardlist);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("map", map);
 		mav.setViewName("manager/managerboard");  
 		return mav;
 		
 	} 
-	
 	@RequestMapping("/viewmanageuser")
 	public ModelAndView viewmanageuser (Model model) {
 		List<UserVO> userlist = ms.getUserlist();
@@ -121,34 +208,42 @@ public class ManagerController {
 		return mav;
 		
 	}
-	
-	@RequestMapping(value="/logout", method=RequestMethod.GET)
-	public String logout() {
-		return "home";
+	@RequestMapping("/insertBoard")
+	public String insertBoard (@ModelAttribute M_boardVO vo) {
+		ms.insertboard(vo);
+		
+		return "redirect:/manager/managerboard";
+		
 	}
-
 	@RequestMapping(value="/deleteUser/{user_id}", method=RequestMethod.GET)
 	public String deleteUser(@PathVariable("user_id") String user_id) {
 		ms.delete(user_id);
 		return "redirect:/manager/viewmanageuser";
 	}
 
-	
-	
-	
-	@RequestMapping("/managerhome")
-	public String managerhome (Model model, HttpSession session) {
-	
+	@RequestMapping(value="/deleteBoard/{board_no}", method=RequestMethod.GET)
+	public String deleteBoard(@PathVariable("board_no") int board_no) {
+		ms.deleteBoard(board_no);
+		return "redirect:/manager/managerboard";
+	}
+	@RequestMapping("/insertForm")
+	public String insertForm (Model model) {
 		
-		List<ItemVO> itemlist = ms.getnewItemlist();
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("list", itemlist);
-		model.addAttribute("itemlist", itemlist);
-		
-		return "manager/managerhome";
+		return "manager/insertForm";
 		
 	}
-
+	@RequestMapping(value ="/boardDetail/{board_no}" , method = RequestMethod.GET)
+	public ModelAndView boardDetail (@PathVariable("board_no") int board_no) {
+		M_boardVO boardvo=ms.selectboard(board_no);
+		Map<String,M_boardVO> map = new HashMap<String,M_boardVO>();
+		map.put("boardvo", boardvo);
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("map", map);
+		mav.setViewName("manager/boardDetail");  
+		return mav;
+		
+	}
+	
 	@ResponseBody
 	@RequestMapping(value="/companySel", method = RequestMethod.POST)
 	public List<ItemVO> companySel(Model model, ItemVO vo){

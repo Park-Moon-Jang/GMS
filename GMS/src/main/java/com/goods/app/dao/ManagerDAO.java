@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.goods.app.vo.ItemVO;
+import com.goods.app.vo.M_boardVO;
 import com.goods.app.vo.ManagerVO;
 import com.goods.app.vo.UserVO;
 
@@ -30,6 +31,10 @@ public class ManagerDAO {
 		//신상 3개만 출력
 		return ss.selectList("getnewItemlist");
 	}
+	public List<ItemVO> getstoredlist(Map<String, Object> map){
+		return ss.selectList("getstoredlist", map);
+	}
+	
 	
 	public List<ItemVO> getItemlist(Map<String, Object> map){
 		
@@ -62,12 +67,31 @@ public class ManagerDAO {
 	}
 
 	public List<ItemVO> companySel(){
-		
 		return ss.selectList("companySel");
 	}	
 	public List<ItemVO> categorySel(){
 		
 		return ss.selectList("categorySel");
+	}
+
+	public List<M_boardVO> getboardlist() {
+	
+		return ss.selectList("boardlist");
+	}
+
+	public void deleteBoard(int board_no) {
+		// TODO Auto-generated method stub
+		ss.delete("deleteBoard",board_no);
+	}
+
+	public void insertboard(M_boardVO vo) {
+		// TODO Auto-generated method stub
+		ss.insert("insertboard", vo);
+	}
+
+	public M_boardVO selectboard(int board_no) {
+		// TODO Auto-generated method stub
+		return ss.selectOne("selectboard", board_no);
 	}
 
 }

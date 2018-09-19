@@ -29,7 +29,7 @@ table, th, td {
 			<td>핸드폰</td>
 			<td>이메일</td>
 			<td>나이</td>
-			<td>변경/삭제</td>
+			<td>삭제</td>
 		</tr>
 		<c:forEach items="${map.userlist}" var="vo">
 		<tr>
@@ -41,7 +41,6 @@ table, th, td {
 			<td>${vo.user_email }</td>
 			<td>${vo.user_age }</td>
 			<td>
-			<button onclick="location='${pageContext.servletContext.contextPath}/manager/up_User/${vo.user_id}'">변경</button>
 			<button onclick="location='${pageContext.servletContext.contextPath}/manager/deleteUser/${vo.user_id}'">삭제</button>
 			</td>
 		</tr>
