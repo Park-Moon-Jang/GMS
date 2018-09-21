@@ -241,7 +241,6 @@ public class ManagerController {
 		mav.addObject("map", map);
 		mav.setViewName("manager/boardDetail");  
 		return mav;
-		
 	}
 	
 	@ResponseBody

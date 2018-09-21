@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bit.app">
+	<select id="itemrank" resultType="com.goods.app.vo.ItemVO">
+		select t2.ITEM_NAME,t1.amount
+		from 
+		(
+		select ITEM_NO,count(*) as amount
+		from scrap
+		group by item_no
+		limit 5)t1, item t2
+		where t1.item_no=t2.item_no
+	</select>
+
+</mapper>
