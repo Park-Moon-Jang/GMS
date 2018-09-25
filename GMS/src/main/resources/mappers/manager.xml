@@ -5,7 +5,21 @@
 <mapper namespace="com.bit.app">
 
    
-
+   <insert id="registerItem" parameterType="com.goods.app.vo.PhotoVO">
+	INSERT INTO gms_pj.item  (ITEM_NO, ITEM_NAME, COMPANY_NO, CATEGORY_NO, AMOUNT, PRICE, CARRY_DATE)
+	 VALUES (${item_No}, "${item_Name}", ${company_No}, ${category_No}, ${amount}, ${price}, "${carry_Date}")
+   </insert>
+   <insert id="registerPhoto" parameterType="com.goods.app.vo.PhotoVO">
+   insert into gms_pj.photo (item_no, photo_name, photo_data)
+   VALUES(#{item_No}, "${photo_Name}", #{photo_Data})
+   </insert>
+	
+	<select id= "checkregiNum" resultType="int" parameterType="int">
+	select count(*)
+	from gms_pj.item
+	where item_no = #{checkNum}
+	
+	</select>
    
     <select id="userlist" resultType="com.goods.app.vo.UserVO">
    SELECT * FROM USER

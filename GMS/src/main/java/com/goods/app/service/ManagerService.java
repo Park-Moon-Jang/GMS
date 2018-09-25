@@ -5,12 +5,18 @@ import java.util.Map;
 
 import com.goods.app.vo.ItemVO;
 import com.goods.app.vo.ManagerVO;
+import com.goods.app.vo.PhotoVO;
 import com.goods.app.vo.UserVO;
 
 
 public interface ManagerService {
 
-
+	public int registerPhoto(PhotoVO pvo);
+	
+	public int registerItem(ItemVO ivo);
+	
+	public int checkregiNum(int checkNum);
+	
 	public List<UserVO> getUserlist();
 
 	public List<ItemVO> getnewItemlist();

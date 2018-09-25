@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.goods.app.dao.ManagerDAO;
 import com.goods.app.vo.ItemVO;
 import com.goods.app.vo.ManagerVO;
+import com.goods.app.vo.PhotoVO;
 import com.goods.app.vo.UserVO;
 
 @Service
@@ -75,6 +76,24 @@ public class ManagerServiceImpl implements ManagerService {
 	public List<ItemVO> getstoredlist(Map<String, Object> map) {
 		// TODO Auto-generated method stub
 		return mdao.getstoredlist(map);
+	}
+
+	@Override
+	public int checkregiNum(int checkNum) {
+		// TODO Auto-generated method stub
+		return mdao.checkregiNum(checkNum);
+	}
+
+	@Override
+	public int registerItem(ItemVO ivo) {
+		// TODO Auto-generated method stub
+		return mdao.registerItem(ivo);
+	}
+
+	@Override
+	public int registerPhoto(PhotoVO pvo) {
+		// TODO Auto-generated method stub
+		return mdao.registerPhoto(pvo);
 	}
 
 }

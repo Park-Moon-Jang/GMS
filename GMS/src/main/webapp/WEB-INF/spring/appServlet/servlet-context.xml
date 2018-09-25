@@ -26,8 +26,18 @@
 	<context:component-scan base-package="com.goods.app.dao"/>
 	<context:component-scan base-package="com.goods.app.interceptor"/>
 	<context:component-scan base-package="com.goods.app.service"/>
+	<context:component-scan base-package="com.goods.app.vo"/>
 	
-	
+	    <!-- MultipartResolver -->
+    <beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <beans:property name="maxUploadSize" value="100000000"/>
+        <beans:property name="maxInMemorySize" value="100000000"/>
+    </beans:bean>
+
+	<beans:bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
+			<beans:property name="contentType" value="application/json;charset=UTF-8" />
+	</beans:bean>
+
 	<beans:bean id="logininterceptor_user" class="com.goods.app.interceptor.LoginInterceptor_user"></beans:bean>
 	<beans:bean id="logininterceptor_manager" class="com.goods.app.interceptor.LoginInterceptor_manager"></beans:bean>
 	<beans:bean id="FindInterceptor" class="com.goods.app.interceptor.FindInterceptor"></beans:bean>

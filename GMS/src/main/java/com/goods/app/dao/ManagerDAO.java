@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.goods.app.vo.ItemVO;
 import com.goods.app.vo.ManagerVO;
+import com.goods.app.vo.PhotoVO;
 import com.goods.app.vo.UserVO;
 
 
@@ -18,6 +19,28 @@ public class ManagerDAO {
 
 	@Autowired
 	SqlSession ss;
+	
+	
+	
+	public int checkregiNum(int checkNum) {
+		
+		return ss.selectOne("checkregiNum", checkNum);
+	}
+	public int registerItem(ItemVO ivo) {
+
+		
+		System.out.println("dao"+ivo.getCarry_Date());
+		System.out.println("dao"+ivo.getCarry_Date().getClass());
+		
+		return ss.insert("registerItem", ivo);
+	}
+	public int registerPhoto(PhotoVO pvo) {
+		
+		return ss.insert("registerPhoto", pvo);
+	}
+	
+	
+	
 	
 	public void insert(ItemVO vo) {
 		System.out.println("dao!");
