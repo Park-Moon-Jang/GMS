@@ -2,16 +2,25 @@ package com.goods.app.service;
 
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
 import com.goods.app.vo.ItemVO;
+import com.goods.app.vo.SPostVO;
 import com.goods.app.vo.UserVO;
 import com.goods.app.vo.comentVO;
 
 @Service
 public interface UserService 
 {
+	public int delSPost(int spost_No);
+	public List<SPostVO> selDetailSPost(int spost_No);
+	public int updateHits(int spost_no);
+	public List<SPostVO> selectSPost(int curPage);
+	public int selectSPostCount();
+	public int updateSuggestionsPost(Map map);
+	public int insertSuggestionsPost(Map map);
 	public int deleteComent(int item_No, int coment_No);
 	public int selectComentCount(int item_No);
 	public List<comentVO> selectComent(int item_No, int curPage);

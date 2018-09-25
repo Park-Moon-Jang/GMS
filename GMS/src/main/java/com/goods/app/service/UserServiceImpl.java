@@ -5,12 +5,14 @@ package com.goods.app.service;
 import javax.servlet.http.HttpSession;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.goods.app.dao.UserDAO;
 import com.goods.app.vo.ItemVO;
+import com.goods.app.vo.SPostVO;
 import com.goods.app.vo.UserVO;
 import com.goods.app.vo.comentVO;
 
@@ -159,7 +161,47 @@ public class UserServiceImpl implements UserService{
 		// TODO Auto-generated method stub
 		return dao.deleteComent(item_No, coment_No);
 	}
-		
+
+	@Override
+	public int insertSuggestionsPost(Map map) {
+		// TODO Auto-generated method stub
+		return dao.insertSuggestionsPost(map);
+	}
+	
+	@Override
+	public int selectSPostCount() {
+		// TODO Auto-generated method stub
+		return dao.selectSPostCount();
+	}
+
+	@Override
+	public List<SPostVO> selectSPost(int curPage) {
+		// TODO Auto-generated method stub
+		return dao.selectSPost(curPage);
+	}
+
+	@Override
+	public int updateHits(int spost_no) {
+		// TODO Auto-generated method stub
+		return dao.updateHits(spost_no);
+	}
+
+	@Override
+	public List<SPostVO> selDetailSPost(int spost_No) {
+		// TODO Auto-generated method stub
+		return dao.selDetailSPost(spost_No);
+	}
+
+	@Override
+	public int updateSuggestionsPost(Map map) {
+		// TODO Auto-generated method stub
+		return dao.updateSuggestionsPost(map);
+	}
+	
+	@Override
+	public int delSPost(int spost_No) {
+		return dao.delSPost(spost_No);
+	}
 }
 
 

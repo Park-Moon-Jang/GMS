@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
+`<%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="EUC-KR"%>
 	<%@  taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c" %> <!-- 기본기능 -->
 <%@  taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt" %> <!-- 포멧 기능 (형식지정)-->
@@ -32,7 +32,7 @@
 	<div id="topMenu">
 		<ul>
 			<li><a class="menuLink" id="userItem" href="${pageContext.servletContext.contextPath}/user/item">물품현황</a></li>
-			<li><a class="menuLink" id="userLast" href="${pageContext.servletContext.contextPath}/user/last">건의사항</a></li>
+			<li><a class="menuLink" id="userLast" href="${pageContext.servletContext.contextPath}/user/suggestions">건의사항</a></li>
 			<li><a class="menuLink" id="userScrape" href="${pageContext.servletContext.contextPath}/user/scrape">my Scrape</a></li>
 			<li><a class="menuLink" id="userPage" href="${pageContext.servletContext.contextPath}/user/page">my Page</a></li>
 		</ul>
