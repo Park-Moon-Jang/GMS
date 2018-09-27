@@ -15,42 +15,31 @@ table, th, td {
 	border: 1px solid #bcbcbc;
 }
 </style>
-<script type="text/javascript">
-
-function checkid(id,no){
-
-	var ss_id="${session_manager}";
-	if(ss_id==id)
-		{
-			location.href="${pageContext.servletContext.contextPath}/manager/updateboard/"+no
-		}
-	else
-		{
-
-			alert("작성자가 아닙니다.");
-			return false;
-		}
-}
-
-</script>
 </head>
 
 <%@include file="managerHeader.jsp"%>
 <body>
-<table>
 <c:set value="${map.boardvo}" var="vo"/>
+<form action="${pageContext.servletContext.contextPath}/manager/updateform" method="POST" >
+
+<input type="hidden" name="board_no" value="${vo.board_no}">
+<table>
 <tr>
-<td>글번호</td><td>${vo.board_no}</td><td>작성시간</td><td>${vo.board_date}</td>
-</tr><tr>
-<td>제목</td><td>${vo.title}</td>
-<td>작성자</td><td>${vo.manager_id}</td>
+<td>제목</td><td><input type="text" name="title" value="${vo.title}"></td>
 </tr>
 <tr>
 <td>내용</td>
-<td>${vo.content}</td>
+</tr><tr>
+<td><input type="text" name="content" value="${vo.content}"></td>
+</tr><tr>
 </tr>
 </table>
-<input type="button" onclick="checkid('${vo.manager_id}','${vo.board_no}')" value="수정하기">
+<input type="submit" value="수정하기">
+</form>
 <button onclick="location='${pageContext.servletContext.contextPath}/manager/managerboard'">뒤로가기</button>
 </body>
 </html>
+
+
+
+

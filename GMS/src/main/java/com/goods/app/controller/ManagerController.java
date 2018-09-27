@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.swing.plaf.synth.SynthSplitPaneUI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -197,6 +198,19 @@ public class ManagerController {
 		return mav;
 		
 	} 
+	@RequestMapping(value ="/updateboard/{no}" , method = RequestMethod.GET)
+	public ModelAndView updateboard (@PathVariable("no") int no) {
+		M_boardVO boardvo=ms.selectboard(no);
+		Map<String,M_boardVO> map = new HashMap<String,M_boardVO>();
+		map.put("boardvo", boardvo);
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("map", map);
+		mav.setViewName("manager/updateBoard");  
+		return mav;
+	}
+	
+	
+
 	@RequestMapping("/viewmanageuser")
 	public ModelAndView viewmanageuser (Model model) {
 		List<UserVO> userlist = ms.getUserlist();
@@ -257,6 +271,13 @@ public class ManagerController {
 			
 			return ms.categorySel();
 			
+	}
+	@RequestMapping(value="/updateform", method = RequestMethod.POST)
+	public String updateform (@ModelAttribute M_boardVO vo){
+		ms.updateform(vo);
+		 
+		return "redirect:/manager/managerboard";
+		
 	}
 	
 }

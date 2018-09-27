@@ -101,4 +101,10 @@ public class ManagerServiceImpl implements ManagerService {
 		return mdao.selectboard(board_no);
 	}
 
+	@Override
+	public void updateform(M_boardVO vo) {
+		mdao.updateboard(vo);
+		
+	}
+
 }

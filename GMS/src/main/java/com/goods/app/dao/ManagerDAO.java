@@ -94,4 +94,9 @@ public class ManagerDAO {
 		return ss.selectOne("selectboard", board_no);
 	}
 
+	public void updateboard(M_boardVO vo) {
+		ss.update("updateboard",vo);
+		
+	}
+
 }

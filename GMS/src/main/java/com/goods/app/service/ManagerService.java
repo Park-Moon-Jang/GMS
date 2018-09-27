@@ -38,4 +38,6 @@ public interface ManagerService {
 
 	public M_boardVO selectboard(int board_no);
 
+	public void updateform(M_boardVO vo);
+
 }
