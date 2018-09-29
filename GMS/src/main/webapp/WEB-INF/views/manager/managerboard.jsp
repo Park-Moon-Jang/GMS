@@ -16,7 +16,7 @@
 			<td>제목</td>
 			<td>작성자</td>
 			<td>날짜</td>
-			<td>삭제</td>
+			
 		</tr>
 		<c:forEach var="vo" items="${map.boardlist}" > 
 				<tr>
@@ -24,7 +24,6 @@
 								<td><a href="${pageContext.servletContext.contextPath}/manager/boardDetail/${vo.board_no}">${vo.title}</a></td>
 								<td>${vo.manager_id}</td>
 								<td>${vo.board_date}</td>
-								<td><input type="button" onclick="location='${pageContext.servletContext.contextPath}/manager/deleteBoard/${vo.board_no}'" value="삭제" ></td>
 				</tr>
 			</c:forEach>
 

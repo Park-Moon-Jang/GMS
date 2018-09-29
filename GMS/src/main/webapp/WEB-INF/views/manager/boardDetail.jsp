@@ -22,7 +22,7 @@ function checkid(id,no){
 	var ss_id="${session_manager}";
 	if(ss_id==id)
 		{
-			location.href="${pageContext.servletContext.contextPath}/manager/updateboard/"+no
+			location.href="${pageContext.servletContext.contextPath}/manager/updateboard/"+no;
 		}
 	else
 		{
@@ -31,6 +31,20 @@ function checkid(id,no){
 			return false;
 		}
 }
+function checkboard(id,no){
+	var ss_id="${session_manager}";
+	if(ss_id==id)
+		{
+			location.href="${pageContext.servletContext.contextPath}/manager/deleteBoard/"+no;
+		}
+	else
+		{
+
+			alert("작성자가 아닙니다.");
+			return false;
+		}
+}
+
 
 </script>
 </head>
@@ -50,7 +64,8 @@ function checkid(id,no){
 <td>${vo.content}</td>
 </tr>
 </table>
-<input type="button" onclick="checkid('${vo.manager_id}','${vo.board_no}')" value="수정하기">
+<input type="button" onclick="checkid('${vo.manager_id}','${vo.board_no}')" value="수정">
+<input type="button" onclick="checkboard('${vo.manager_id}','${vo.board_no}')" value="삭제">
 <button onclick="location='${pageContext.servletContext.contextPath}/manager/managerboard'">뒤로가기</button>
 </body>
 </html>
