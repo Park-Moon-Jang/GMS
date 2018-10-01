@@ -14,7 +14,9 @@
 	
 </script>
 	<jsp:include page="userHeader.jsp"></jsp:include>
-	<div id="content">Main</div>
+	<div id="content" align="center">
+		
+	</div>
 	<jsp:include page="userFooter.jsp"></jsp:include>
 </body>
 </html>

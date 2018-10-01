@@ -1,4 +1,4 @@
-`<%@ page language="java" contentType="text/html; charset=EUC-KR"
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="EUC-KR"%>
 	<%@  taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c" %> <!-- 기본기능 -->
 <%@  taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt" %> <!-- 포멧 기능 (형식지정)-->
@@ -18,7 +18,6 @@
 	ul li a{float:center;font-size:12px;color:white;font-weight:bold;text-decoration:none}
 	.white a{color:#fff}
 </style>
-	
 	<div id="header">
 	<a class="mainLink" href="#">GMS(Goods-Mangement-Service)</a>
 			<ul class="menu">
