@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+  <mapper namespace="com.bit.app">
+  
+    <!-- 전체 목록 -->
+<!--     <select id="boardlistAll" resultType="com.bit.app.vo.BoardVO"> -->
+<!--         SELECT * FROM BOARD1 ORDER BY no desc, writedate desc -->
+<!--     </select> -->
+
+   <insert id="insertItem" parameterType="com.goods.app.vo.ItemVO" >
+    INSERT INTO item (item_no, item_name, amount, category_no, company_no, price, carry_date) VALUES (#{item_no}, #{item_name}, #{amount}, #{category_no}, #{company_no}, #{price}, #{carry_date})
+   </insert>
+   
+   <select id="newitemList" resultType="com.goods.app.vo.ItemVO">
+   SELECT * FROM gms_pj.item order by carry_date desc limit 3
+   </select>
+    <select id="userlist" resultType="com.goods.app.vo.UserVO">
+   SELECT * FROM USER
+   </select>
+   
+   <delete id="deleteOne" parameterType="int">
+   delete from item where item_no = #{item_no}
+   </delete>
+   <select id="checkManager"  resultType="com.goods.app.vo.ManagerVO">
+   		SELECT MANAGER_ID,MANAGER_PW FROM MANAGER WHERE MANAGER_ID=#{manager_id} and MANAGER_PW=#{manager_pw}
+   </select>
+   <update id="updateUser">
+   UPDATE USER SET USER_PW = #{user_pw},USER_NICKNAME=#{user_nickname},USER_PHON=#{user_phon}, USER_email = #{user_email},USER_AGE=#{user_age}WHERE USER_ID= #{user_id}
+   </update>
+   <delete id="deleteUser">
+        DELETE FROM USER WHERE user_id = #{user_id}
+    </delete>
+   
+ </mapper>
