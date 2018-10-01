@@ -54,16 +54,12 @@
 					<th>공지사항</th>
 				</tr>
 			</thead>
-			
 			<tbody>
 				<tr>
 					<td colspan="7">인기상품1</td>
 					<td>공지사항1</td>
 				</tr>
-
 			</tbody>
-			
-			
 		</table>
 			
 

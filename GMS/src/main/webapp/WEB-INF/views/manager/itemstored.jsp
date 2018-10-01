@@ -20,6 +20,43 @@ $(document).on("click","#register",function(url){
 	window.open("${pageContext.servletContext.contextPath}/manager/viewitemregister","", "width=600, height=400");
 })
 
+$(document).on("click",".itemUpdate", function(){
+	var item_No = $(this).find(".item_No").val();
+	alert(item_No);
+	window.open("${pageContext.servletContext.contextPath}/manager/viewitemupdate?item_No="+item_No,"", "width=600, height=400");
+})
+
+$(document).on("click",".itemDelete", function(){
+	var item_No = $(this).find(".item_No").val();
+	alert(item_No);
+	var item = {"item_No": item_No};
+	
+	var answer = confirm("정말로 삭제하시겠습니까?");
+	if(answer == true){
+		
+		alert(item);
+		$.ajax({
+			
+			type:"post",
+			url:"/app/manager/itemdelete",
+			dataType:"json",
+			data:item,
+			success: function(data){
+				
+				alert("입고정보가 삭제되었습니다");
+				alert(data);
+			},
+			error: function (jqXHR, Status, error){
+				console.log("delete Error!");
+			}
+
+		});
+		
+	}else{
+		return;
+	}
+})
+
 
 function getList(curPage){
 		
@@ -56,7 +93,7 @@ function getList(curPage){
 			
 			success: function(data){
 				alert("success");
-				var str = '<table id="itemTab"><tr><td>상품명</td><td>생산업체 명</td><td>카테고리 명</td><td>수량</td><td>입고일</td></tr>';
+				var str = '<table id="itemTab"><tr><td>상품명</td><td>생산업체 명</td><td>카테고리 명</td><td>수량</td><td>입고일</td><td>비고</td></tr>';
 				
 				values = data.list;
 				
@@ -68,8 +105,9 @@ function getList(curPage){
 					str += "<td>"+values[i].category_Name+"</td>";
 					str += "<td>"+values[i].amount+"</td>";				
 					str += "<td>"+moment(values[i].carry_Date).format('YYYY-MM-DD')+"</td>";
-
-					str += "</tr>"
+					str += "<td>" + "<td><a href='javscript:;' class= 'itemUpdate'><input type='button' class='item_No' hidden='hidden' value= '"+values[i].item_No+"'>" +"변경" + "</td>";
+					str += "<td>" + "<td><a href='javscript:;' class= 'itemDelete'><input type='button' class='item_No' hidden='hidden' value= '"+values[i].item_No+"'>" +"삭제" + "</td>";
+					str += "</tr>"    //<a href="javscript:;" class="itemClick"><input type="text" class="item_No" hidden="hidden" value="'+data.IList[i].item_No+'">'+data.IList[i].item_Name+'</td>';
 									
 				})
 				
@@ -166,6 +204,7 @@ $(document).on("click",".paging",function(){
 								<td>카테고리 명</td>
 								<td>수량</td>
 								<td>입고일</td>
+								<td>비고</td>
 					</tr>
 				</table>
 			</tbody>

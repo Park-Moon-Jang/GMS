@@ -15,7 +15,17 @@ public interface ManagerService {
 	
 	public int registerItem(ItemVO ivo);
 	
+	public int updateItem(Map<String, Object> map);
+	
+	public int updatePhoto(Map<String, Object> map);
+	
+	public int deleteItem(int item_No);
+	
 	public int checkregiNum(int checkNum);
+	
+	public ItemVO getItemInfo(int item_No);
+	
+	public PhotoVO getItemPhoto(int item_No);
 	
 	public List<UserVO> getUserlist();
 

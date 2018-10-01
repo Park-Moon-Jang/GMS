@@ -89,11 +89,40 @@ public class ManagerServiceImpl implements ManagerService {
 		// TODO Auto-generated method stub
 		return mdao.registerItem(ivo);
 	}
+	@Override
+	public int updateItem(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return mdao.updateItem(map);
+	}
 
 	@Override
 	public int registerPhoto(PhotoVO pvo) {
 		// TODO Auto-generated method stub
 		return mdao.registerPhoto(pvo);
+	}
+
+	@Override
+	public ItemVO getItemInfo(int item_No) {
+		// TODO Auto-generated method stub
+		return mdao.getItemInfo(item_No);
+	}
+
+	@Override
+	public PhotoVO getItemPhoto(int item_No) {
+		// TODO Auto-generated method stub
+		return mdao.getItemPhoto(item_No);
+	}
+
+	@Override
+	public int updatePhoto(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return mdao.updatePhoto(map);
+	}
+
+	@Override
+	public int deleteItem(int item_No) {
+		// TODO Auto-generated method stub
+		return mdao.deleteItem(item_No);
 	}
 
 }

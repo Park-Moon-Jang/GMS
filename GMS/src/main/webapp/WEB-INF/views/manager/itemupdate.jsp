@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,7 +18,8 @@ $(document).ready(function(){
 
 	companySel();
 	categorySel();
-
+	getPhoto();
+	
 	function companySel(){
 		
 		$.ajax({
@@ -54,8 +57,8 @@ $(document).ready(function(){
 				console.log("category Error!");
 			}
 			
-		});		
-	};
+		});
+	}
 	
 	$(document).on("change", "#photo_Data", handleImgFileSelect);
 	
@@ -75,22 +78,83 @@ $(document).ready(function(){
 			
 			var reader = new FileReader();
 			reader.onload = function(e){
-				$("#img").attr("src", e.target.result);
+				
+				var img =  $('<img id="img" width="100" height="100"/>');
+				$("#itemImage").find("img").remove();
+				
+				
+				img.attr("src", e.target.result);
+				img.appendTo("#itemImage");
 			}
 			reader.readAsDataURL(f);
 			
 		})
 	}
+	
+	
+	
+	
+	function getPhoto() {
+		
+		var photo = $("#encoded_Photo").val();
+		var img =  $('<img id="img" width="100" height="100"/>');
+        img.attr('src','data:image/png;base64,'+photo);
+        img.appendTo("#itemImage");
+
+	}
+	
 })
 
 
+$(document).on("click", "#update", function () {
 
-
-$(document).on("click", "#register", function () {
-
+	if(!$("input[name=item_Name]").val()){
+		alert("상품명을 기입해주세요");
+		return;
+	}
+	if(!$("select[name=company]").val()){
+		alert("생산업체를 선택해주세요");
+		return;
+	}
+	if(!$("select[name=category]").val()){
+		alert("카테고리를 선택해주세요");
+		return;
+	}
+	if(!$("input[name=registerNum]").val()){
+		alert("입고번호를 기입해주세요");
+		return;
+	}
+	if(!$("input[name=amount]").val()){
+		alert("수량을 기입해주세요");
+		return;
+	}
+	if(!$("input[name=price]").val()){
+		alert("가격을 기입해주세요");
+		return;
+	}
+	if(!$("input[name=carry_Date]").val()){
+		alert("입고일자를 선택해주세요");
+		return;
+	}
+	if(!$("input[name=registerNum]").val()){
+		alert("입고번호를 기입해주세요");
+		return;
+	}	
+	if(!$("input[name=photo_Name]").val()){
+		alert("사진제목을 기입해주세요");
+		return;
+	}
+	if(!$("input[name=photo_Data]")[0].files[0]){
+		alert("사진을 선택해주세요");
+		return;
+	}
+	
+	
 	var formData = new FormData();
 	
 	formData.append("item_Name", $("input[name=item_Name]").val());
+	formData.append("ex_Item_No", $("input[name=ex_Item_No]").val());
+	
 	formData.append("company", $("select[name=company]").val());
 	formData.append("category", $("select[name=category]").val());
 	
@@ -103,7 +167,7 @@ $(document).on("click", "#register", function () {
 	
 
 	$.ajax({
-		url: "/app/manager/itemregister.do",
+		url: "/app/manager/itemupdate.do",
 		data: formData, 
 		processData: false, 
 		contentType: false, 
@@ -126,20 +190,23 @@ $(document).on("click", "#register", function () {
 
 </head>
 <body>
-
-
-	<p>Item register</p>
+	<p>Item update</p>
 	
 	<div id="content">
 		<form id = "ajaxform" method = "post" enctype="multipart/form-data">
+			수정할 상품번호: 
+			<p> ${ivo.item_No} </p>
 			<table>
+
 				<tr>
-					<th colspan="2">입고 등록</th>
+					<th colspan="2">입고 수정</th>
+					
 				</tr>
 				<tr>
 					<td>상품명</td>
 					<td>	
-						<input type="text" name="item_Name">
+						<input type="text" name="item_Name" value = "${ivo.item_Name}" />
+						<input type="hidden" name="ex_Item_No" value = "${ivo.item_No}"/>
 					</td>
 				</tr>
 				<tr>
@@ -166,36 +233,37 @@ $(document).on("click", "#register", function () {
 				</tr>
 				<tr>
 					<td>수량</td>
-					<td>	
-						<input type="number" name="amount">
+					<td>
+						<input type="number" name="amount" value="${ivo.amount}">
 					</td>
 				</tr>
 				<tr>	
 					<td>가격</td>
 					<td>	
-						<input type="number" name="price">
+						<input type="number" name="price" value="${ivo.price}">
 					</td>
 				</tr>
 				<tr>
 					<td>입고일자</td>
 					<td>	
-						<input type="date" name="carry_Date" >
+						<input type="date" name="carry_Date" value="${ivo.carry_Date}" >
 					</td>
 				</tr>
 				<tr>
 					<td>
 					<input type= "text" name="photo_Name"><br>
-					<input type="file" name ="photo_Data" id= "photo_Data">
-					<br/>
-						<img id ="img" width="100" height="100"/>
-
+					<input type="file" name ="photo_Data" id= "photo_Data" value = "${pvo.photo_Data}">
+					<input type="hidden" id="encoded_Photo" value = "${encoded_Photo}">
+					<div id="itemImage"></div>
+ 
 					</td>
 				</tr>
 				<tr>
 					<td colspan="2">	
-						<input type="button" id="register" value ="등록">
+						<input type="button" id="update" value ="수정">
 					</td>
 				</tr>
+
 			</table>
 		</form>	
 	</div>	

@@ -27,19 +27,37 @@ public class ManagerDAO {
 		return ss.selectOne("checkregiNum", checkNum);
 	}
 	public int registerItem(ItemVO ivo) {
-
-		
-		System.out.println("dao"+ivo.getCarry_Date());
-		System.out.println("dao"+ivo.getCarry_Date().getClass());
 		
 		return ss.insert("registerItem", ivo);
 	}
+	public int updateItem(Map<String, Object> map) {
+
+		return ss.update("updateItem", map);
+	}
+	
 	public int registerPhoto(PhotoVO pvo) {
 		
 		return ss.insert("registerPhoto", pvo);
 	}
 	
+	public ItemVO getItemInfo(int item_No) {
+		
+		return ss.selectOne("getItemInfo", item_No);
+	}
 	
+	public PhotoVO getItemPhoto(int item_No) {
+		
+		return ss.selectOne("getItemPhoto", item_No);
+	}
+	
+	public int updatePhoto(Map<String, Object> map) {
+		
+		return ss.update("updatePhoto", map);
+	}
+	public int deleteItem(int item_No) {
+		
+		return ss.delete("deleteItem", item_No);
+	}
 	
 	
 	public void insert(ItemVO vo) {
