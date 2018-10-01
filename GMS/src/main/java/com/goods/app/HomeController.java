@@ -1,4 +1,3 @@
-
 package com.goods.app;
 
 import java.util.Locale;
