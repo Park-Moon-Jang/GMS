@@ -41,7 +41,10 @@ window.onload = function(){
 <form name ="userloginform" action="${pageContext.servletContext.contextPath}/user/loginPost" method="post">
 아이디<input type="text" name="user_id"><br>
 비밀번호<input type="password" name="user_pw"><br>
-<button  onclick="location='${pageContext.servletContext.contextPath}/user/join'">회원가입</button><button  onclick="location='${pageContext.servletContext.contextPath}/user/find'">ID/PW찾기</button><input type="submit" value="로그인">
+
+<input type="button" onclick="location='${pageContext.servletContext.contextPath}/user/join'" value="회원가입">
+<input type="button" onclick="location='${pageContext.servletContext.contextPath}/user/find'" value="id/pw찾기">
+<input type="submit" value="로그인">
 </form>
 </td>
 </tr>
@@ -55,5 +58,6 @@ window.onload = function(){
 </td>
 </tr>
 </table>
+
 </body>
 </html>

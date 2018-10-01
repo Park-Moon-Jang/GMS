@@ -5,6 +5,8 @@
 <head>
 <meta charset="UTF-8">
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+	
 <title>item list page</title>
 <script>
 
@@ -13,7 +15,6 @@ $(document).ready(function(){
 	companySel();
 	categorySel();
 	
-
 	function companySel(){
 		
 		$.ajax({
@@ -58,13 +59,15 @@ $(document).ready(function(){
 	
 })
 
-
-function selBtn(){
+function selBtn(curPage){
 	
 	var company_No = $("#company").val();
 	var category_No = $("#category").val();
-	var from_Date = $("#from_date").val();
-	var to_Date = $("#to_date").val();
+	var from_Date = $("#from_Date").val();
+	var to_Date = $("#to_Date").val();
+	var item_Name = $("#item_Name").val();
+
+	
 	
 	function my_curr_date() {      
 	    var currentDate = new Date()
@@ -76,36 +79,29 @@ function selBtn(){
 	    return my_date;
 	}
 	
-	
 	if(!company_No){
 
-		alert("회사명 입력 ");
 		company_No = 0;
 		}
 	if(!category_No){
-		alert("카테고리 입력 안했네");
+
 		category_No = 0;
 	}
 	if(!from_Date){
-		alert("시작날짜 입력 안했네");
+
 		from_Date = "2017-01-01";
 	}
 	if(!to_Date){
-		alert("끝 날짜 입력 안했네");
-		to_Date = my_curr_date();
 
+		to_Date = my_curr_date();
+	}
+	if(item_Name =="" || item_Name == null || item_Name == '' ){
+		item_Name = null;
+		
 	}
 	
-	
-	alert(company_No);
-	alert(category_No);
-	alert(from_Date);
-	alert(to_Date);
-// 	carry_date1 = date1.getYear()+"-"+date
-	
-	
-	var source = {"company_No":company_No, "category_No":category_No, "from_Date":from_Date, "to_Date":to_Date};
-// 	var source = JSON.stringify(data);
+	var source = {"item_Name":item_Name, "company_No":company_No, "category_No":category_No, "from_Date":from_Date, "to_Date":to_Date, "curPage":curPage};
+
 	
 	var values = []; //ArrayList 값을 받을 변수를 선언
 
@@ -117,24 +113,27 @@ function selBtn(){
 		data: source,
 		
 		success: function(data){
-			console.log("성공");
-			alert("성공");
-			var str = '<table id="itemTab"><tr><td>상품명</td><td>생산업체 번호</td><td>카테고리 번호</td><td>수량</td><td>입고일</td></tr>';
+			alert("success");
+			var str = '<table id="itemTab"><tr><td>상품명</td><td>생산업체 명</td><td>카테고리 명</td><td>수량</td><td>입고일</td></tr>';
 			
 			values = data.list;
 			
 			$.each(values, function(i){
+				
 				str += "<tr id='"+i+"'>"
 				str += "<td>"+values[i].item_Name+"</td>";
-				str += "<td>"+values[i].company_No+"</td>";
-				str += "<td>"+values[i].category_No+"</td>";
-				str += "<td>"+values[i].amount+"</td>";
-				str += "<td>"+values[i].carry_Date+"</td>";
+				str += "<td>"+values[i].company_Name+"</td>";
+				str += "<td>"+values[i].category_Name+"</td>";
+				str += "<td>"+values[i].amount+"</td>";				
+				str += "<td>"+moment(values[i].carry_Date).format('YYYY-MM-DD')+"</td>";
+
 				str += "</tr>"
-//					alert(data[i].category_Name+","+data[i].item_Name+","+data[i].amount+","+data[i].price)
-				
+									
 			})
+			str += paging(data.sp);
+			
 			str += "</table>";
+			
 			$("#itemTab").html(str);
 		},
 		error: function (jqXHR, Status, error){
@@ -142,49 +141,56 @@ function selBtn(){
 		}
 		
 		
-		
 	});
-	
-	///////////////////////
-
-	///////////////////////
-	
-	
-	
-// 	검색할 코드를 넘겨서 값을 가져온다.		
-// 	$.post(
-// 		"/app/manager/itemlist", 
-// 		data,
-// 		function(retVal) {
-// 			if(retVal.code == "OK") { //controller에서 넘겨준 성공여부 코드
+	function paging(sp){
+		var str = '<tr><td colspan="4">';
+		
+		if(sp.curPage > 1){
+			str += '<a href="javascript:;" class="paging">'
+			str += '<input type="text" class="page" value="1" hidden="true">[처음]</a>';
+		}
+		
+		if(sp.curPage > 1){
+			str += '<a href="javascript:;" class="paging">'
+			str += '<input type="text" class="page" value="'+sp.prevPage+'" hidden="true">[이전]</a>';
+		}
+		
+		for(var i=sp.blockBegin ; i<=sp.blockEnd ; i++ ){
+			if(i == sp.curPage){
+				str += '<span style="color: red">'+i+'</span>&nbsp;'
+			}else{
 				
-// 				values = retVal.list; //java에서 정의한 ArrayList명을 적어준다.
-				
-// 				$.each(values, function() {
-// 				   console.log(values); //Book.java 의 변수명을 써주면 된다.
-// 				});
-				
-// 				alert("성공");
-// 			}
-// 			else {
-// 				alert("실패");
-// 			}					
-// 		}
-// 	);
-	// 리스트 가져올 ajax 만들 공간
-
-	//
+				str += '<a href="javascript:;" class="paging">'
+    			str += '<input type="text" class="page" value="'+i+'" hidden="true" target="">'+i+'</a>&nbsp;';
+    			
+			}
+		}
+		
+		if(sp.curBlock <= sp.totalBlock){
+			str += '<a href="javascript:;" class="paging">'
+			str += '<input type="text" class="page" value="'+sp.nextPage+'" hidden="true">[다음]</a>';
+		}
+		
+		if(sp.curPage <= sp.totalPage){
+			str += '<a href="javascript:;" class="paging">'
+			str += '<input type="text" class="page" value="'+sp.totalPage+'" hidden="true">[끝]</a>';
+	
+		}
+		str += '</td></tr>';
+		return str;
+		
+	}
 }
 
-
-
+$(document).on("click",".paging",function(){
+	
+	page = $(this).find(".page").val();
+	console.log(page)
+	selBtn(page)
+	
+})
 
 </script>
-
-
-
-
-
 
 </head>
 
@@ -198,7 +204,7 @@ function selBtn(){
 		<table>
 			<thead>
 				<tr>
-					<th corspan="4" ">물품현황</th>
+					<th corspan="5">물품현황</th>
 				</tr>
 				<tr>
 		
@@ -213,10 +219,13 @@ function selBtn(){
 						</select>
 					</td>
 					<td>	
-						<input type="date" id="from_date" >
+						<input type="date" id="from_Date" >
 					</td>
 					<td>	
-						<input type="date" id="to_date" >
+						<input type="date" id="to_Date" >
+					</td>
+					<td>	
+						<input type="text" id="item_Name">
 					</td>
 					<td>	
 						<button id="selBtn" onclick="selBtn()">검색</button>
@@ -227,8 +236,8 @@ function selBtn(){
 				<table id="itemTab">
 					<tr>
 								<td>상품명</td>
-								<td>생산업체 번호</td>
-								<td>카테고리 번호</td>
+								<td>생산업체 명</td>
+								<td>카테고리 명</td>
 								<td>수량</td>
 								<td>입고일</td>
 					</tr>

@@ -18,23 +18,16 @@
 
 		<div class="util">
 			<ul class="menu">
-<%-- 				<c:set var="id" value="${session_manager}" /> --%>
-<%-- 				<c:choose> --%>
-<%-- 					<c:when test="${empty id}"> --%>
-<!-- 						<li><a -->
-<%-- 							href="${pageContext.servletContext.contextPath}/home">login</a></li> --%>
-<%-- 					</c:when> --%>
-<%-- 					<c:otherwise> --%>
-						<li> ${session_manager} 님</li>					
-						
+
+						<li>${session_manager}님</li>
+
 						<li><a
 							href="${pageContext.servletContext.contextPath}/manager/userpage">userpage</a></li>
 						<li><a
 							href="${pageContext.servletContext.contextPath}/manager/viewmanageuser">회원관리</a></li>
 						<li><a
 							href="${pageContext.servletContext.contextPath}/manager/logout">logout</a></li>
-<%-- 					</c:otherwise> --%>
-<%-- 				</c:choose> --%>
+
 			</ul>
 		</div>
 
@@ -48,18 +41,14 @@
 					href="${pageContext.servletContext.contextPath}/manager/viewitemlist">물품현황</a></li>
 				<li class="gnb03"><a
 					href="${pageContext.servletContext.contextPath}/manager/viewitemstored">입고관리</a></li>
-				<li class="gnb03"><a
-					href="${pageContext.servletContext.contextPath}/manager/viewitemreleased">출고관리</a></li>					
 				<li class="gnb04"><a
-					href="${pageContext.servletContext.contextPath}/manager/viewitemreturned">반납관리</a></li>
+					href="${pageContext.servletContext.contextPath}/manager/viewitemreleased">출고관리</a></li>					
 				<li class="gnb05"><a
 					href="${pageContext.servletContext.contextPath}/store/viewstore">매장관리</a></li>
 				<li class="gnb06"><a
-					href="${pageContext.servletContext.contextPath}/store/statistics">판매통계</a></li>
+					href="${pageContext.servletContext.contextPath}/store/statistics">선호도통계</a></li>
 				<li class="gnb07"><a
 					href="${pageContext.servletContext.contextPath}/manager/managerboard">관리자 공지사항</a></li>
-				<li class="gnb08"><a
-					href="${pageContext.servletContext.contextPath}/manager/mypage">mypage</a></li>				
 	
 			</ul>
 		</nav>
