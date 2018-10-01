@@ -19,9 +19,7 @@ public class ManagerDAO {
 
 	@Autowired
 	SqlSession ss;
-	
-	
-	
+
 	public int checkregiNum(int checkNum) {
 		
 		return ss.selectOne("checkregiNum", checkNum);
@@ -61,14 +59,12 @@ public class ManagerDAO {
 	
 	
 	public void insert(ItemVO vo) {
-		System.out.println("dao!");
+		
 		ss.insert("insertItem", vo);
 	}
 
 	public List<ItemVO> getnewItemlist() {
-		// TODO Auto-generated method stub
 		
-		//신상 3개만 출력
 		return ss.selectList("getnewItemlist");
 	}
 	public List<ItemVO> getstoredlist(Map<String, Object> map){
@@ -98,8 +94,6 @@ public class ManagerDAO {
 	public List<UserVO> getUserlist() {
 		return ss.selectList("userlist");
 	}
-
-
 
 	public void deleteUser(String user_id) {
 		ss.delete("deleteUser",user_id);

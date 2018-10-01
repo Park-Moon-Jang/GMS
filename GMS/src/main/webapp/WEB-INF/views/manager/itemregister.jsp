@@ -110,7 +110,6 @@ $(document).on("click", "#register", function () {
 		type: "POST", 
 		success: function(data){
 			alert("success"); 
-			alert(data.check);
 		},
 		error: function(){ 
 			alert("error");

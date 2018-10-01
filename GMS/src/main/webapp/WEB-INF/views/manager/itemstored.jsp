@@ -22,19 +22,16 @@ $(document).on("click","#register",function(url){
 
 $(document).on("click",".itemUpdate", function(){
 	var item_No = $(this).find(".item_No").val();
-	alert(item_No);
 	window.open("${pageContext.servletContext.contextPath}/manager/viewitemupdate?item_No="+item_No,"", "width=600, height=400");
 })
 
 $(document).on("click",".itemDelete", function(){
 	var item_No = $(this).find(".item_No").val();
-	alert(item_No);
 	var item = {"item_No": item_No};
 	
 	var answer = confirm("정말로 삭제하시겠습니까?");
 	if(answer == true){
 		
-		alert(item);
 		$.ajax({
 			
 			type:"post",
@@ -44,7 +41,7 @@ $(document).on("click",".itemDelete", function(){
 			success: function(data){
 				
 				alert("입고정보가 삭제되었습니다");
-				alert(data);
+				getList(1);
 			},
 			error: function (jqXHR, Status, error){
 				console.log("delete Error!");
