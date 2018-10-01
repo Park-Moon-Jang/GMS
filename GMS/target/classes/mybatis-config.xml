@@ -8,6 +8,8 @@
 
     <mapper resource="/mappers/User.xml"/>
     <mapper resource="/mappers/manager.xml"/>
+    <mapper resource="/mappers/store.xml"/>
+    
   </mappers>
   
 </configuration>

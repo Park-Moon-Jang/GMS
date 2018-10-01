@@ -2,8 +2,11 @@ package com.goods.app.vo;
 
 public class Paging {
 
+
 	public static final int PAGE_SCALE = 10;  //한 페이지에 보여지는 글의 수
 	public static final int BLOCK_SCALE = 5;  // 한번에 보여지는 페이지넘버의 개수
+
+
 	
 	private int curPage;   //현재 페이지
     private int prevPage;  //이전 페이지

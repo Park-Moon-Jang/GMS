@@ -62,6 +62,13 @@ public class UserServiceImpl implements UserService{
 		
 		dao.updatePW(vo);
 	}
+
+
+	@Override
+	public void delete(UserVO vo) throws Exception {
+		dao.delete(vo);
+		
+}
 	@Override
 	public List<ItemVO> brandSel() {
 		// TODO Auto-generated method stub
@@ -96,6 +103,54 @@ public class UserServiceImpl implements UserService{
 	public List<ItemVO> itemDetalSel(int item_No) {
 		// TODO Auto-generated method stub
 		return dao.itemDetalSel(item_No);
+
+
+	}
+
+	@Override
+	public int checkid(String user_id) {
+		// TODO Auto-generated method stub
+		return dao.checkid(user_id);
+	}
+
+	@Override
+	public boolean selectScrap(int item_No, String user_Id) {
+		// TODO Auto-generated method stub
+		return dao.selectScrap(item_No, user_Id);
+	}
+
+	@Override
+	public int insertScrap(String user_Id, int item_No) {
+		// TODO Auto-generated method stub
+		return dao.insertScrap(user_Id, item_No);
+	}
+
+	@Override
+	public int deleteScrap(String user_Id, int item_No) {
+		// TODO Auto-generated method stub
+		return dao.deleteScrap(user_Id, item_No);
+	}
+
+	@Override
+	public List<ItemVO> myScrapSel(String user_Id, int curPage) {
+		// TODO Auto-generated method stub
+		return dao.myScrapSel(user_Id, curPage);
+	}
+
+	@Override
+	public int myScrapCount(String user_Id) {
+		// TODO Auto-generated method stub
+		return dao.myScrapCount(user_Id);
+	}
+
+	@Override
+	public void delete_scr(String user_id) {
+		dao.delete_scr(user_id);
+	}
+
+	public int selectedScrapDelete(List<String> checkArray, String user_Id) {
+		// TODO Auto-generated method stub
+		return dao.selectedScrapDelete(checkArray, user_Id);
 
 	}
 		
