@@ -14,8 +14,7 @@ import com.goods.app.vo.UserVO;
 public class LoginInterceptor_user extends HandlerInterceptorAdapter {
 	@Inject
 	UserService ser;
-/*	@Inject
-	ManagerService ser2;*/
+
 	
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception
 	{
@@ -25,13 +24,12 @@ public class LoginInterceptor_user extends HandlerInterceptorAdapter {
 		UserVO vo = ser.checkUser(id, pw);
 		if (vo==null)
 		{
-			System.out.println("로그인실패");
 			response.sendRedirect(request.getContextPath()+"/");
+			
 			return false;
 		}
 		HttpSession session = request.getSession();
 		session.setAttribute("session_user", vo.getUser_id());
-		System.out.println("로그인성공");
 		response.sendRedirect(request.getContextPath()+"/user/login");
 		
 		return false;

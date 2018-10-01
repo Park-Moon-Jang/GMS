@@ -1,6 +1,9 @@
 package com.goods.app.vo;
 
+
+
 import java.util.Date;
+
 
 public class ItemVO {
  
@@ -15,6 +18,7 @@ public class ItemVO {
 	private int price;
 	private int amount;
 	private Date carry_Date;
+	
 	public int getCompany_No() {
 		return company_No;
 	}
@@ -81,6 +85,8 @@ public class ItemVO {
 	public void setCarry_Date(Date carry_Date) {
 		this.carry_Date = carry_Date;
 	}
+
 	
-	
+
 }
+	

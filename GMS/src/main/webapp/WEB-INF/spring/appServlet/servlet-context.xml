@@ -28,13 +28,38 @@
 	<context:component-scan base-package="com.goods.app.service"/>
 	
 	
-	<beans:bean id="logininterceptor" class="com.goods.app.interceptor.LoginInterceptor_user"></beans:bean>
+	<beans:bean id="logininterceptor_user" class="com.goods.app.interceptor.LoginInterceptor_user"></beans:bean>
+	<beans:bean id="logininterceptor_manager" class="com.goods.app.interceptor.LoginInterceptor_manager"></beans:bean>
+	<beans:bean id="FindInterceptor" class="com.goods.app.interceptor.FindInterceptor"></beans:bean>
+	<beans:bean id="FindInterceptor2" class="com.goods.app.interceptor.FindInterceptor2"></beans:bean>
+	<beans:bean id="LogoutInterceptor" class="com.goods.app.interceptor.LogoutInterceptor"></beans:bean>
+	
 	
 	<interceptors>
 		<interceptor>
-		<mapping path="/user/loginPost"/>
-		<beans:ref bean="logininterceptor"/>
-	</interceptor>
+			<mapping path="/user/loginPost"/>
+			<beans:ref bean="logininterceptor_user"/>
+		</interceptor>
+		<interceptor>
+			<mapping path="/manager/loginPost"/>
+			<beans:ref bean="logininterceptor_manager"/>
+		</interceptor>
+		<interceptor>
+			<mapping path="/user/findID"/>
+			<beans:ref bean="FindInterceptor"/>
+		</interceptor>
+		<interceptor>
+			<mapping path="/user/findPW"/>
+			<beans:ref bean="FindInterceptor2"/>
+		</interceptor>
+		<interceptor>
+			<mapping path="/user/logout"/>
+			<beans:ref bean="LogoutInterceptor"/>
+		</interceptor>
+		<interceptor>
+			<mapping path="/manager/logout"/>
+			<beans:ref bean="LogoutInterceptor"/>
+		</interceptor>
 	</interceptors>
 	
 </beans:beans>

@@ -4,6 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
   <mapper namespace="com.bit.app">
   
+  
     <!-- 전체 목록 -->
 <!--     <select id="boardlistAll" resultType="com.bit.app.vo.BoardVO"> -->
 <!--         SELECT * FROM BOARD1 ORDER BY no desc, writedate desc -->
@@ -12,7 +13,114 @@
 <!--    <insert id="join" parameterType="com.goods.app.vo.MemberVO" >
     INSERT INTO item_category (category_no, category_name) VALUES (#{category_no}, #{category_name})
    </insert> -->
+   <delete id="delSPost" parameterType="int">
+   		delete from gms_pj.spost where spost_No = #{spost_No}
+   </delete>
+   <update id="updateSuggestionsPost">
+   	update gms_pj.spost set spost.category_no = #{category_No},  spost.title= #{title}, spost.content = #{content}, spost.secret = #{secret} where spost_No = #{spost_No}
+   </update>
    
+   <select id="SelectDetailSPost" resultType="com.goods.app.vo.SPostVO" parameterType="int">
+   select t1.spost_no, t3.category_name, t1.title, t1.content, t1.user_Id, t2.user_nickname, t1.hits, t1.secret from
+	(SELECT * FROM gms_pj.spost where spost_no = #{spost_No}) t1
+	INNER JOIN
+	(SELECT * FROM gms_pj.user) t2
+	on t1.user_id = t2.user_id
+	inner join
+	(select * from gms_pj.item_category) t3
+	on t1.category_no = t3.category_no
+   	
+   </select>
+   
+   <update id="updateHits">
+   	update gms_pj.spost set hits = (select * from (select hits + 1 as hits from gms_pj.spost where spost_no = #{spost_no}) as t1) where spost_no = #{spost_no}
+   </update>
+   <select id="SelectSPost" resultType="com.goods.app.vo.SPostVO" parameterType="int">
+	select t1.spost_no, t3.category_name, t1.title, t1.content, t1.user_Id, t2.user_nickname, t1.hits, t1.secret from
+	(SELECT * FROM gms_pj.spost) t1
+	INNER JOIN
+	(SELECT * FROM gms_pj.user) t2
+	on t1.user_id = t2.user_id
+	inner join
+	(select * from gms_pj.item_category) t3
+	on t1.category_no = t3.category_no
+	order by spost_no
+	limit 10 offset #{curPage}
+   </select>
+   
+   <select id="SelectSPostCount" resultType="int">
+   	SELECT count(*) FROM gms_pj.spost;
+   </select>
+   
+   <insert id="insertSuggestionsPost" parameterType="map">
+   	insert into gms_pj.spost (spost.category_no, spost.title, spost.content, spost.user_id,spost.hits, spost.secret)
+   	values(#{category_No},#{title},#{content},#{user_Id},0,#{secret})
+   </insert>
+   
+   <delete id="DeleteComent" parameterType="map">
+   	delete from gms_pj.item_coment where item_no = #{item_No} and coment_no = #{coment_No}
+   </delete>
+   
+   <select id="SelectComentCount" parameterType="int" resultType="int">
+   	SELECT count(*) FROM gms_pj.item_coment where item_No = #{item_No}
+   </select>
+   
+   <select id="SelectComent" parameterType="int" resultType="com.goods.app.vo.comentVO">
+   	select t1.coment_no, t1.item_No, t1.content, t1.user_Id, t2.user_NickName, t1.write_Date from 
+	(SELECT * FROM gms_pj.item_coment where item_no = #{item_No}) t1
+	inner join 
+	(select * from gms_pj.user) t2
+	on t1.user_id = t2. user_id
+	order by write_date limit 10 offset #{curPage};
+   </select>
+   
+   <insert id="InsertComent" parameterType="map">
+   	insert into gms_pj.item_coment (item_coment.item_no, item_coment.content, item_coment.user_id, item_coment.write_date) values(#{item_No},#{coment},#{user_Id},DATE_FORMAT(now(), '%Y-%m-%d %H:%i:%s'))
+   </insert>
+   
+   <delete id="SelectedScrapDelete" parameterType="map">
+   	delete from gms_pj.scrap where user_id = #{user_Id} and  
+   	
+   	<foreach collection="checkArray" item="item" separator="or" index="index">
+   	 item_no = #{item}
+   	</foreach>
+   </delete>
+   
+   <select id="SelectMyScrap" parameterType="Map"  resultType="com.goods.app.vo.ItemVO">
+	select t1.item_no, t1.amount, t1.user_id, t2.item_name, t2.company_no,
+	t2.category_no, t2.price, t3.company_name from
+	(SELECT * FROM gms_pj.scrap where user_id = #{user_Id}) t1
+	inner Join
+	(select * from gms_pj.item) t2
+	on t1.item_No = t2.item_No
+	inner join
+	(select * from gms_pj.manufacturer) t3
+	on t2.company_no = t3.company_no
+	order by item_no
+	limit 10 offset #{curPage}
+   </select> 
+   
+   <select id="MyScrapCount" parameterType="String" resultType="int">
+	select count(*) from
+	(SELECT * FROM gms_pj.scrap where user_id = #{user_Id}) t1
+	inner Join
+	(select * from gms_pj.item) t2
+	on t1.item_No = t2.item_No
+	inner join
+	(select * from gms_pj.manufacturer) t3
+	on t2.company_no = t3.company_no
+   </select>
+   
+   <delete id="deleteScrap" parameterType="Map">
+   delete from gms_pj.scrap where item_No = #{item_No} and user_id = #{user_Id}
+   </delete>
+   <insert id="insertScrap" parameterType="Map">
+   INSERT INTO gms_pj.scrap VALUES (#{item_No}, (select amount from gms_pj.item where item_No = #{item_No}), #{user_Id})
+   </insert>
+   
+   <select id="ChoiceScrap" resultType="boolean" parameterType="Map">
+   SELECT count(*) FROM gms_pj.SCRAP WHERE ITEM_NO = #{item_No} and USER_ID = #{user_Id}
+   </select>
    <select id="SelectItemDetal" resultType="com.goods.app.vo.ItemVO" parameterType="int">
 	SELECT t1.item_no,t1.item_name,t1.amount,t1.company_no,
 	t3.company_name,t1.price,t1.carry_Date, t2.category_no,
@@ -26,163 +134,148 @@
 	on t1.company_no = t3.company_no
    </select>
    
-   <select id="countSelectBtn8" resultType="int" parameterType="com.goods.app.vo.ItemVO">
-		SELECT count(*)
-		FROM (select * from gms_pj.item where item.item_no like CONCAT(#{item_No},"%") and item.item_no = 
+   <select id="countSelectBtn" resultType="int" parameterType="map">
+   SELECT count(*)
+		FROM (select * from gms_pj.item
+   <choose>
+   		<when test="store_Name!='' and category_No != 0 and company_No != 0">
+   		where item.item_no like CONCAT(#{item_No},"%") and item.item_no = 
+		(select store.item_no from gms_pj.store where store_name = #{store_Name})) t1
+		INNER JOIN 
+		(SELECT * from gms_pj.item_category where item_category.category_no = #{category_No}) t2
+		on t1.category_no = t2.category_no  
+   		</when>
+   		
+   		<when test="store_Name=='' and category_No != 0 and company_No != 0">
+   		where item.item_no like CONCAT(#{item_No},"%")) t1
+		INNER JOIN 
+		(SELECT * from gms_pj.item_category where item_category.category_no = #{category_No}) t2
+		on t1.category_no = t2.category_no 
+   		</when>	
+   		
+   		<when test="store_Name=='' and category_No == 0 and company_No != 0">
+   		where item.item_no like CONCAT(#{item_No},"%")) t1
+		INNER JOIN 
+		(SELECT * from gms_pj.item_category) t2
+		on t1.category_no = t2.category_no 
+   		</when>
+   		
+   		<when test="store_Name=='' and category_No == 0 and company_No == 0">
+   		) t1
+		INNER JOIN 
+		(SELECT * from gms_pj.item_category) t2
+		on t1.category_no = t2.category_no 
+   		</when>
+   		
+   		<when test="store_Name=='' and category_No != 0 and company_No == 0">
+   		where item.item_no like CONCAT("__",#{item_No},"%")) t1
+		INNER JOIN 
+		(SELECT * from gms_pj.item_category where item_category.category_no = #{category_No}) t2
+		on t1.category_no = t2.category_no 
+   		</when>
+   		
+   		<when test="store_Name!='' and category_No == 0 and company_No == 0">
+   		where item.item_no = 
 		(select store.item_no from gms_pj.store where store_name = #{store_Name})) t1
 		INNER JOIN 
 		(SELECT * from gms_pj.item_category) t2
 		on t1.category_no = t2.category_no 
-   </select>
-   
-   <select id="countSelectBtn7" resultType="int" parameterType="com.goods.app.vo.ItemVO">
-		SELECT count(*)
-		FROM (select * from gms_pj.item where item.item_no like CONCAT("__",#{item_No},"%") and item.item_no = 
+   		</when>
+   		
+   		<when test="store_Name!='' and category_No != 0 and company_No == 0">
+   		where item.item_no like CONCAT("__",#{item_No},"%") and item.item_no = 
 		(select store.item_no from gms_pj.store where store_name = #{store_Name})) t1
 		INNER JOIN 
 		(SELECT * from gms_pj.item_category where item_category.category_no = #{category_No}) t2
 		on t1.category_no = t2.category_no 
-   </select>
-   
-   <select id="countSelectBtn6" resultType="int" parameterType="com.goods.app.vo.ItemVO">
-		SELECT count(*)
-		FROM (select * from gms_pj.item where item.item_no = 
+   		</when>
+   		<otherwise>
+   		where item.item_no like CONCAT(#{item_No},"%") and item.item_no = 
 		(select store.item_no from gms_pj.store where store_name = #{store_Name})) t1
 		INNER JOIN 
 		(SELECT * from gms_pj.item_category) t2
 		on t1.category_no = t2.category_no 
-   </select>
+   		</otherwise>
+   </choose>			
    
-   <select id="countSelectBtn5" resultType="int" parameterType="com.goods.app.vo.ItemVO">
-		SELECT count(*)
-		FROM (select * from gms_pj.item where item.item_no like CONCAT("__",#{item_No},"%")) t1
-		INNER JOIN 
-		(SELECT * from gms_pj.item_category where item_category.category_no = #{category_No}) t2
-		on t1.category_no = t2.category_no 
-   </select>
-   
-   <select id="countSelectBtn4" resultType="int" parameterType="com.goods.app.vo.ItemVO">
-		SELECT count(*)
-		FROM (select * from gms_pj.item) t1
-		INNER JOIN 
-		(SELECT * from gms_pj.item_category) t2
-		on t1.category_no = t2.category_no 
-   </select>
-   <select id="countSelectBtn3" resultType="int" parameterType="com.goods.app.vo.ItemVO">
-		SELECT count(*)
-		FROM (select * from gms_pj.item where item.item_no like CONCAT(#{item_No},"%")) t1
-		INNER JOIN 
-		(SELECT * from gms_pj.item_category) t2
-		on t1.category_no = t2.category_no 
-   </select>
-   
-   <select id="countSelectBtn2" resultType="int" parameterType="com.goods.app.vo.ItemVO">
-		SELECT count(*)
-		FROM (select * from gms_pj.item where item.item_no like CONCAT(#{item_No},"%")) t1
-		INNER JOIN 
-		(SELECT * from gms_pj.item_category where item_category.category_no = #{category_No}) t2
-		on t1.category_no = t2.category_no 
-   </select>
-   
-   <select id="countSelectBtn" resultType="int" parameterType="com.goods.app.vo.ItemVO">
-		SELECT count(*)
-		FROM (select * from gms_pj.item where item.item_no like CONCAT(#{item_No},"%") and item.item_no = 
-		(select store.item_no from gms_pj.store where store_name = #{store_Name})) t1
-		INNER JOIN 
-		(SELECT * from gms_pj.item_category where item_category.category_no = #{category_No}) t2
-		on t1.category_no = t2.category_no 
-   </select>
-   
-   
-   <select id="SelectBtn8" resultType="com.goods.app.vo.ItemVO" parameterType="Map">
-		<include refid ="pagingStart"/>
-		SELECT t1.item_no,t1.item_name,t1.amount,t1.company_no,t1.price,t1.carry_Date, t2.category_no, t2.category_name
-		FROM (select * from gms_pj.item where item.item_no like CONCAT(#{item_No},"%") and item.item_no = 
-		(select store.item_no from gms_pj.store where store_name = #{store_Name})) t1
-		INNER JOIN 
-		(SELECT * from gms_pj.item_category) t2
-		on t1.category_no = t2.category_no 
-		<include refid ="pagingEnd"/>
-   </select>
-   
-   <select id="SelectBtn7" resultType="com.goods.app.vo.ItemVO" parameterType="Map">
- 	  <include refid ="pagingStart"/>
-		SELECT t1.item_no,t1.item_name,t1.amount,t1.company_no,t1.price,t1.carry_Date, t2.category_no, t2.category_name
-		FROM (select * from gms_pj.item where item.item_no like CONCAT("__",#{item_No},"%") and item.item_no = 
-		(select store.item_no from gms_pj.store where store_name = #{store_Name})) t1
-		INNER JOIN 
-		(SELECT * from gms_pj.item_category where item_category.category_no = #{category_No}) t2
-		on t1.category_no = t2.category_no 
-		<include refid ="pagingEnd"/>
-   </select>
-   
-   <select id="SelectBtn6" resultType="com.goods.app.vo.ItemVO" parameterType="Map">
-   		<include refid ="pagingStart"/>
-		SELECT t1.item_no,t1.item_name,t1.amount,t1.company_no,t1.price,t1.carry_Date, t2.category_no, t2.category_name
-		FROM (select * from gms_pj.item where item.item_no = 
-		(select store.item_no from gms_pj.store where store_name = #{store_Name})) t1
-		INNER JOIN 
-		(SELECT * from gms_pj.item_category) t2
-		on t1.category_no = t2.category_no 
-		<include refid ="pagingEnd"/>
-   </select>
-   
-   <select id="SelectBtn5" resultType="com.goods.app.vo.ItemVO" parameterType="Map">
-   		<include refid ="pagingStart"/>
-		SELECT t1.item_no,t1.item_name,t1.amount,t1.company_no,t1.price,t1.carry_Date, t2.category_no, t2.category_name
-		FROM (select * from gms_pj.item where item.item_no like CONCAT("__",#{item_No},"%")) t1
-		INNER JOIN 
-		(SELECT * from gms_pj.item_category where item_category.category_no = #{category_No}) t2
-		on t1.category_no = t2.category_no 
-		<include refid ="pagingEnd"/>
-   </select>
-   
-   <select id="SelectBtn4" resultType="com.goods.app.vo.ItemVO" parameterType="Map">
-   		<include refid ="pagingStart"/>
-		SELECT t1.item_no,t1.item_name,t1.amount,t1.company_no,t1.price,t1.carry_Date, t2.category_no, t2.category_name
-		FROM (select * from gms_pj.item) t1
-		INNER JOIN 
-		(SELECT * from gms_pj.item_category) t2
-		on t1.category_no = t2.category_no 
-		<include refid ="pagingEnd"/>
-   </select>
-   <select id="SelectBtn3" resultType="com.goods.app.vo.ItemVO" parameterType="Map">
-   		<include refid ="pagingStart"/>
-		SELECT t1.item_no,t1.item_name,t1.amount,t1.company_no,t1.price,t1.carry_Date, t2.category_no, t2.category_name
-		FROM (select * from gms_pj.item where item.item_no like CONCAT(#{item_No},"%")) t1
-		INNER JOIN 
-		(SELECT * from gms_pj.item_category) t2
-		on t1.category_no = t2.category_no 
-		<include refid ="pagingEnd"/>
-   </select>
-   
-   <select id="SelectBtn2" resultType="com.goods.app.vo.ItemVO" parameterType="Map">
-  		<include refid ="pagingStart"/>
-		SELECT t1.item_no,t1.item_name,t1.amount,t1.company_no,t1.price,t1.carry_Date, t2.category_no, t2.category_name
-		FROM (select * from gms_pj.item where item.item_no like CONCAT(#{item_No},"%")) t1
-		INNER JOIN 
-		(SELECT * from gms_pj.item_category where item_category.category_no = #{category_No}) t2
-		on t1.category_no = t2.category_no 
-		<include refid ="pagingEnd"/>
    </select>
    
    <select id="SelectBtn" resultType="com.goods.app.vo.ItemVO" parameterType="Map">
-  		<include refid ="pagingStart"/>
+		<include refid ="pagingStart"/>
 		SELECT t1.item_no,t1.item_name,t1.amount,t1.company_no,t1.price,t1.carry_Date, t2.category_no, t2.category_name
-		FROM (select * from gms_pj.item where item.item_no like CONCAT(#{item_No},"%") and item.item_no = 
+		FROM (select * from gms_pj.item 
+		<choose>
+		
+		<when test="store_Name !='' and category_No != 0 and company_No == 0">
+		where item.item_no like CONCAT("__",#{item_No},"%") and item.item_no = 
 		(select store.item_no from gms_pj.store where store_name = #{store_Name})) t1
 		INNER JOIN 
 		(SELECT * from gms_pj.item_category where item_category.category_no = #{category_No}) t2
 		on t1.category_no = t2.category_no 
+		</when>
+
+		<when test="store_Name !='' and category_No == 0 and company_No == 0">
+		where item.item_no = 
+		(select store.item_no from gms_pj.store where store_name = #{store_Name})) t1
+		INNER JOIN 
+		(SELECT * from gms_pj.item_category) t2
+		on t1.category_no = t2.category_no 
+		</when>
+
+		<when test="store_Name=='' and category_No != 0 and company_No == 0">
+		where item.item_no like CONCAT("__",#{item_No},"%")) t1
+		INNER JOIN 
+		(SELECT * from gms_pj.item_category where item_category.category_no = #{category_No}) t2
+		on t1.category_no = t2.category_no 
+		</when>
+
+		<when test="store_Name =='' and category_No == 0 and company_No == 0">
+		) t1
+		INNER JOIN 
+		(SELECT * from gms_pj.item_category) t2
+		on t1.category_no = t2.category_no
+		</when>
+ 		
+		<when test="store_Name=='' and category_No == 0 and company_No != 0">
+		where item.item_no like CONCAT(#{item_No},"%")) t1
+		INNER JOIN 
+		(SELECT * from gms_pj.item_category) t2
+		on t1.category_no = t2.category_no 
+		</when>
+
+		<when test="store_Name=='' and category_No != 0 and company_No != 0">
+		where item.item_no like CONCAT(#{item_No},"%")) t1
+		INNER JOIN 
+		(SELECT * from gms_pj.item_category where item_category.category_no = #{category_No}) t2
+		on t1.category_no = t2.category_no 
+		</when>
+
+		<when test="store_Name !='' and category_No != 0 and company_No != 0">
+		where item.item_no like CONCAT(#{item_No},"%") and item.item_no = 
+		(select store.item_no from gms_pj.store where store_name = #{store_Name})) t1
+		INNER JOIN 
+		(SELECT * from gms_pj.item_category where item_category.category_no = #{category_No}) t2
+		on t1.category_no = t2.category_no 
+		</when>
+		
+		<otherwise>
+		where item.item_no like CONCAT(#{item_No},"%") and item.item_no = 
+		(select store.item_no from gms_pj.store where store_name = #{store_Name})) t1
+		INNER JOIN 
+		(SELECT * from gms_pj.item_category) t2
+		on t1.category_no = t2.category_no
+		</otherwise>
+		</choose>
 		<include refid ="pagingEnd"/>
    </select>
+   
    <sql id ="pagingStart">
    select * from (
    </sql>
    <sql id ="pagingEnd">
    order by item_no
 	) B
-	limit 2 offset #{curPage}
+	limit 10 offset #{curPage}
    </sql>
    <select id="SelectStore" resultType="com.goods.app.vo.ItemVO">
    		SELECT STORE_NO, STORE_NAME FROM STORE
@@ -200,6 +293,21 @@
    		SELECT USER_ID,USER_PW FROM USER WHERE USER_ID=#{user_id} and USER_PW=#{user_pw}
    </select>
 	<insert id="joinUser">
-		INSERT INTO USER VALUES (#{user_id},#{user_pw},#{user_nickname},#{user_name},#{user_phon},#{user_email},#{birth})
+		INSERT INTO USER VALUES (#{user_id},#{user_pw},#{user_nickname},#{user_name},#{user_phon},#{user_email},#{user_age})
 	</insert>
+
+    <update id="updateUser_">
+    	UPDATE USER SET USER_PW = #{user_pw},USER_NICKNAME=#{user_nickname},USER_PHON=#{user_phon}, USER_email = #{user_email} WHERE USER_ID= #{user_id}
+    </update>
+    <select id="findID" resultType="com.goods.app.vo.UserVO" >
+    	SELECT USER_ID FROM USER WHERE USER_NAME=#{user_name} AND USER_EMAIL=#{user_email}
+    </select>
+
+    <select id="findpw">
+    	SELECT USER_ID,USER_PW FROM USER WHERE USER_id=#{user_id} AND USER_EMAIL=#{user_email}
+    </select>
+    <update id="updatePW">
+    	UPDATE USER SET USER_PW=#{user_pw} WHERE USER_ID=#{user_id}
+    </update>
+    
  </mapper>
