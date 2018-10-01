@@ -150,6 +150,22 @@ public class ManagerController {
 		return "manager/itemregister";
 		
 	}
+
+	@SuppressWarnings("restriction")
+	@RequestMapping(value = "/viewitemrelease", method = RequestMethod.GET)
+	public String viewitemrelease(Model model, @RequestParam(value="item_No", required=false) int item_No, ItemVO ivo, PhotoVO pvo) {
+		
+		ivo = ms.getItemInfo(item_No);
+		pvo = ms.getItemPhoto(item_No);
+		
+		String encoded_Photo = Base64.encode(pvo.getPhoto_Data());
+		
+		model.addAttribute("ivo", ivo);
+		model.addAttribute("pvo", pvo);
+		model.addAttribute("encoded_Photo", encoded_Photo);
+		
+		return "manager/itemrelease";
+	}
 	
 	@ResponseBody
 	@RequestMapping("/itemregister.do")
