@@ -12,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.goods.app.vo.ItemVO;
+import com.goods.app.vo.SPostVO;
 import com.goods.app.vo.UserVO;
+import com.goods.app.vo.comentVO;
 
 @Repository
 public class UserDAO 
@@ -167,7 +169,70 @@ public class UserDAO
 		map.put("user_Id",user_Id);
 		map.put("checkArray", checkArray);
 		return ss.delete("SelectedScrapDelete", map);
+<<<<<<< HEAD
 
+=======
+	}
+	
+	public int insertComent(int item_No, String user_Id, String coment) {
+		Map map = new HashMap();
+		map.put("item_No", item_No);
+		map.put("user_Id",user_Id);
+		map.put("coment", coment);
+		
+		return ss.insert("InsertComent",map);
+	}
+	
+	public List<comentVO> selectComent(int item_No, int curPage){
+		Map map = new HashMap();
+		curPage = (curPage - 1 ) * 10;
+		map.put("item_No", item_No);
+		map.put("curPage", curPage);
+		return ss.selectList("SelectComent",map);
+	}
+	
+	public int selectComentCount(int item_No) {
+		System.out.println(item_No);
+		return ss.selectOne("SelectComentCount", item_No);
+	}
+	
+	public int deleteComent(int item_No, int coment_No) {
+		Map map = new HashMap();
+		map.put("item_No", item_No);
+		map.put("coment_No", coment_No);
+		return ss.delete("DeleteComent",map);
+	}
+	
+	public int insertSuggestionsPost(Map map) {
+		
+		return ss.insert("insertSuggestionsPost",map);
+	}
+	
+	public int updateSuggestionsPost(Map map) {
+		return ss.update("updateSuggestionsPost",map);
+	}
+	
+	public int selectSPostCount() {
+		
+		return ss.selectOne("SelectSPostCount");
+	}
+	
+	public List<SPostVO> selectSPost(int curPage){
+		curPage = (curPage - 1 ) * 10;
+		return ss.selectList("SelectSPost", curPage);
+	}
+	
+	public int updateHits(int spost_no) {
+		return ss.update("updateHits",spost_no);
+	}
+
+	public List<SPostVO> selDetailSPost(int spost_No){
+		return ss.selectList("SelectDetailSPost", spost_No);
+	}
+	
+	public int delSPost(int spost_No) {
+		return ss.delete("delSPost", spost_No);
+>>>>>>> refs/heads/moon
 	}
 
 }

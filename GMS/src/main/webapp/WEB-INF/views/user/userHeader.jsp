@@ -26,7 +26,6 @@
 	ul li a{float:center;font-size:12px;color:white;font-weight:bold;text-decoration:none}
 	.white a{color:#fff}
 </style>
-	
 	<div id="header">
 	<a class="mainLink" href="#">GMS(Goods-Mangement-Service)</a>
 			<ul class="menu">
@@ -40,7 +39,7 @@
 	<div id="topMenu">
 		<ul>
 			<li><a class="menuLink" id="userItem" href="${pageContext.servletContext.contextPath}/user/item">물품현황</a></li>
-			<li><a class="menuLink" id="userLast" href="${pageContext.servletContext.contextPath}/user/last">최근본목록</a></li>
+			<li><a class="menuLink" id="userLast" href="${pageContext.servletContext.contextPath}/user/suggestions">건의사항</a></li>
 			<li><a class="menuLink" id="userScrape" href="${pageContext.servletContext.contextPath}/user/scrape">my Scrape</a></li>
 			<li><a class="menuLink" id="userPage" href="${pageContext.servletContext.contextPath}/user/page">my Page</a></li>
 		</ul>

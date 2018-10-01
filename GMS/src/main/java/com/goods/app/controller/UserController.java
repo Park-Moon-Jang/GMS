@@ -25,7 +25,14 @@ import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.goods.app.service.UserService;
 import com.goods.app.vo.ItemVO;
 import com.goods.app.vo.Paging;
+<<<<<<< HEAD
 import com.goods.app.vo.UserVO;
+=======
+import com.goods.app.vo.SPostVO;
+import com.goods.app.vo.UserVO;
+import com.goods.app.vo.comentVO;
+
+>>>>>>> refs/heads/moon
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -75,9 +82,6 @@ public class UserController {
 	public List<ItemVO> brandSel(Model model, ItemVO IVO) {
 
 		List<ItemVO> IList = ser.brandSel();
-//		for(ItemVO a : IList) {
-//			System.out.println("�귣�� : " + a.getComPany_Name());
-//		}
 		return IList;
 	}
 
@@ -86,9 +90,6 @@ public class UserController {
 	public List<ItemVO> categorySel(Model model, ItemVO IVO) {
 
 		List<ItemVO> IList = ser.categorySel();
-//		for(ItemVO a : IList) {
-//			System.out.println("�귣�� : " + a.getCategory_Name());
-//		}
 		return IList;
 	}
 
@@ -173,13 +174,44 @@ public class UserController {
 
 		return "/user/userItem";
 	}
+<<<<<<< HEAD
 
 	@RequestMapping("/last")
 	public String last(Model model) {
+=======
+	@RequestMapping("/suggestions")
+	public String suggestions(Model model) {
+		
+>>>>>>> refs/heads/moon
 
-		return "/user/userLast";
+		return "/user/userSuggestions";
 	}
+<<<<<<< HEAD
 
+=======
+	
+	@RequestMapping(value = "/detailSPost", method = RequestMethod.GET)
+	public String detailSPost(Model model, @RequestParam(value="spost_No", required=false) int spost_No, HttpSession session) {
+		session.setAttribute("session_spost", spost_No);
+		ser.updateHits(spost_No);
+		
+		return "/user/userDetailSuggestions";
+	}
+	
+	@RequestMapping("/insertSuggestions")
+	public String insertSuggestions(Model model) {
+		
+
+		return "/user/userInsertSuggestions";
+	}
+	@RequestMapping("/updateSuggestions")
+	public String updateSuggestions(Model model) {
+		
+
+		return "/user/userUpdateSuggestions";
+	}
+	
+>>>>>>> refs/heads/moon
 	@RequestMapping("/scrape")
 	public String scrape(Model model) {
 
@@ -196,13 +228,13 @@ public class UserController {
 	@RequestMapping(value="/itemDetalSel" , method = RequestMethod.POST)
 	public List<ItemVO> itemDetalSel(Model model, HttpSession session) { 
 		
+<<<<<<< HEAD
 
 //		System.out.println(session.getAttribute("item_No"));
+=======
+>>>>>>> refs/heads/moon
 		int item_No = (Integer) session.getAttribute("session_Item_No");
 		List<ItemVO> IList = ser.itemDetalSel(item_No);
-//		for(ItemVO a : IList) {
-//			System.out.println("�귣�� : " + a.getCategory_Name());
-//		}
 		return IList;
 	}
 
@@ -281,5 +313,113 @@ public class UserController {
 		map.put("sp", sp2);
 		return map;
 	}
+<<<<<<< HEAD
+=======
+	
+	@ResponseBody
+	@RequestMapping(value="/insertComent" , method = RequestMethod.POST)
+	public int insertComnet(Model model, HttpSession session, @RequestParam(value = "coment") String coment) { 
+		int item_No = (Integer) session.getAttribute("session_Item_No");
+		String user_Id = session.getAttribute("session_user").toString();
+		
+		
+		return ser.insertComent(item_No, user_Id, coment);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/comentSel" , method = RequestMethod.POST)
+	public Map comentSel(Model model, HttpSession session, @RequestParam("curPage") int curPage) { 
+		
+		
+		int item_No = (Integer) session.getAttribute("session_Item_No");
+		
+		if(curPage==0) {
+			curPage = 1;
+		}
+		
+		int count = ser.selectComentCount(item_No);
+		
+		Paging sp3 = new Paging(count, curPage);
+		List<comentVO> CList = ser.selectComent(item_No, curPage);
+		Map map = new HashMap();
+		map.put("sp", sp3);
+		map.put("CList",CList);
+		map.put("totalCount", count);
+		return map;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/deleteComent" , method = RequestMethod.POST)
+	public int deleteComent(Model model, HttpSession session, comentVO CVO) { 
+		int item_No = (Integer) session.getAttribute("session_Item_No");
+		int coment_No = CVO.getComent_No();
+		
+		return ser.deleteComent(item_No, coment_No);
+	}
+	
+	@RequestMapping(value="/insertSuggestionsPost" , method = RequestMethod.POST)
+	public String insertSuggestionsPost(Model model, HttpSession session, SPostVO SVO ) { 
+		Map map = new HashMap();
+		map.put("category_No", SVO.getCategory_No());
+		map.put("title", SVO.getTitle());
+		map.put("content", SVO.getContent());
+		map.put("user_Id", session.getAttribute("session_user").toString());
+		map.put("secret", SVO.getSecret());
+		
+		ser.insertSuggestionsPost(map);
+		return "redirect:/user/suggestions";
+	}
+	
+	@RequestMapping(value="/updateSuggestionsPost" , method = RequestMethod.POST)
+	public String updateSuggestionsPost(Model model, HttpSession session, SPostVO SVO ) { 
+		Map map = new HashMap();
+		map.put("spost_No", SVO.getSpost_No());
+		map.put("category_No", SVO.getCategory_No());
+		map.put("title", SVO.getTitle());
+		map.put("content", SVO.getContent());
+		map.put("secret", SVO.getSecret());
+		
+		ser.updateSuggestionsPost(map);
+		return "redirect:/user/suggestions";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/SelSPost" , method = RequestMethod.POST)
+	public Map SelSPost(Model model, HttpSession session, SPostVO SVO, @RequestParam("curPage") int curPage) { 
+		if(curPage==0) {
+			curPage = 1;
+		}
+		System.out.println(curPage);
+		int count = ser.selectSPostCount();
+		System.out.println(count);
+//		
+		Paging sp4 = new Paging(count, curPage);
+		List<SPostVO> SList = ser.selectSPost(curPage);
+		
+		Map map = new HashMap();
+		map.put("sp", sp4);
+		map.put("SList", SList);
+		return map;
+		
+	}
+	@ResponseBody
+	@RequestMapping(value="/delSPost" , method = RequestMethod.POST)
+	public int delSPost(Model model, HttpSession session, SPostVO SVO) { 
+
+		
+		return ser.delSPost(SVO.getSpost_No());
+		
+	}
+	@ResponseBody
+	@RequestMapping(value="/SelDetailSPost" , method = RequestMethod.POST)
+	public List<SPostVO> SelDetailSPost(Model model, HttpSession session, SPostVO SVO) { 
+		int spost_No = (Integer) session.getAttribute("session_spost");
+		List<SPostVO> SList = ser.selDetailSPost(spost_No);
+		return SList;
+		
+		
+	}
+}
+>>>>>>> refs/heads/moon
 
 }
