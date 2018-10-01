@@ -18,10 +18,7 @@ public class ItemVO {
 	private int amount;
 	private Date carry_Date;
 	
-<<<<<<< HEAD
-	
-=======
->>>>>>> refs/heads/moon
+
 	public int getCompany_No() {
 		return company_No;
 	}

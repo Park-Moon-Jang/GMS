@@ -169,9 +169,7 @@ public class UserDAO
 		map.put("user_Id",user_Id);
 		map.put("checkArray", checkArray);
 		return ss.delete("SelectedScrapDelete", map);
-<<<<<<< HEAD
 
-=======
 	}
 	
 	public int insertComent(int item_No, String user_Id, String coment) {
@@ -232,7 +230,7 @@ public class UserDAO
 	
 	public int delSPost(int spost_No) {
 		return ss.delete("delSPost", spost_No);
->>>>>>> refs/heads/moon
+
 	}
 
 }

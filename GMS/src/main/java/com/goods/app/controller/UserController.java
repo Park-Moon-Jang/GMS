@@ -25,14 +25,14 @@ import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.goods.app.service.UserService;
 import com.goods.app.vo.ItemVO;
 import com.goods.app.vo.Paging;
-<<<<<<< HEAD
+
 import com.goods.app.vo.UserVO;
-=======
+
 import com.goods.app.vo.SPostVO;
 import com.goods.app.vo.UserVO;
 import com.goods.app.vo.comentVO;
 
->>>>>>> refs/heads/moon
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -174,22 +174,17 @@ public class UserController {
 
 		return "/user/userItem";
 	}
-<<<<<<< HEAD
 
-	@RequestMapping("/last")
-	public String last(Model model) {
-=======
+
+	
 	@RequestMapping("/suggestions")
 	public String suggestions(Model model) {
 		
->>>>>>> refs/heads/moon
+
 
 		return "/user/userSuggestions";
 	}
-<<<<<<< HEAD
 
-=======
-	
 	@RequestMapping(value = "/detailSPost", method = RequestMethod.GET)
 	public String detailSPost(Model model, @RequestParam(value="spost_No", required=false) int spost_No, HttpSession session) {
 		session.setAttribute("session_spost", spost_No);
@@ -211,7 +206,7 @@ public class UserController {
 		return "/user/userUpdateSuggestions";
 	}
 	
->>>>>>> refs/heads/moon
+
 	@RequestMapping("/scrape")
 	public String scrape(Model model) {
 
@@ -228,11 +223,9 @@ public class UserController {
 	@RequestMapping(value="/itemDetalSel" , method = RequestMethod.POST)
 	public List<ItemVO> itemDetalSel(Model model, HttpSession session) { 
 		
-<<<<<<< HEAD
 
 //		System.out.println(session.getAttribute("item_No"));
-=======
->>>>>>> refs/heads/moon
+
 		int item_No = (Integer) session.getAttribute("session_Item_No");
 		List<ItemVO> IList = ser.itemDetalSel(item_No);
 		return IList;
@@ -313,9 +306,7 @@ public class UserController {
 		map.put("sp", sp2);
 		return map;
 	}
-<<<<<<< HEAD
-=======
-	
+
 	@ResponseBody
 	@RequestMapping(value="/insertComent" , method = RequestMethod.POST)
 	public int insertComnet(Model model, HttpSession session, @RequestParam(value = "coment") String coment) { 
@@ -420,6 +411,6 @@ public class UserController {
 		
 	}
 }
->>>>>>> refs/heads/moon
 
-}
+
+
