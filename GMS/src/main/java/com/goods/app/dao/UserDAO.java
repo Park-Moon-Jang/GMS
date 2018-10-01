@@ -1,9 +1,6 @@
 package com.goods.app.dao;
 
 
-
-
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +15,7 @@ import com.goods.app.vo.PhotoVO;
 import com.goods.app.vo.SPostVO;
 import com.goods.app.vo.UserVO;
 import com.goods.app.vo.comentVO;
+import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 
 @Repository
 public class UserDAO 
@@ -213,21 +211,27 @@ public class UserDAO
 		return ss.delete("delSPost", spost_No);
 	}
 	
-	public Map myScrap(String user_Id){
-		List<ItemVO> IList = ss.selectList("MyScrapSelect",user_Id);
-		List<Integer> scrapArray = new ArrayList();
-		for(ItemVO e : IList) {
-			scrapArray.add(e.getItem_No());
-		}
-		Map<String,List<Integer>> map = new HashMap();
+	public List<ItemVO> myScrap(String user_Id){
+		
+		return ss.selectList("MyScrapSelect",user_Id);
+	}
+	
+	public List selPhoto(List<Object> scrapArray){
+		Map<String, List<Object>> map = new HashMap();
 		map.put("scrapArray", scrapArray);
-		List<PhotoVO> PList = ss.selectList("SelectPhoto",map);
+		List<PhotoVO> PList = ss.selectList("SelectPhoto", map);
 		Map<String,Object> resultMap = new HashMap();
-		resultMap.put("IList", IList);
-		resultMap.put("PList", PList);
+		List list = new ArrayList();
+		for(PhotoVO e : PList) {
+			resultMap.put("item_No",e.getItem_No());
+			resultMap.put("photo_Data",Base64.encode(e.getPhoto_Data()));
+			list.add(resultMap);
+		}
 		
+		return list;
+	}
+	public List<SPostVO> mySPost(String user_Id) {
 		
-		System.out.println(resultMap.toString());
-		return resultMap;
+		return  ss.selectList("MySPostSelect",user_Id);
 	}
 }

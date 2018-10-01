@@ -26,10 +26,12 @@ import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.goods.app.service.UserService;
 import com.goods.app.vo.ItemVO;
 import com.goods.app.vo.Paging;
+import com.goods.app.vo.PhotoVO;
 import com.goods.app.vo.SPostVO;
 import com.goods.app.vo.UserVO;
 import com.goods.app.vo.comentVO;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -154,8 +156,10 @@ public class UserController {
 	public String test(HttpSession session, Model model)
 	{
 		String user_Id = session.getAttribute("session_user").toString();
-		Map<String,List> map = ser.myScrap(user_Id);
-		model.addAttribute("map", map);
+		List<ItemVO> IList = ser.myScrap(user_Id);
+		List<SPostVO> SList = ser.mySPost(user_Id);
+		model.addAttribute("IList", IList);
+		model.addAttribute("SList", SList);
 		return "/user/userMain";
 	}
 	
@@ -221,7 +225,10 @@ public class UserController {
 		String user_Id = session.getAttribute("session_user").toString();
 		
 		session.setAttribute("session_scrape", ser.selectScrap(item_No, user_Id));
-
+		List<Object> itemArray = new ArrayList();
+		itemArray.add(session.getAttribute("session_Item_No").toString());
+		List list = ser.selPhoto(itemArray);
+		model.addAttribute("list", list);
 		return "/user/userItemDetail";
 	}
 	
@@ -268,9 +275,16 @@ public class UserController {
 		Paging sp2 = new Paging(count, curPage); 
 		
 		List<ItemVO> IList = ser.myScrapSel(user_Id, curPage);
+		List<Object> itemArray = new ArrayList();
+		String str = "";
+		for(ItemVO e : IList) {
+			itemArray.add(e.getItem_No());
+		}
+		List list = ser.selPhoto(itemArray);
 		Map map = new HashMap();
 		map.put("IList", IList);
 		map.put("sp", sp2);
+		map.put("list", list);
 		return map;
 	}
 	
@@ -374,6 +388,15 @@ public class UserController {
 		int spost_No = (Integer) session.getAttribute("session_spost");
 		List<SPostVO> SList = ser.selDetailSPost(spost_No);
 		return SList;
+		
+		
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/photoSel" , method = RequestMethod.POST)
+	public List photoSel(Model model, @RequestParam(value = "scrapArray[]") List<Object> scrapArray) { 
+		
+		return ser.selPhoto(scrapArray);
 		
 		
 	}

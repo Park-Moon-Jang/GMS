@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.goods.app.dao.UserDAO;
 import com.goods.app.vo.ItemVO;
+import com.goods.app.vo.PhotoVO;
 import com.goods.app.vo.SPostVO;
 import com.goods.app.vo.UserVO;
 import com.goods.app.vo.comentVO;
@@ -204,9 +205,21 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public Map myScrap(String user_Id) {
+	public List<ItemVO> myScrap(String user_Id) {
 		// TODO Auto-generated method stub
 		return dao.myScrap(user_Id);
+	}
+
+	@Override
+	public List selPhoto(List<Object> scrapArray) {
+		// TODO Auto-generated method stub
+		return dao.selPhoto(scrapArray);
+	}
+
+	@Override
+	public List<SPostVO> mySPost(String user_Id) {
+		// TODO Auto-generated method stub
+		return dao.mySPost(user_Id);
 	}
 }
 

@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import com.goods.app.vo.ItemVO;
+import com.goods.app.vo.PhotoVO;
 import com.goods.app.vo.SPostVO;
 import com.goods.app.vo.UserVO;
 import com.goods.app.vo.comentVO;
@@ -14,7 +15,9 @@ import com.goods.app.vo.comentVO;
 @Service
 public interface UserService 
 {
-	public Map myScrap(String user_Id);
+	public List<SPostVO> mySPost(String user_Id);
+	public List selPhoto(List<Object> scrapArray);
+	public List<ItemVO> myScrap(String user_Id);
 	public int delSPost(int spost_No);
 	public List<SPostVO> selDetailSPost(int spost_No);
 	public int updateHits(int spost_no);

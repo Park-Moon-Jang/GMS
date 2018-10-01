@@ -13,10 +13,19 @@
 <!--    <insert id="join" parameterType="com.goods.app.vo.MemberVO" >
     INSERT INTO item_category (category_no, category_name) VALUES (#{category_no}, #{category_name})
    </insert> -->
+   <select id="MySPostSelect" parameterType="String" resultType="com.goods.app.vo.SPostVO">
+	select t2.category_name, t1.title from
+	(SELECT * FROM gms_pj.spost where user_id = 'test') t1
+	inner join
+	(Select * from gms_pj.item_category) t2
+	on t1.category_No = t2.category_no
+	order by rand()
+	limit 3
+   </select>
    <select id="SelectPhoto" parameterType="map" resultType="com.goods.app.vo.PhotoVO">
   	SELECT * FROM gms_pj.photo where
   	<foreach collection="scrapArray" item="item" separator="or" index="index">
-   	 item_no = #{item.value}
+   	 item_no = #{item}
    	</foreach>
    </select>
    
