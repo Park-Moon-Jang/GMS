@@ -190,7 +190,6 @@ $(document).on("click",".paging",function(){
 	
 })
 
-
 </script>
 
 </head>

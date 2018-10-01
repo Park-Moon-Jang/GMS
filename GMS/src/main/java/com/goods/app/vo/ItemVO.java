@@ -6,11 +6,10 @@ import java.sql.Date;
 
 public class ItemVO {
 
- 
+	private int item_No;
+	private String item_Name;
 	private int company_No;
 	private String company_Name;
-	private String item_Name;
-	private int item_No;
 	private int category_No;
 	private String category_Name;
 	private int store_No;
@@ -18,6 +17,8 @@ public class ItemVO {
 	private int price;
 	private int amount;
 	private Date carry_Date;
+	
+	
 	public int getCompany_No() {
 		return company_No;
 	}
