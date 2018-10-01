@@ -202,6 +202,12 @@ public class UserServiceImpl implements UserService{
 	public int delSPost(int spost_No) {
 		return dao.delSPost(spost_No);
 	}
+
+	@Override
+	public Map myScrap(String user_Id) {
+		// TODO Auto-generated method stub
+		return dao.myScrap(user_Id);
+	}
 }
 
 

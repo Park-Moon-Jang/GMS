@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.goods.app.vo.ItemVO;
+import com.goods.app.vo.PhotoVO;
 import com.goods.app.vo.SPostVO;
 import com.goods.app.vo.UserVO;
 import com.goods.app.vo.comentVO;
@@ -210,5 +211,23 @@ public class UserDAO
 	
 	public int delSPost(int spost_No) {
 		return ss.delete("delSPost", spost_No);
+	}
+	
+	public Map myScrap(String user_Id){
+		List<ItemVO> IList = ss.selectList("MyScrapSelect",user_Id);
+		List<Integer> scrapArray = new ArrayList();
+		for(ItemVO e : IList) {
+			scrapArray.add(e.getItem_No());
+		}
+		Map<String,List<Integer>> map = new HashMap();
+		map.put("scrapArray", scrapArray);
+		List<PhotoVO> PList = ss.selectList("SelectPhoto",map);
+		Map<String,Object> resultMap = new HashMap();
+		resultMap.put("IList", IList);
+		resultMap.put("PList", PList);
+		
+		
+		System.out.println(resultMap.toString());
+		return resultMap;
 	}
 }

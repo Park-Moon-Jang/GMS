@@ -19,7 +19,7 @@
 	.white a{color:#fff}
 </style>
 	<div id="header">
-	<a class="mainLink" href="#">GMS(Goods-Mangement-Service)</a>
+	<a class="mainLink" href="${pageContext.servletContext.contextPath}/user/main">GMS(Goods-Mangement-Service)</a>
 			<ul class="menu">
 
 						<li>${session_user}ดิ</li>

@@ -13,6 +13,23 @@
 <!--    <insert id="join" parameterType="com.goods.app.vo.MemberVO" >
     INSERT INTO item_category (category_no, category_name) VALUES (#{category_no}, #{category_name})
    </insert> -->
+   <select id="SelectPhoto" parameterType="map" resultType="com.goods.app.vo.PhotoVO">
+  	SELECT * FROM gms_pj.photo where
+  	<foreach collection="scrapArray" item="item" separator="or" index="index">
+   	 item_no = #{item.value}
+   	</foreach>
+   </select>
+   
+   <select id="MyScrapSelect" parameterType="String" resultType="com.goods.app.vo.ItemVO">
+	select t1.item_no,t2.amount,t2.item_name from
+	(select * from gms_pj.scrap where user_id = #{user_Id}) t1
+	inner join
+	(select * from gms_pj.item) t2
+	on t1.item_no = t2.item_no
+	order by rand()
+	limit 3
+   </select>
+   
    <delete id="delSPost" parameterType="int">
    		delete from gms_pj.spost where spost_No = #{spost_No}
    </delete>

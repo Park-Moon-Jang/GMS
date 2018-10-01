@@ -14,6 +14,7 @@ import com.goods.app.vo.comentVO;
 @Service
 public interface UserService 
 {
+	public Map myScrap(String user_Id);
 	public int delSPost(int spost_No);
 	public List<SPostVO> selDetailSPost(int spost_No);
 	public int updateHits(int spost_no);

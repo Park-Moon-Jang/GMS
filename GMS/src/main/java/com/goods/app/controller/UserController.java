@@ -97,7 +97,7 @@ public class UserController {
 	@RequestMapping(value = "/login" , method = RequestMethod.GET )
 	public String login() 
 	{
-		return "/user/userMain"; 
+		return "forward:/user/main"; 
 	}
 	@RequestMapping(value="/loginPost", method = RequestMethod.POST)
 	public void loginPost(@ModelAttribute UserVO vo, HttpSession session, Model model) 
@@ -151,8 +151,11 @@ public class UserController {
 	}
 	
 	@RequestMapping(value ="/main" )
-	public String test(Model model)
+	public String test(HttpSession session, Model model)
 	{
+		String user_Id = session.getAttribute("session_user").toString();
+		Map<String,List> map = ser.myScrap(user_Id);
+		model.addAttribute("map", map);
 		return "/user/userMain";
 	}
 	
@@ -249,7 +252,7 @@ public class UserController {
 		String user_Id = session.getAttribute("session_user").toString();
 		int count = ser.selectedScrapDelete(checkArray, user_Id);
 		
-		return 0;
+		return count;
 	}
 	
 	@ResponseBody
