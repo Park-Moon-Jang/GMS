@@ -125,4 +125,16 @@ public class ManagerServiceImpl implements ManagerService {
 
 	}
 
+	@Override
+	public List<ItemVO> selectList() {
+		
+		return mdao.select();
+	}
+
+	@Override
+	public List<M_boardVO> getBoardlist2() {
+		// TODO Auto-generated method stub
+		return mdao.getboardlist2();
+	}
+
 }

@@ -121,5 +121,13 @@ public class ManagerDAO {
 		ss.update("updateboard",vo);
 		
 	}
+	public List<ItemVO> select() {
+		
+		return ss.selectList("itemrank");
+	}
+	public List<M_boardVO> getboardlist2() {
+		// TODO Auto-generated method stub
+		return ss.selectList("boardlist2");
+	}
 
 }

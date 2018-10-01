@@ -14,6 +14,8 @@ public interface ManagerService {
 
 	public int registerPhoto(PhotoVO pvo);
 	
+	public List<ItemVO> selectList();
+	
 	public int registerItem(ItemVO ivo);
 	
 	public int checkregiNum(int checkNum);
@@ -45,5 +47,7 @@ public interface ManagerService {
 	public M_boardVO selectboard(int board_no);
 
 	public void updateform(M_boardVO vo);
+
+	public List<M_boardVO> getBoardlist2();
 
 }

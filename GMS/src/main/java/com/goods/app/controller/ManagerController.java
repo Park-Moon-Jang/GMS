@@ -250,6 +250,11 @@ public class ManagerController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", itemlist);
 		model.addAttribute("itemlist", itemlist);
+		List<ItemVO>list = ms.selectList();
+		map.put("list", list);
+		model.addAttribute("map", map);
+		List<M_boardVO> boardlist = ms.getBoardlist2();
+		map.put("boardlist", boardlist);
 		
 		return "manager/managerhome";
 		

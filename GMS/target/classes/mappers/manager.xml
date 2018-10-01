@@ -27,6 +27,9 @@
    <select id="boardlist" resultType="com.goods.app.vo.M_boardVO">
    SELECT * FROM m_board
    </select>
+   <select id="boardlist2" resultType="com.goods.app.vo.M_boardVO">
+   SELECT * FROM m_board limit 3
+   </select>
    <insert id="insertboard">
    	INSERT INTO m_board(title,content,board_date,manager_id) VALUES (#{title},#{content},DATE_FORMAT(now(), '%Y-%m-%d %H:%i:%s'),#{manager_id})
    </insert>
