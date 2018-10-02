@@ -335,5 +335,15 @@
     <update id="updatePW">
     	UPDATE USER SET USER_PW=#{user_pw} WHERE USER_ID=#{user_id}
     </update>
+    <delete id="deleteUser_">
+    	 DELETE FROM USER WHERE USER_ID = #{user_id} AND USER_PW=#{user_pw}
+    </delete>
+    <delete id="deleteUser_scr">
+    	DELETE FROM SCRAP WHERE USER_ID=#{user_id}
+    </delete>
     
+    <select id="checkid" parameterType="String" resultType="Integer">
+    	SELECT COUNT(*) FROM USER WHERE USER_ID=#{user_id}
+    
+    </select>
  </mapper>

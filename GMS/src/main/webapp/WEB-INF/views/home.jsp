@@ -1,7 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
 <html>
 <head>
 <title>로그인</title>
@@ -58,10 +56,6 @@ window.onload = function(){
 </td>
 </tr>
 </table>
-<<<<<<< HEAD
-=======
-	
- 
->>>>>>> branch 'moon' of https://github.com/Park-Moon-Jang/GMS.git
+
 </body>
 </html>

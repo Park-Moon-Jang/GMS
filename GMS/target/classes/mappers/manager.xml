@@ -1,25 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
-  <mapper namespace="com.bit.app">
-  
-    <!-- 전체 목록 -->
-<!--     <select id="boardlistAll" resultType="com.bit.app.vo.BoardVO"> -->
-<!--         SELECT * FROM BOARD1 ORDER BY no desc, writedate desc -->
-<!--     </select> -->
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bit.app">
 
-   <insert id="insertItem" parameterType="com.goods.app.vo.ItemVO" >
-    INSERT INTO item (item_no, item_name, amount, category_no, company_no, price, carry_date) VALUES (#{item_no}, #{item_name}, #{amount}, #{category_no}, #{company_no}, #{price}, #{carry_date})
-   </insert>
    
-   <select id="newitemList" resultType="com.goods.app.vo.ItemVO">
-   SELECT * FROM gms_pj.item order by carry_date desc limit 3
-   </select>
+   <insert id="registerItem" parameterType="com.goods.app.vo.PhotoVO">
+	INSERT INTO gms_pj.item  (ITEM_NO, ITEM_NAME, COMPANY_NO, CATEGORY_NO, AMOUNT, PRICE, CARRY_DATE)
+	 VALUES (${item_No}, "${item_Name}", ${company_No}, ${category_No}, ${amount}, ${price}, "${carry_Date}")
+   </insert>
+   <insert id="registerPhoto" parameterType="com.goods.app.vo.PhotoVO">
+   insert into gms_pj.photo (item_no, photo_name, photo_data)
+   VALUES(#{item_No}, "${photo_Name}", #{photo_Data})
+   </insert>
+	
+	<select id= "checkregiNum" resultType="int" parameterType="int">
+	select count(*)
+	from gms_pj.item
+	where item_no = #{checkNum}
+	
+	</select>
+   
     <select id="userlist" resultType="com.goods.app.vo.UserVO">
    SELECT * FROM USER
    </select>
-   
+   <select id="boardlist" resultType="com.goods.app.vo.M_boardVO">
+   SELECT * FROM m_board
+   </select>
+   <select id="boardlist2" resultType="com.goods.app.vo.M_boardVO">
+   SELECT * FROM m_board limit 3
+   </select>
+   <insert id="insertboard">
+   	INSERT INTO m_board(title,content,board_date,manager_id) VALUES (#{title},#{content},DATE_FORMAT(now(), '%Y-%m-%d %H:%i:%s'),#{manager_id})
+   </insert>
+   <select id="selectboard" resultType="com.goods.app.vo.M_boardVO">
+    select * from m_board where board_no = #{board_no} ORDER BY board_date DESC
+   </select>
+  <delete id="deleteBoard">
+        DELETE FROM M_BOARD WHERE board_no = #{board_no}
+    </delete>
    <delete id="deleteOne" parameterType="int">
    delete from item where item_no = #{item_no}
    </delete>
@@ -29,8 +48,150 @@
    <update id="updateUser">
    UPDATE USER SET USER_PW = #{user_pw},USER_NICKNAME=#{user_nickname},USER_PHON=#{user_phon}, USER_email = #{user_email},USER_AGE=#{user_age}WHERE USER_ID= #{user_id}
    </update>
-   <delete id="deleteUser">
-        DELETE FROM USER WHERE user_id = #{user_id}
-    </delete>
+   <update id="updateboard">
+    UPDATE M_BOARD SET TITLE = #{title}, content=#{content} where board_no=#{board_no}
    
- </mapper>
+   </update>
+   <delete id="deleteUser">
+        DELETE FROM USER WHERE user_id = #{user_id} 
+    </delete>
+
+	<select id="getnewItemlist" resultType="com.goods.app.vo.ItemVO">
+		SELECT t1.*, t2.COMPANY_NAME, t3.Category_NAME
+		FROM gms_pj.item t1, gms_pj.manufacturer t2, gms_pj.item_category t3
+		where t1.company_no = t2.company_no and t1.category_no = t3.category_no
+		order by carry_date desc limit 3 
+	</select>
+	<select id="getstoredlist" parameterType="java.util.Map" resultType="com.goods.app.vo.ItemVO">
+	<include refid="paging" />
+		SELECT t1.*, t2.COMPANY_NAME, t3.Category_NAME
+		FROM gms_pj.item t1, gms_pj.manufacturer t2, gms_pj.item_category t3
+		where t1.company_no = t2.company_no and t1.category_no = t3.category_no
+		order by carry_date
+	<include refid="paging2" />
+	</select>
+
+	<select id="getCount" parameterType="java.util.Map" resultType="int">
+		SELECT count(*) FROM gms_pj.item
+		where
+				<choose>
+			<when test="company_No == 0 and category_No == 0">
+				carry_date between date_add(#{from_Date}, interval 1 day) 
+				and date_add(#{to_Date}, interval 1 day) 
+			</when>
+
+			<when test="company_No != 0 and category_No == 0">
+				company_no = #{company_No}
+				and carry_date between date_add(#{from_Date}, interval 1 day) 
+				and date_add(#{to_Date}, interval 1 day)
+			</when>
+
+			<when test="company_No == 0 and category_No != 0">
+				category_no = #{category_No}
+				and carry_date between date_add(#{from_Date}, interval 1 day) 
+				and date_add(#{to_Date}, interval 1 day) 
+			</when>
+
+			<otherwise>
+				category_no = #{category_No} 
+				and company_no = #{company_No} 
+				and carry_date between date_add(#{from_Date}, interval 1 day) 
+				and date_add(#{to_Date}, interval 1 day) 
+			</otherwise>
+		</choose>
+		
+	</select>
+
+
+	<select id="getItemlist"  parameterType="java.util.Map" resultType="com.goods.app.vo.ItemVO">
+		<include refid="paging" />
+		SELECT t1.*, t2.COMPANY_NAME, t3.Category_NAME
+		FROM gms_pj.item t1, gms_pj.manufacturer t2, gms_pj.item_category t3
+		where t1.company_no = t2.company_no and t1.category_no = t3.category_no
+		and
+		
+		<if test="item_Name == ''">
+		<choose>
+			<when test="company_No == 0 and category_No == 0">
+				t1.carry_date between date_add(#{from_Date}, interval 1 day) 
+				and date_add(#{to_Date}, interval 1 day)  
+			</when>
+
+			<when test="company_No != 0 and category_No == 0">
+				t1.company_no = #{company_No}
+				and t1.carry_date between date_add(#{from_Date}, interval 1 day) 
+				and date_add(#{to_Date}, interval 1 day)
+			</when>
+
+			<when test="company_No == 0 and category_No != 0">
+				t1.category_no = #{category_No}
+				and t1.carry_date between date_add(#{from_Date}, interval 1 day) 
+				and date_add(#{to_Date}, interval 1 day) 
+			</when>
+
+			<otherwise>
+				t1.category_no = #{category_No} 
+				and t1.company_no = #{company_No} 
+				and t1.carry_date between date_add(#{from_Date}, interval 1 day) 
+				and date_add(#{to_Date}, interval 1 day) 
+			</otherwise>
+		
+		</choose>
+		</if>
+		<if test="item_Name != ''">
+			<choose>
+			<when test="company_No == 0 and category_No == 0">
+				t1.carry_date between date_add(#{from_Date}, interval 1 day) 
+				and date_add(#{to_Date}, interval 1 day)
+				and t1.item_name like CONCAT("%",#{item_Name},"%")
+			</when>
+
+			<when test="company_No != 0 and category_No == 0">
+				t1.company_no = #{company_No}
+				and t1.carry_date between date_add(#{from_Date}, interval 1 day) 
+				and date_add(#{to_Date}, interval 1 day)
+				and t1.item_name like CONCAT("%",#{item_Name},"%")
+			</when>
+
+			<when test="company_No == 0 and category_No != 0">
+				t1.category_no = #{category_No}
+				and t1.carry_date between date_add(#{from_Date}, interval 1 day) 
+				and date_add(#{to_Date}, interval 1 day)
+				and t1.item_name like CONCAT("%",#{item_Name},"%")
+			</when>
+
+			<otherwise>
+				t1.category_no = #{category_No} 
+				and t1.company_no = #{company_No} 
+				and t1.carry_date between date_add(#{from_Date}, interval 1 day) 
+				and date_add(#{to_Date}, interval 1 day)
+				and t1.item_name like CONCAT("%",#{item_Name},"%")
+			</otherwise>
+		</choose>
+		</if>
+		
+		
+		order by t1.carry_date desc
+		
+		<include refid="paging2" />
+	</select>
+
+	<select id="companySel" resultType="com.goods.app.vo.ItemVO">
+		select * from gms_pj.manufacturer 
+	</select>
+
+	<select id="categorySel" resultType="com.goods.app.vo.ItemVO">
+		select * from gms_pj.item_category 
+	</select>
+
+	<sql id="paging">
+	SELECT A.* FROM ( 
+	</sql>
+
+	<sql id="paging2">
+	) A 
+	LIMIT ${sp.pageBegin-1}, 10 
+	</sql>
+
+</mapper>
+

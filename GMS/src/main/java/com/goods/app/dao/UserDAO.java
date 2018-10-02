@@ -44,10 +44,7 @@ public class UserDAO
 		return ss.selectOne("checkUser",vo);
 	}
 
-	public void update(UserVO vo) {
-		
-		ss.insert("updateUser",vo);
-	}
+	
 	public UserVO findID(UserVO vo) throws Exception
 	{
 		
@@ -61,7 +58,16 @@ public class UserDAO
 	}
 	public void updatePW(UserVO vo)
 	{
+
 		ss.update("updatePW",vo);
+	}
+
+	public void delete(UserVO vo) {
+		ss.delete("deleteUser_",vo);
+	}
+	public void update(UserVO vo) {
+		
+		ss.update("updateUser_",vo);
 	}
 	
 
@@ -104,6 +110,15 @@ public class UserDAO
 	public List<ItemVO> itemDetalSel(int item_No){
 		return ss.selectList("SelectItemDetal", item_No);
 	}
+
+
+	public int checkid(String user_id) {
+		return ss.selectOne("checkid",user_id);
+	}
+
+	
+	
+
 	
 	public boolean selectScrap(int item_No, String user_Id) {
 		Map map = new HashMap();
@@ -144,11 +159,18 @@ public class UserDAO
 		
 		return ss.selectList("SelectMyScrap",map);
 	}
+
+
+	public void delete_scr(String user_id) {
+		ss.delete("deleteUser_scr", user_id);
+		
+	}
 	public int selectedScrapDelete(List<String> checkArray, String user_Id) {
 		Map map = new HashMap();
 		map.put("user_Id",user_Id);
 		map.put("checkArray", checkArray);
 		return ss.delete("SelectedScrapDelete", map);
+
 	}
 	
 	public int insertComent(int item_No, String user_Id, String coment) {

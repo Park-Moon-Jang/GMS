@@ -8,10 +8,18 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>Insert title here</title>
+
 </head>
 <link href="${pageContext.servletContext.contextPath}/resources/css/userPage.css" rel="stylesheet" type="text/css">
 <body>
+	<script type="text/javascript">
+	var id = <%=(String)session.getAttribute("session_user")%>
+	if(id==null){
+		alert("로그인을 해주세요");
+		location.href="${pageContext.servletContext.contextPath}/"
+	}
 	
+	</script>
 	<style>
 	ul{width:100%;height:30px;background:skyblue;list-style:none;padding-top:15px}
 	ul li{float:left;margin-right:10px;font-family:dotum;font-size:12px;color:white;font-weight:bold}

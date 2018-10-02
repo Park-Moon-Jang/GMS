@@ -66,6 +66,13 @@ public class UserServiceImpl implements UserService{
 		
 		dao.updatePW(vo);
 	}
+
+
+	@Override
+	public void delete(UserVO vo) throws Exception {
+		dao.delete(vo);
+		
+}
 	@Override
 	public List<ItemVO> brandSel() {
 		// TODO Auto-generated method stub
@@ -101,6 +108,13 @@ public class UserServiceImpl implements UserService{
 		// TODO Auto-generated method stub
 		return dao.itemDetalSel(item_No);
 
+
+	}
+
+	@Override
+	public int checkid(String user_id) {
+		// TODO Auto-generated method stub
+		return dao.checkid(user_id);
 	}
 
 	@Override
@@ -134,9 +148,14 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
+	public void delete_scr(String user_id) {
+		dao.delete_scr(user_id);
+	}
+
 	public int selectedScrapDelete(List<String> checkArray, String user_Id) {
 		// TODO Auto-generated method stub
 		return dao.selectedScrapDelete(checkArray, user_Id);
+
 	}
 
 	@Override

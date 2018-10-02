@@ -1,25 +1,30 @@
 package com.goods.app.vo;
 
 public class Paging {
-	public static final int PAGE_SCALE = 10;
-	public static final int BLOCK_SCALE = 5;
+
+
+	public static final int PAGE_SCALE = 10;  //한 페이지에 보여지는 글의 수
+	public static final int BLOCK_SCALE = 5;  // 한번에 보여지는 페이지넘버의 개수
+
+
 	
-	private int curPage; 
-    private int prevPage; 
-    private int nextPage; 
-    private int totalPage; 
-    private int totalBlock; 
-    private int curBlock;  
-    private int prevBlock; 
-    private int nextBlock;
+	private int curPage;   //현재 페이지
+    private int prevPage;  //이전 페이지
+    private int nextPage;   //다음 페이지
+    private int totalPage;   //전체 페이지 수
+    private int totalBlock;   //전체 블럭의 수  에를들면 총 10페이지 인 경우, 블럭은 2개 (5페이지씩 나타낼 것이기 때문)
+    private int curBlock;    // 현재 블럭
+    private int prevBlock;   // 이전 블럭
+    private int nextBlock;   // 다음 블럭
     
-    private int pageBegin;
-    private int pageEnd;
+    private int pageBegin;    // 블럭 내에 첫페이지 넘버
+    private int pageEnd;    //  블럭 내에 마지막 페이지 넘버
     
     private int blockBegin; 
     private int blockEnd; 
     
-
+//글 20개 ->  1, 2 페이지  두개 나옴 블럭은 1개
+//1페이지일 경우 1  2페이지일 경우 11(10 + 1)
    
  
 
@@ -38,7 +43,7 @@ public class Paging {
 
         curBlock = (int)Math.ceil((curPage-1) / BLOCK_SCALE)+1;
 
-        blockBegin = (curBlock-1)*BLOCK_SCALE+1;
+        blockBegin = (curBlock-1)*BLOCK_SCALE+1;   
 
         blockEnd = blockBegin+BLOCK_SCALE-1;
 
@@ -130,3 +135,4 @@ public class Paging {
         this.blockEnd = blockEnd;
     }
 } 
+
