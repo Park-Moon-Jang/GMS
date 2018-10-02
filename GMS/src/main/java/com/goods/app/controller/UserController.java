@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.util.JSONPObject;
-
+import com.goods.app.service.ManagerService;
 import com.goods.app.service.UserService;
 import com.goods.app.vo.ItemVO;
 import com.goods.app.vo.Paging;
@@ -43,6 +43,9 @@ public class UserController {
 	@Inject
 	UserService ser;
 
+	@Inject
+	ManagerService ms;
+	
 	@ResponseBody
 	@RequestMapping(value = "/selBtn", method = RequestMethod.POST)
 	public Map selBtn(Model model, ItemVO IVO, @RequestParam("curPage") int curPage) {
@@ -157,6 +160,13 @@ public class UserController {
 		List<SPostVO> SList = ser.mySPost(user_Id);
 		model.addAttribute("IList", IList);
 		model.addAttribute("SList", SList);
+		List<ItemVO> itemlist = ms.getnewItemlist();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", itemlist);
+		model.addAttribute("itemlist", itemlist);
+		List<ItemVO>list = ms.selectList();
+		map.put("list", list);
+		model.addAttribute("map", map);
 		return "/user/userMain";
 	}
 

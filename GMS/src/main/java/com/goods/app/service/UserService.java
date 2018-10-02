@@ -15,6 +15,7 @@ import com.goods.app.vo.comentVO;
 @Service
 public interface UserService 
 {
+
 	public List<SPostVO> mySPost(String user_Id);
 	public List selPhoto(List<Object> scrapArray);
 	public List<ItemVO> myScrap(String user_Id);
