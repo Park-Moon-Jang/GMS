@@ -7,11 +7,20 @@ import com.goods.app.vo.ItemVO;
 import com.goods.app.vo.M_boardVO;
 import com.goods.app.vo.ManagerVO;
 import com.goods.app.vo.PhotoVO;
+import com.goods.app.vo.SPostVO;
 import com.goods.app.vo.UserVO;
 
 
 public interface ManagerService {
 
+	public int insertSPostComent(int spost_No, String coment, String manager_Id);
+	
+	public List<SPostVO> selectSPost();
+	
+	public List<SPostVO> selectSPost(int curPage);
+	
+	public int SPostCount();
+	
 	public int registerPhoto(PhotoVO pvo);
 	
 	public List<ItemVO> selectList();

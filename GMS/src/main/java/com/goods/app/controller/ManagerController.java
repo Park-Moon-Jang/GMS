@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 
 import com.goods.app.service.ManagerService;
+import com.goods.app.service.UserService;
 import com.goods.app.vo.ItemVO;
 import com.goods.app.vo.M_boardVO;
 import com.goods.app.vo.Paging;
@@ -44,7 +45,8 @@ import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 
 import com.goods.app.vo.PhotoVO;
-
+import com.goods.app.vo.SComentVO;
+import com.goods.app.vo.SPostVO;
 import com.goods.app.vo.UserVO;
 
 
@@ -58,6 +60,9 @@ public class ManagerController {
 	
 	@Autowired
 	ManagerService ms;
+	
+	@Autowired
+	UserService ser;
 	
 	@RequestMapping("/viewitemreturned")
 	public String viewitemreturned (Model model) {
@@ -88,7 +93,7 @@ public class ManagerController {
 		selInfo.put("to_Date", to_Date);
 		
 		int count = ms.getCount(selInfo);
-		System.out.println("카운트: " + count);
+		System.out.println("移댁슫�듃: " + count);
 		Paging sp = new Paging(count, curPage);
 
 		selInfo.put("sp", sp);
@@ -117,7 +122,7 @@ public class ManagerController {
 										@RequestParam("to_Date") java.sql.Date to_Date, 
 										@RequestParam(defaultValue = "1") int curPage) {
 		
-		System.out.println("현재 페이지 :"+curPage);
+		System.out.println("�쁽�옱 �럹�씠吏� :"+curPage);
 		
 		Map<String, Object> selInfo = new HashMap<String, Object>();
 		
@@ -128,7 +133,7 @@ public class ManagerController {
 		selInfo.put("to_Date", to_Date);
 		
 		int count = ms.getCount(selInfo);
-		System.out.println("카운드 :"+ count);
+		System.out.println("移댁슫�뱶 :"+ count);
 		Paging sp = new Paging(count, curPage);
 
 		selInfo.put("sp", sp);
@@ -167,10 +172,10 @@ public class ManagerController {
 		System.out.println(checkNum);
 		
 		if(ms.checkregiNum(checkNum) == 0) {
-			result.put("check", "입고등록");
+			result.put("check", "�엯怨좊벑濡�");
 			
 			ItemVO ivo = new ItemVO();
-			ivo.setItem_No(checkNum);  //여기 왜 널이지??
+			ivo.setItem_No(checkNum);  //�뿬湲� �솢 �꼸�씠吏�??
 			ivo.setItem_Name(multi.getParameter("item_Name"));
 			ivo.setCompany_No(Integer.parseInt(multi.getParameter("company")));
 			ivo.setCategory_No(Integer.parseInt(multi.getParameter("category")));
@@ -202,12 +207,12 @@ public class ManagerController {
 			}			
 
 			ms.registerPhoto(pvo);
-			System.out.println("pvo 성공");
+			System.out.println("pvo �꽦怨�");
 
 			return result;
 			
 		}else {
-			result.put("check", "입고번호 중복");
+			result.put("check", "�엯怨좊쾲�샇 以묐났");
 			return result;
 		}
 
@@ -255,6 +260,8 @@ public class ManagerController {
 		model.addAttribute("map", map);
 		List<M_boardVO> boardlist = ms.getBoardlist2();
 		map.put("boardlist", boardlist);
+		List<SPostVO> SList = ms.selectSPost();
+		model.addAttribute("SList",SList);
 		
 		return "manager/managerhome";
 		
@@ -283,8 +290,23 @@ public class ManagerController {
 		return mav;
 	}
 	
-	
+	@RequestMapping("/managerSPost")
+	public String managerSPost (Model model) {
+		return "manager/managerSPost";
+		
+	}
 
+	@RequestMapping(value= "/managerSPostDetail", method = RequestMethod.GET)
+	public String managerSPostDetail (Model model, HttpSession session, @RequestParam(value="spost_No") int spost_No) {
+		session.setAttribute("spost_No", spost_No);
+		List<SPostVO> SList = ser.selDetailSPost(spost_No);
+		List<SComentVO> Coment = ser.selectSPostComent(spost_No);
+		model.addAttribute("SList",SList);
+		model.addAttribute("Coment",Coment);
+		return "manager/managerSPostDetail";
+		
+	}
+	
 	@RequestMapping("/viewmanageuser")
 	public ModelAndView viewmanageuser (Model model) {
 		List<UserVO> userlist = ms.getUserlist();
@@ -353,7 +375,30 @@ public class ManagerController {
 		return "redirect:/manager/managerboard";
 		
 	}
-	
+	@ResponseBody
+	@RequestMapping(value="/SPostList" , method = RequestMethod.POST)
+	public Map SPostList(Model model, HttpSession session, SPostVO SVO, @RequestParam("curPage") int curPage) { 
+		if(curPage==0) {
+			curPage = 1;
+		}
+		int count = ms.SPostCount();
+//		
+		Paging sp = new Paging(count, curPage);
+		List<SPostVO> SList = ms.selectSPost(curPage);
+		Map map = new HashMap();
+		map.put("sp", sp);
+		map.put("SList", SList);
+		return map;
+		
+	}
+	@ResponseBody
+	@RequestMapping(value="/insertSPostComent", method = RequestMethod.POST)
+	public int insertSPostComent(Model model, HttpSession session, SPostVO SVO, @RequestParam("coment") String coment) {
+		int spost_No = (Integer) session.getAttribute("spost_No");
+		String manager_Id = session.getAttribute("session_manager").toString();
+		return ms.insertSPostComent(spost_No,coment,manager_Id);
+		
+	}
 }
 
 

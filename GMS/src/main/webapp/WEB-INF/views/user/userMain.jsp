@@ -90,7 +90,7 @@ $(document).ready(function(){
 					</tr>
 						<c:forEach var="vo" items="${itemlist}">
 				<tr>
-					<td>${vo.item_Name}</td>
+					<td><a href="${pageContext.servletContext.contextPath}/user/itemDetail?item_No=${vo.item_No}">${vo.item_Name}</a></td>
 					<td>${vo.category_Name}</td>
 					<td>${vo.company_Name}</td>
 					<td>${vo.price}</td>
@@ -110,7 +110,7 @@ $(document).ready(function(){
 						<c:forEach var="vo" items="${IList}">
 						<tr>
 								<td><div id="${vo.item_No}"></div></td>								
-								<td><input type="text" value="${vo.item_No}" class="text" hidden="true">${vo.item_Name}</td>
+								<td><a href="${pageContext.servletContext.contextPath}/user/itemDetail?item_No=${vo.item_No}"><input type="text" value="${vo.item_No}" class="text" hidden="true">${vo.item_Name}</a></td>
 								<td>${vo.amount}</td>
 						</tr>
 						</c:forEach>
@@ -137,7 +137,7 @@ $(document).ready(function(){
 						<c:forEach var="vo" items="${SList}">
 						<tr>
 								<td>${vo.category_Name}</td>								
-								<td>${vo.title}</td>
+								<td><a href="${pageContext.servletContext.contextPath}/user/detailSPost?spost_No=${vo.spost_No}">${vo.title}</a></td>
 						</tr>
 						</c:forEach>
 					

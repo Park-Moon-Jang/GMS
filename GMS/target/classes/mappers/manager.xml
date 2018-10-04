@@ -3,8 +3,31 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bit.app">
+	<select id="SelSPostManger2" resultType="com.goods.app.vo.SPostVO">
+   	select t1.* from gms_pj.spost as t1
+	LEFT JOIN gms_pj.spost_coment as t2 on t1.spost_no = t2.spost_no
+	where t2.spost_no is null  
+	order by spost_no desc limit 3
+   </select>
 
+	<insert id="insertSPostComent" parameterType="Map">
+	 INSERT INTO gms_pj.spost_coment (spost_no, content, manager_id, write_date) 
+	 values (#{spost_No},#{coment},#{manager_Id},DATE_FORMAT(now(), '%Y-%m-%d %H:%i:%s'))
+
+	</insert>
+
+   <select id="SelSPostManger" resultType="com.goods.app.vo.SPostVO">
+   	select t1.* from gms_pj.spost as t1
+	LEFT JOIN gms_pj.spost_coment as t2 on t1.spost_no = t2.spost_no
+	where t2.spost_no is null  
+	order by spost_no limit 10 offset #{curPage}
+   </select>
    
+   <select id="SPostCount" resultType="int">
+   	select count(*) from gms_pj.spost as t1
+	LEFT JOIN gms_pj.spost_coment as t2 on t1.spost_no = t2.spost_no
+	where t2.spost_no is null 
+   </select>
    <insert id="registerItem" parameterType="com.goods.app.vo.PhotoVO">
 	INSERT INTO gms_pj.item  (ITEM_NO, ITEM_NAME, COMPANY_NO, CATEGORY_NO, AMOUNT, PRICE, CARRY_DATE)
 	 VALUES (${item_No}, "${item_Name}", ${company_No}, ${category_No}, ${amount}, ${price}, "${carry_Date}")

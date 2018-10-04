@@ -120,7 +120,9 @@ $(document).on("click","#detail",function(){
 			<td colspan="5" align="right"><button onclick="location='${pageContext.servletContext.contextPath}/user/insertSuggestions'">±Û¾²±â</button></td>
 		</tr>
 	</table>
+	
 	</div>
+	
 	<jsp:include page="userFooter.jsp"></jsp:include>
 </body>
 </html>

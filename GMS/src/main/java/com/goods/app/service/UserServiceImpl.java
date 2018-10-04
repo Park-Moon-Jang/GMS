@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.goods.app.dao.UserDAO;
 import com.goods.app.vo.ItemVO;
 import com.goods.app.vo.PhotoVO;
+import com.goods.app.vo.SComentVO;
 import com.goods.app.vo.SPostVO;
 import com.goods.app.vo.UserVO;
 import com.goods.app.vo.comentVO;
@@ -239,6 +240,18 @@ public class UserServiceImpl implements UserService{
 	public List<SPostVO> mySPost(String user_Id) {
 		// TODO Auto-generated method stub
 		return dao.mySPost(user_Id);
+	}
+
+	@Override
+	public List<SComentVO> selectSPostComent(int spost_No) {
+		// TODO Auto-generated method stub
+		return dao.selectSPostComent(spost_No);
+	}
+
+	@Override
+	public int delSComnet(int spost_No) {
+		// TODO Auto-generated method stub
+		return dao.delSComnet(spost_No);
 	}
 
 }

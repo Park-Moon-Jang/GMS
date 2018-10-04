@@ -26,6 +26,7 @@ import com.goods.app.service.UserService;
 import com.goods.app.vo.ItemVO;
 import com.goods.app.vo.Paging;
 import com.goods.app.vo.PhotoVO;
+import com.goods.app.vo.SComentVO;
 import com.goods.app.vo.SPostVO;
 import com.goods.app.vo.UserVO;
 import com.goods.app.vo.comentVO;
@@ -204,10 +205,11 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/detailSPost", method = RequestMethod.GET)
-	public String detailSPost(Model model, @RequestParam(value="spost_No", required=false) int spost_No, HttpSession session) {
+	public String detailSPost(Model model, @RequestParam(value="spost_No") int spost_No, HttpSession session) {
 		session.setAttribute("session_spost", spost_No);
 		ser.updateHits(spost_No);
-		
+		List<SComentVO> SList = ser.selectSPostComent(spost_No);
+		model.addAttribute("SList",SList);
 		return "/user/userDetailSuggestions";
 	}
 	
@@ -318,7 +320,6 @@ public class UserController {
 		String user_Id = session.getAttribute("session_user").toString();
 		
 		int count = ser.myScrapCount(user_Id);
-		System.out.println(count);
 		Paging sp2 = new Paging(count, curPage); 
 		
 		List<ItemVO> IList = ser.myScrapSel(user_Id, curPage);
@@ -408,9 +409,7 @@ public class UserController {
 		if(curPage==0) {
 			curPage = 1;
 		}
-		System.out.println(curPage);
 		int count = ser.selectSPostCount();
-		System.out.println(count);
 //		
 		Paging sp4 = new Paging(count, curPage);
 		List<SPostVO> SList = ser.selectSPost(curPage);
@@ -447,6 +446,15 @@ public class UserController {
 		
 		
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="/delSComent" , method = RequestMethod.POST)
+	public int delSComent(Model model, @RequestParam(value = "spost_No") int spost_No) { 
+		return ser.delSComnet(spost_No);
+	}
+	
+	
+	
 }
 
 

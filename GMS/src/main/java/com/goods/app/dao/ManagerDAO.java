@@ -1,6 +1,7 @@
 package com.goods.app.dao;
 
 import java.sql.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +13,7 @@ import com.goods.app.vo.ItemVO;
 import com.goods.app.vo.M_boardVO;
 import com.goods.app.vo.ManagerVO;
 import com.goods.app.vo.PhotoVO;
+import com.goods.app.vo.SPostVO;
 import com.goods.app.vo.UserVO;
 
 
@@ -51,7 +53,7 @@ public class ManagerDAO {
 	public List<ItemVO> getnewItemlist() {
 		// TODO Auto-generated method stub
 		
-		//신상 3개만 출력
+		//�떊�긽 3媛쒕쭔 異쒕젰
 		return ss.selectList("getnewItemlist");
 	}
 	public List<ItemVO> getstoredlist(Map<String, Object> map){
@@ -129,5 +131,25 @@ public class ManagerDAO {
 		// TODO Auto-generated method stub
 		return ss.selectList("boardlist2");
 	}
-
+	public int SPostCount() {
+		return ss.selectOne("SPostCount");
+	}
+	public List<SPostVO> selectSPost(int curPage) {
+	
+		curPage = (curPage - 1 ) * 10;
+		
+		return ss.selectList("SelSPostManger",curPage);
+	}
+	public List<SPostVO> selectSPost() {
+		
+		return ss.selectList("SelSPostManger2");
+	}
+	
+	public int insertSPostComent(int spost_No, String coment, String manager_Id) {
+		Map map = new HashMap();
+		map.put("spost_No", spost_No);
+		map.put("coment", coment);
+		map.put("manager_Id", manager_Id);
+		return ss.insert("insertSPostComent",map);
+	}
 }

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import com.goods.app.vo.ItemVO;
 import com.goods.app.vo.PhotoVO;
+import com.goods.app.vo.SComentVO;
 import com.goods.app.vo.SPostVO;
 import com.goods.app.vo.UserVO;
 import com.goods.app.vo.comentVO;
@@ -255,5 +256,14 @@ public class UserDAO
 	public List<SPostVO> mySPost(String user_Id) {
 		
 		return  ss.selectList("MySPostSelect",user_Id);
+	}
+	
+	public List<SComentVO> selectSPostComent(int spost_No) {
+		
+		return ss.selectList("SelectSComent",spost_No);
+	}
+	
+	public int delSComnet(int spost_No) {
+		return ss.delete("delSComent",spost_No);
 	}
 }

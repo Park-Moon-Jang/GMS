@@ -13,7 +13,7 @@
 <link href="${pageContext.servletContext.contextPath}/resources/css/userPage.css" rel="stylesheet" type="text/css">
 <body>
 	<script type="text/javascript">
-	var id = <%=(String)session.getAttribute("session_user")%>
+	var id = '<%=(String)session.getAttribute("session_user")%>'
 	if(id==null){
 		alert("로그인을 해주세요");
 		location.href="${pageContext.servletContext.contextPath}/"

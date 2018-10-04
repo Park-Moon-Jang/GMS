@@ -11,6 +11,7 @@ import com.goods.app.vo.ItemVO;
 import com.goods.app.vo.M_boardVO;
 import com.goods.app.vo.ManagerVO;
 import com.goods.app.vo.PhotoVO;
+import com.goods.app.vo.SPostVO;
 import com.goods.app.vo.UserVO;
 
 @Service
@@ -135,6 +136,30 @@ public class ManagerServiceImpl implements ManagerService {
 	public List<M_boardVO> getBoardlist2() {
 		// TODO Auto-generated method stub
 		return mdao.getboardlist2();
+	}
+
+	@Override
+	public List<SPostVO> selectSPost(int curPage) {
+		// TODO Auto-generated method stub
+		return mdao.selectSPost(curPage);
+	}
+	
+	@Override
+	public List<SPostVO> selectSPost() {
+		// TODO Auto-generated method stub
+		return mdao.selectSPost();
+	}
+
+	@Override
+	public int SPostCount() {
+		// TODO Auto-generated method stub
+		return mdao.SPostCount();
+	}
+
+	@Override
+	public int insertSPostComent(int spost_No, String coment, String manager_Id) {
+		// TODO Auto-generated method stub
+		return mdao.insertSPostComent(spost_No,coment,manager_Id);
 	}
 
 }

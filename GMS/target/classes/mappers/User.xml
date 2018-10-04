@@ -13,8 +13,17 @@
 <!--    <insert id="join" parameterType="com.goods.app.vo.MemberVO" >
     INSERT INTO item_category (category_no, category_name) VALUES (#{category_no}, #{category_name})
    </insert> -->
+   
+   <delete id="delSComent" parameterType="int">
+   	delete from gms_pj.spost_coment where spost_No = #{spost_No}
+   </delete>
+   
+   <select id="SelectSComent" parameterType="int" resultType="com.goods.app.vo.SComentVO">
+   	SELECT * FROM gms_pj.spost_coment where spost_no = #{spost_No}
+   </select>
+   
    <select id="MySPostSelect" parameterType="String" resultType="com.goods.app.vo.SPostVO">
-	select t2.category_name, t1.title from
+	select t2.category_name, t1.title, t1.spost_No from
 	(SELECT * FROM gms_pj.spost where user_id = 'test') t1
 	inner join
 	(Select * from gms_pj.item_category) t2

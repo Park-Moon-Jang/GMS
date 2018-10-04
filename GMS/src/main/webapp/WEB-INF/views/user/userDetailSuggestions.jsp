@@ -1,6 +1,7 @@
 <%@ page language= "java" contentType= "text/html; charset=utf-8" pageEncoding= "utf-8" %>
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -39,7 +40,7 @@ function delSPost(){
 			url:"/app/user/delSPost",
 			data:{"spost_No":$("#spost_No").val()},
 			success: function(data){
-			alert("삭제")
+			alert("삭제");
 			location.href="suggestions"
 			},
 			error: function (jqXHR, Status, error){
@@ -48,6 +49,7 @@ function delSPost(){
 		})
 
 }
+
 </script>
 	<jsp:include page="userHeader.jsp"></jsp:include>
 	<div id="content" align="center">
@@ -74,6 +76,33 @@ function delSPost(){
 	<div id="contentBtn">
 		
 	</div>
+	</div>
+	<div id="coment" align="center">
+	<table id="comentTable">
+		
+			<c:forEach var="vo" items="${SList}">
+			
+			<c:if test="${!empty vo}">
+			<tr>
+				<th colspan="2" align="left">댓글</th>
+			</tr>
+			<tr>
+			<td>${vo.manager_Id}</td>
+			<td>
+			<fmt:formatDate value="${vo.write_Date}" pattern="yyyy-MM-dd"/>
+			</td>
+				<td></td>
+				
+			</tr>
+			<tr>
+			<td colspan="3" height="70" width="500">${vo.content}</td>
+			</tr>
+			
+		</c:if>
+			</c:forEach>
+		
+			
+	</table>
 	</div>
 	<jsp:include page="userFooter.jsp"></jsp:include>
 </body>
