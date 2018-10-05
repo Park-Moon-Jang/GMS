@@ -6,6 +6,7 @@ import java.sql.Date;
 
 public class ItemVO {
 
+	private int comentCount;
 	private int item_No;
 	private String item_Name;
 	private int company_No;
@@ -19,6 +20,12 @@ public class ItemVO {
 	private Date carry_Date;
 	
 
+	public int getComentCount() {
+		return comentCount;
+	}
+	public void setComentCount(int comentCount) {
+		this.comentCount = comentCount;
+	}
 	public int getCompany_No() {
 		return company_No;
 	}

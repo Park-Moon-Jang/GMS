@@ -61,13 +61,10 @@ public class UserController {
 		Paging sp = new Paging(count, curPage);
 
 		List<ItemVO> IList = ser.selBtn(IVO.getCompany_No(), IVO.getCategory_No(), IVO.getStore_Name(), curPage);
+		
 		Map map = new HashMap();
-//		for(ItemVO a : IList) {
-//			System.out.println("�귣�� : " + a.getItem_No());
-//		}
 		map.put("IList", IList);
 		map.put("sp", sp);
-
 		return map;
 
 	}

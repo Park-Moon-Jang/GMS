@@ -266,4 +266,5 @@ public class UserDAO
 	public int delSComnet(int spost_No) {
 		return ss.delete("delSComent",spost_No);
 	}
+	
 }

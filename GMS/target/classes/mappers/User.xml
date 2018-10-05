@@ -237,7 +237,7 @@
    
    <select id="SelectBtn" resultType="com.goods.app.vo.ItemVO" parameterType="Map">
 		<include refid ="pagingStart"/>
-		SELECT t1.item_no,t1.item_name,t1.amount,t1.company_no,t1.price,t1.carry_Date, t2.category_no, t2.category_name
+		SELECT t1.item_no,t1.item_name,t1.amount,t1.company_no,t1.price,t1.carry_Date, t2.category_no, t2.category_name, (select count(*) from gms_pj.item_coment where item_no = t1.item_no) as comentCount
 		FROM (select * from gms_pj.item 
 		<choose>
 		

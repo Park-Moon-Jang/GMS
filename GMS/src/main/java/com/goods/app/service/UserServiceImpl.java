@@ -254,6 +254,7 @@ public class UserServiceImpl implements UserService{
 		return dao.delSComnet(spost_No);
 	}
 
+
 }
 
 
