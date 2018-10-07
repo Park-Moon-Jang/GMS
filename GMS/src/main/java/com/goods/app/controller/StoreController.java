@@ -17,8 +17,10 @@ import com.goods.app.vo.ItemVO;
 @RequestMapping("/store")
 public class StoreController {
 
+
 	@Autowired
 	StoreService ss;
+
 	
 	@RequestMapping("/viewstore")
 	public String viewstore (Model model) {
