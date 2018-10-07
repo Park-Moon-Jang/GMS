@@ -1,4 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@  taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c" %> <!-- 기본기능 -->
+<%@  taglib uri="http://java.sun.com/jsp/jstl/fmt"  prefix="fmt" %> <!-- 포멧 기능 (형식지정)-->
+<%@  taglib uri="http://java.sun.com/jsp/jstl/functions"  prefix="fn" %> <!-- 함수 기능 -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,48 +14,79 @@
 <title>Insert title here</title>
 
 <script type="text/javascript">
-
 $(document).ready(function(){
-	getPhoto();
-	
-	function getPhoto() {
+
+	storeSel();
+
+	function storeSel(){
 		
-		var photo = $("#encoded_Photo").val();
-		var img =  $('<img id="img" width="100" height="100"/>');
-        img.attr('src','data:image/png;base64,'+photo);
-        img.appendTo("#itemImage");
-
+		$.ajax({
+			
+			type:"post",
+			url:"/app/manager/storeSel",
+			success:function(data){
+				
+				$("#store").find("option").remove().end().append("<option value=''>출고매장</option>");
+				$.each(data, function(i){
+				
+					$("#store").append("<option value='"+data[i].store_No+"'>"+data[i].store_Name+"</option>")
+				})
+			},
+			error: function (jqXHR, Status, error){
+				console.log("category Error!");
+			}
+			
+		});
 	}
-})
-////////////
-$(document).on("click", "#register", function () {
 
-	var formData = new FormData();
+})
+
+$(document).on("click", "#release", function () {
+
+	var item_No_List = [];
+	var amount_List = [];
+	var rel_Amount_List = [];
+	var size = $("td[name = 'item_No']").length;
 	
-	formData.append("item_Name", $("input[name=item_Name]").val());
-	formData.append("company", $("select[name=company]").val());
-	formData.append("category", $("select[name=category]").val());
+	if(!$("#store").val()){
+		alert("출고매장을 선택해주세요");
+		return; 
+	}
+	var store_No = $("#store").val();
 	
-	formData.append("registerNum", $("input[name=registerNum]").val());
-	formData.append("amount", $("input[name=amount]").val());
-	formData.append("price", $("input[name=price]").val());
-	formData.append("carry_Date", $("input[name=carry_Date]").val());
-	formData.append("photo_Name", $("input[name=photo_Name]").val());
-	formData.append("photo_Data", $("input[name=photo_Data]")[0].files[0]);
+	for(var i = 0; i < size ; i++){
+		
+		if(parseInt($("input[name='rel_Amount']").eq(i).val()) <= 0){
+			alert("출고수량은 0보다 커야 합니다");
+			return false;
+		}
+		
+		if(parseInt($("td[name='amount']").eq(i).attr("value")) < parseInt($("input[name='rel_Amount']").eq(i).val())){
+			alert("재고수량보다 출고수량이 많은 아이템이 있습니다");
+			return false;
+		}
+		item_No_List.push($("td[name='item_No']").eq(i).attr("value"));
+		amount_List.push($("td[name='amount']").eq(i).attr("value"));
+		rel_Amount_List.push($("input[name='rel_Amount']").eq(i).val());
+		
+	}
+	alert(item_No_List);
+	alert(amount_List);
+	alert(rel_Amount_List);
 
 	$.ajax({
-		url: "/app/manager/itemregister.do",
-		data: formData, 
-		processData: false, 
-		contentType: false, 
-		type: "POST", 
+		type:"post",
+		url: "/app/manager/itemrelease.do",
+		dataType:"json",
+		data: {"item_No_List":item_No_List,"amount_List":amount_List,"rel_Amount_List":rel_Amount_List, "store_No": store_No}, 
 		success: function(data){
-			alert("success"); 
+			console.log("itemrelease Success!");
+	         window.close();
+			
 		},
-		error: function(){ 
-			alert("error");
-
-		} 	
+	    error: function (jqXHR, Status, error){
+	          console.log("itemrelease Error!");
+	    }
 		
 	});
 
@@ -65,88 +99,52 @@ $(document).on("click", "#register", function () {
 <body>
 
 
-	<p>Item register</p>
-	
+	<p>Item release</p>
+
 	<div id="content">
-		<form id = "ajaxform" method = "post" enctype="multipart/form-data">
+	
+		<form id = "ajaxform" method = "post">
+
 			<table>
 				<tr>
-					<th colspan="2">출고</th>
+					<th colspan="2">출고상품 정보</th>
+					<th>
+						<select id="store">
+							<option>출고매장</option>
+						</select></th>
 				</tr>
-				<p>상품정보</p>
 				<tr>
 					<td>상품번호</td>
-					<td>	
-						<p name="item_No" value = "${ivo.item_No}"></p>
-					</td>
-				</tr>
-				<tr>
 					<td>상품명</td>
-					<td>	
-						<p name="item_Name" value = "${ivo.item_Name}"></p>
-					</td>
-				</tr>
-				<tr>
 					<td>생산업체</td>
-					<td>
-						<p name="company" value = "${ivo.company_Name}"></p>
-					</td>
-				</tr>
-				<tr>
 					<td>상품유형</td>
-					<td>
-						<p name="category" value = "${ivo.category_Name}"></p>
-					</td>
-				</tr>
-				<tr>
-					<td>수량</td>
-					<td>
-						<p name="amount" value = "${ivo.amount}"></p>
-					</td>
-				</tr>
-				<tr>	
+					<td>재고수량</td>
 					<td>가격</td>
-					<td>
-						<p name="price" value = "${ivo.price}"></p>
-					</td>
-				</tr>
-				<tr>
-					<td>입고일자</td>
-					<td>	
-						<input type="date" name="carry_Date" value="${ivo.carry_Date}" >
-					</td>
-				</tr>
-				<tr>
-					<td>
-						사진
-					</td>
-					<td>
-						<p name="photo_Name" value = "${pvo.photo_Name}"></p>
-					</td>
-					<td>
-						<img id ="img" width="100" height="100"/>
-					</td>
-				</tr>
-				<tr>
-					<td>출고매장</td>
-					<td>
-						<select name="store">
-							<option>매장선택</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
 					<td>출고수량</td>
-					<td>
-						<input type="number" name= "rel_amount">
-					</td>
 				</tr>
+				<div id= "itemData">
+			<c:forEach var="vo" items= "${itemList}">
 				<tr>
-					<td colspan="2">	
-						<input type="button" id="register" value ="등록">
+					<td name = "item_No" value ="${vo.item_No}" >${vo.item_No}</td>
+					<td>${vo.item_Name}</td>
+					<td>${vo.company_Name}</td>
+					<td>${vo.category_Name}</td>
+					<td name = "amount" value="${vo.amount}">${vo.amount}</td>
+					<td>${vo.price}</td>
+					<td>
+						<input type="number" name = "rel_Amount" max="${vo.amount}" placeholder="재고수량 내로 입력해주세요">
 					</td>
 				</tr>
+			</c:forEach>
+				</div>
+				<tr>
+					<td>
+						<input type = "button" id = "release" value="출고">
+					</td>
+				</tr>
+				
 			</table>
+
 		</form>	
 	</div>	
 

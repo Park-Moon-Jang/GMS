@@ -14,7 +14,7 @@ $(document).ready(function(){
 	
 	companySel();
 	categorySel();
-	storeSel();
+// 	storeSel();
 	
 	function companySel(){
 		
@@ -76,13 +76,25 @@ $(document).ready(function(){
 			
 		});
 	}
+
+})
+
+$(document).on("click","#release", function(){
+	var item_No_List = "";
+	var tempstr = "";
+	$("input[name=mycheck]:checked").each(function(){
+		tempstr += $(this).val()+":";
+	})
+
+	item_No_List = tempstr.substr(0, tempstr.length -1);
+
+	alert(item_No_List);
 	
+	window.open("${pageContext.servletContext.contextPath}/manager/viewitemrelease?item_No_List="+item_No_List,"", "width=600, height=400");
 	
 })
-$(document).on("click",".itemRelease", function(){
-	var item_No = $(this).find(".item_No").val();
-	window.open("${pageContext.servletContext.contextPath}/manager/viewitemrelease?item_No="+item_No,"", "width=600, height=400");
-})
+
+
 
 
 function selBtn(curPage){
@@ -139,7 +151,7 @@ function selBtn(curPage){
 		
 		success: function(data){
 			alert("success");
-			var str = '<table id="itemTab"><tr><td>상품명</td><td>생산업체 명</td><td>카테고리 명</td><td>수량</td><td>입고일</td></tr>';
+			var str = '<table id="itemTab"><tr><td>상품명</td><td>생산업체 명</td><td>카테고리 명</td><td>수량</td><td>입고일</td><td>출고상품선택</td></tr>';
 			
 			values = data.list;
 			
@@ -151,9 +163,9 @@ function selBtn(curPage){
 				str += "<td>"+values[i].category_Name+"</td>";
 				str += "<td>"+values[i].amount+"</td>";				
 				str += "<td>"+moment(values[i].carry_Date).format('YYYY-MM-DD')+"</td>";
-				str += "<td>" + "<td><a href='javscript:;' class= 'itemRelease'><input type='button' class='item_No' hidden='hidden' value= '"+values[i].item_No+"'>" +"출고" + "</td>";
+	            str += '<td><input type="checkbox" name="mycheck" value="'+values[i].item_No+'">'+'</td>';
 				str += "</tr>"
-									
+				
 			})
 			str += paging(data.sp);
 			
@@ -233,11 +245,6 @@ $(document).on("click",".paging",function(){
 				</tr>
 				<tr>
 					<td>
-						<select id="store">
-							<option>매장선택</option>
-						</select>
-					</td>
-					<td>
 						<input type="button" id= "release" value = "출고">
 					</td>
 				</tr>
@@ -268,6 +275,7 @@ $(document).on("click",".paging",function(){
 				</tr>
 			</thead>
 			<tbody>
+			<form id = "releaseform" action ="/app/manager/selectedRelease" type = "post">
 				<table id="itemTab">
 					<tr>
 								<td>상품명</td>
@@ -275,9 +283,10 @@ $(document).on("click",".paging",function(){
 								<td>카테고리 명</td>
 								<td>수량</td>
 								<td>입고일</td>
-								
+								<td>출고상품선택</td>
 					</tr>
 				</table>
+			</form>
 			</tbody>
 			
 		</table>

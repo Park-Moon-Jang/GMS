@@ -56,7 +56,14 @@ public class ManagerDAO {
 		
 		return ss.delete("deleteItem", item_No);
 	}
-	
+	public int releaseItem(Map<String, Object> map) {
+		
+		return ss.update("releaseItem", map);
+	}
+	public int storeItem(Map<String, Object> map) {
+		
+		return ss.insert("storeItem", map);
+	}
 	
 	public void insert(ItemVO vo) {
 		
@@ -107,6 +114,10 @@ public class ManagerDAO {
 	public List<ItemVO> categorySel(){
 		
 		return ss.selectList("categorySel");
+	}
+	public List<ItemVO> storeSel(){
+		
+		return ss.selectList("storeSel");
 	}
 
 }

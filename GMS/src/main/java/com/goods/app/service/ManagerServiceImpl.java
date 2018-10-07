@@ -71,6 +71,12 @@ public class ManagerServiceImpl implements ManagerService {
 		// TODO Auto-generated method stub
 		return mdao.categorySel();
 	}
+	
+	@Override
+	public List<ItemVO> storeSel() {
+		// TODO Auto-generated method stub
+		return mdao.storeSel();
+	}
 
 	@Override
 	public List<ItemVO> getstoredlist(Map<String, Object> map) {
@@ -123,6 +129,18 @@ public class ManagerServiceImpl implements ManagerService {
 	public int deleteItem(int item_No) {
 		// TODO Auto-generated method stub
 		return mdao.deleteItem(item_No);
+	}
+
+	@Override
+	public int releaseItem(Map<String, Object> map) {
+		
+		return mdao.releaseItem(map);
+	}
+
+	@Override
+	public int storeItem(Map<String, Object> map) {
+		
+		return mdao.storeItem(map);
 	}
 
 }

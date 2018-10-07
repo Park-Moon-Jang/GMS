@@ -20,6 +20,19 @@
    where item_no = #{item_No}
    </delete>
    
+   <update id = "releaseItem" parameterType = "java.util.Map">
+  	update gms_pj.item
+  	set
+   			amount = #{amount}
+			where item_no = #{item_No}
+   </update>
+   
+	<insert id="storeItem" parameterType = "java.util.Map">
+	insert into gms_pj.releaseditem
+	values(#{item_No}, #{store_No}, #{rel_amount})
+	on duplicate key update item_no = #{item_No}, amount = amount + #{rel_amount}
+	</insert>
+
    <update id="updateItem" parameterType="java.util.Map" >
    update gms_pj.item
 	<choose>
@@ -200,6 +213,11 @@
 	<select id="categorySel" resultType="com.goods.app.vo.ItemVO">
 		select * from gms_pj.item_category 
 	</select>
+	
+	<select id="storeSel" resultType="com.goods.app.vo.ItemVO">
+		select * from gms_pj.store 
+	</select>
+	
 
 	<sql id="paging">
 	SELECT A.* FROM ( 

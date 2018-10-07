@@ -10,7 +10,11 @@ import com.goods.app.vo.UserVO;
 
 
 public interface ManagerService {
-
+	
+	public int releaseItem(Map<String, Object> map);
+	
+	public int storeItem(Map<String, Object> map);
+	
 	public int registerPhoto(PhotoVO pvo);
 	
 	public int registerItem(ItemVO ivo);
@@ -40,6 +44,8 @@ public interface ManagerService {
 	public List<ItemVO> companySel();
 	
 	public List<ItemVO> categorySel();
+	
+	public List<ItemVO> storeSel();
 
 	public ManagerVO checkManager(String manager_id, String manager_pw) throws Exception;
 

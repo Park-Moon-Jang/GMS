@@ -3,6 +3,7 @@ package com.goods.app.controller;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -114,6 +115,28 @@ public class ManagerController {
 			return result;
 		}
 	}
+//	@RequestParam(value = "checkArray[]") List<Integer> checkArray
+	@ResponseBody
+	@RequestMapping("/selectedRelease")
+	public String selectedRelease(Model model, @RequestParam(value="mycheck[]") List<Integer> No_List) {
+		System.out.println("폼 전송되긴 했다");
+		List<ItemVO> itemList = new ArrayList<ItemVO>();
+		for(int a : No_List) {
+			System.out.println(a);
+			itemList.add(ms.getItemInfo(a));
+		}
+		model.addAttribute("itemList", itemList);
+//		List<ItemVO> itemList = new ArrayList<ItemVO>();
+//		for(int a :checkArray) {
+//			System.out.println(a);
+//			itemList.add(ms.getItemInfo(a));
+//		}
+		
+//		model.addAttribute("itemList", itemList);
+		
+		return "manager/itemrelease";
+	}
+
 	
 	@ResponseBody
 	@RequestMapping(value="/itemstored", method=RequestMethod.POST)
@@ -151,20 +174,42 @@ public class ManagerController {
 		
 	}
 
-	@SuppressWarnings("restriction")
+
 	@RequestMapping(value = "/viewitemrelease", method = RequestMethod.GET)
-	public String viewitemrelease(Model model, @RequestParam(value="item_No", required=false) int item_No, ItemVO ivo, PhotoVO pvo) {
+	public String viewitemrelease(Model model, @RequestParam(value="item_No_List", required=false) String item_No_List, ItemVO ivo, PhotoVO pvo) {
 		
-		ivo = ms.getItemInfo(item_No);
-		pvo = ms.getItemPhoto(item_No);
-		
-		String encoded_Photo = Base64.encode(pvo.getPhoto_Data());
-		
-		model.addAttribute("ivo", ivo);
-		model.addAttribute("pvo", pvo);
-		model.addAttribute("encoded_Photo", encoded_Photo);
+		String[] item_No_Array = item_No_List.split(":");
+		List<ItemVO> itemList = new ArrayList<ItemVO>();
+		for(String s: item_No_Array) {
+			itemList.add(ms.getItemInfo(Integer.parseInt(s)));
+		}
+		model.addAttribute("itemList", itemList);
 		
 		return "manager/itemrelease";
+	}
+	
+	@ResponseBody
+	@RequestMapping("/itemrelease.do")
+	public String itemrelease(@RequestParam(value = "item_No_List[]") List<Integer> item_No_List,
+								@RequestParam(value = "amount_List[]") List<Integer> amount_List, 
+								@RequestParam(value = "rel_Amount_List[]") List<Integer> rel_Amount_List,
+								@RequestParam(value = "store_No") int store_No){
+	
+		System.out.println("itemrelease.do 왔다!");
+		System.out.println("넘어온 매장번호" + store_No);
+
+		Map<String, Object> tempMap = null;
+		for(int i = 0 ; i< item_No_List.size() ; i++) {
+			tempMap = new HashMap<String, Object>();
+			tempMap.put("item_No", item_No_List.get(i));
+			tempMap.put("amount", amount_List.get(i) - rel_Amount_List.get(i));
+			tempMap.put("store_No", store_No);
+			tempMap.put("rel_amount", rel_Amount_List.get(i));
+			ms.releaseItem(tempMap);
+			ms.storeItem(tempMap);
+		}	
+		
+		return null;
 	}
 	
 	@ResponseBody
@@ -314,7 +359,7 @@ public class ManagerController {
 				} catch (IOException e) {
 						// TODO Auto-generated catch block
 					e.printStackTrace();
-				}			
+				}		
 				itemInfo.put("pvo", pvo);
 				ms.updatePhoto(itemInfo);
 
@@ -407,6 +452,12 @@ public class ManagerController {
 	public List<ItemVO> categorySel(Model model, ItemVO vo){
 			
 			return ms.categorySel();
+	}
+	@ResponseBody
+	@RequestMapping(value="/storeSel", method = RequestMethod.POST)
+	public List<ItemVO> storeSel(Model model){
+			
+			return ms.storeSel();
 	}
 	
 }

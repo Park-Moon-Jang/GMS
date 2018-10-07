@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/store")
 public class StoreController {
 
+	
 	@RequestMapping("/viewstore")
 	public String viewstore (Model model) {
 		
