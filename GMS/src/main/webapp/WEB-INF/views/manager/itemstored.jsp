@@ -23,7 +23,6 @@ $(document).ready(function(){
 			success:function(data){
 				$("#company").find("option").remove().end().append("<option value=''>생산업체</option>");
 				$.each(data, function(i){
-					console.log(data[i].company_No)
 					
 					$("#company").append("<option value='"+data[i].company_No+"'>"+data[i].company_Name+"</option>")
 					
@@ -45,7 +44,7 @@ $(document).ready(function(){
 				
 				$("#category").find("option").remove().end().append("<option value=''>상품유형</option>");
 				$.each(data, function(i){
-					console.log(data[i].category_no)
+					
 					$("#category").append("<option value='"+data[i].category_No+"'>"+data[i].category_Name+"</option>")
 				})
 			},
@@ -69,7 +68,6 @@ $(document).on("click",".itemUpdate", function(){
 
 $(document).on("click",".itemDelete", function(){
 	var item_No = $(this).find(".item_No").val();
-	var item = {"item_No": item_No};
 	
 	var answer = confirm("정말로 삭제하시겠습니까?");
 	if(answer == true){
@@ -79,10 +77,10 @@ $(document).on("click",".itemDelete", function(){
 			type:"post",
 			url:"/app/manager/itemdelete",
 			dataType:"json",
-			data:item,
+			data:{"item_No": item_No},
 			success: function(data){
 				
-				alert("입고정보가 삭제되었습니다");
+				alert(data.result);
 				selBtn(1);
 			},
 			error: function (jqXHR, Status, error){
@@ -92,9 +90,10 @@ $(document).on("click",".itemDelete", function(){
 		});
 		
 	}else{
-		return;
+		return false;
 	}
 })
+
 function selBtn(curPage){
 	
 	var company_No = $("#company").val();
@@ -147,7 +146,7 @@ function selBtn(curPage){
 		data: source,
 		
 		success: function(data){
-			alert("success");
+		
 			var str = '<table id="itemTab"><tr><td>상품명</td><td>생산업체 명</td><td>카테고리 명</td><td>수량</td><td>입고일</td><td>비고</td></tr>';
 			
 			values = data.list;

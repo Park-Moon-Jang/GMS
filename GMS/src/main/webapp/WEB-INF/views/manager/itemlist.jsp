@@ -23,7 +23,6 @@ $(document).ready(function(){
 			success:function(data){
 				$("#company").find("option").remove().end().append("<option value=''>생산업체</option>");
 				$.each(data, function(i){
-					console.log(data[i].company_No)
 					
 					$("#company").append("<option value='"+data[i].company_No+"'>"+data[i].company_Name+"</option>")
 					
@@ -45,7 +44,6 @@ $(document).ready(function(){
 				
 				$("#category").find("option").remove().end().append("<option value=''>상품유형</option>");
 				$.each(data, function(i){
-					console.log(data[i].category_no)
 					$("#category").append("<option value='"+data[i].category_No+"'>"+data[i].category_Name+"</option>")
 				})
 			},
@@ -113,7 +111,7 @@ function selBtn(curPage){
 		data: source,
 		
 		success: function(data){
-			alert("success");
+
 			var str = '<table id="itemTab"><tr><td>상품명</td><td>생산업체 명</td><td>카테고리 명</td><td>수량</td><td>입고일</td></tr>';
 			
 			values = data.list;

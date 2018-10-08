@@ -24,7 +24,7 @@ $(document).ready(function(){
 			success:function(data){
 				$("#company").find("option").remove().end().append("<option value=''>생산업체</option>");
 				$.each(data, function(i){
-					console.log(data[i].company_No)
+					
 					
 					$("#company").append("<option value='"+data[i].company_No+"'>"+data[i].company_Name+"</option>")
 					
@@ -88,7 +88,7 @@ $(document).on("click","#release", function(){
 
 	item_No_List = tempstr.substr(0, tempstr.length -1);
 
-	alert(item_No_List);
+	
 	
 	window.open("${pageContext.servletContext.contextPath}/manager/viewitemrelease?item_No_List="+item_No_List,"", "width=600, height=400");
 	
@@ -150,7 +150,7 @@ function selBtn(curPage){
 		data: source,
 		
 		success: function(data){
-			alert("success");
+			
 			var str = '<table id="itemTab"><tr><td>상품명</td><td>생산업체 명</td><td>카테고리 명</td><td>수량</td><td>입고일</td><td>출고상품선택</td></tr>';
 			
 			values = data.list;

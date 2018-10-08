@@ -41,12 +41,6 @@ public class ManagerController {
 	@Autowired
 	ManagerService ms;
 	
-	@RequestMapping("/viewitemreturned")
-	public String viewitemreturned (Model model) {
-		
-		return "manager/itemreturned";
-	}
-	
 	@RequestMapping("/viewitemlist")
 	public String viewitemlist (Model model) {
 		
@@ -106,9 +100,11 @@ public class ManagerController {
 	
 	@ResponseBody
 	@RequestMapping("/itemdelete")
-	public Map<String, Object> itemdelete(@RequestParam Map<String,Object> map) {
+	public Map<String, Object> itemdelete(@RequestParam("item_No") int item_No) {
+
+		System.out.println("itemdelete  ----item_No: "+item_No);
 		Map<String, Object> result = new HashMap<String, Object>();
-		int item_No = Integer.parseInt((String)map.get("item_No"));
+
 		if(ms.deleteItem(item_No) == 1) {
 			result.put("result", "삭제완료");
 			return result;	
@@ -117,7 +113,7 @@ public class ManagerController {
 			return result;
 		}
 	}
-//	@RequestParam(value = "checkArray[]") List<Integer> checkArray
+
 	@ResponseBody
 	@RequestMapping("/selectedRelease")
 	public String selectedRelease(Model model, @RequestParam(value="mycheck[]") List<Integer> No_List) {
@@ -192,7 +188,7 @@ public class ManagerController {
 	
 	@ResponseBody
 	@RequestMapping("/itemrelease.do")
-	public String itemrelease(@RequestParam(value = "item_No_List[]") List<Integer> item_No_List,
+	public Map<String, Object> itemrelease(@RequestParam(value = "item_No_List[]") List<Integer> item_No_List,
 								@RequestParam(value = "amount_List[]") List<Integer> amount_List, 
 								@RequestParam(value = "rel_Amount_List[]") List<Integer> rel_Amount_List,
 								@RequestParam(value = "store_No") int store_No){
@@ -201,6 +197,7 @@ public class ManagerController {
 		System.out.println("넘어온 매장번호" + store_No);
 
 		Map<String, Object> tempMap = null;
+		Map<String, Object> result = new HashMap<String, Object>();
 		for(int i = 0 ; i< item_No_List.size() ; i++) {
 			tempMap = new HashMap<String, Object>();
 			tempMap.put("item_No", item_No_List.get(i));
@@ -209,9 +206,10 @@ public class ManagerController {
 			tempMap.put("rel_amount", rel_Amount_List.get(i));
 			ms.releaseItem(tempMap);
 			ms.storeItem(tempMap);
+			
 		}	
-		
-		return null;
+		result.put("check", "출고가 완료되었습니다");
+		return result;
 	}
 	
 	@ResponseBody

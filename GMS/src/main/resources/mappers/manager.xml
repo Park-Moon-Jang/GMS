@@ -238,12 +238,12 @@
 	
 
 	<sql id="paging">
-	SELECT A.* FROM ( 
+	SELECT AA.* FROM ( 
 	</sql>
 
 	<sql id="paging2">
-	) A 
-	LIMIT ${sp.pageBegin-1}, 10 
+	) AA
+	LIMIT ${sp.pageBegin-1}, 10
 	</sql>
 
 </mapper>

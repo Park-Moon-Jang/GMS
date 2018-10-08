@@ -14,74 +14,45 @@
 <title>Insert title here</title>
 
 <script type="text/javascript">
-$(document).ready(function(){
 
-	storeSel();
 
-	function storeSel(){
-		
-		$.ajax({
-			
-			type:"post",
-			url:"/app/manager/storeSel",
-			success:function(data){
-				
-				$("#store").find("option").remove().end().append("<option value=''>출고매장</option>");
-				$.each(data, function(i){
-				
-					$("#store").append("<option value='"+data[i].store_No+"'>"+data[i].store_Name+"</option>")
-				})
-			},
-			error: function (jqXHR, Status, error){
-				console.log("category Error!");
-			}
-			
-		});
-	}
-
-})
-
-$(document).on("click", "#release", function () {
+$(document).on("click", "#return", function () {
 
 	var item_No_List = [];
 	var amount_List = [];
-	var rel_Amount_List = [];
+	var ret_Amount_List = [];
 	var size = $("td[name = 'item_No']").length;
-	
-	if(!$("#store").val()){
-		alert("출고매장을 선택해주세요");
-		return; 
-	}
-	var store_No = $("#store").val();
 	
 	for(var i = 0; i < size ; i++){
 		
-		if(parseInt($("input[name='rel_Amount']").eq(i).val()) <= 0){
-			alert("출고수량은 0보다 커야 합니다");
+		if(parseInt($("input[name='ret_Amount']").eq(i).val()) <= 0){
+			alert("반납수량은 0보다 커야 합니다");
 			return false;
 		}
 		
-		if(parseInt($("td[name='amount']").eq(i).attr("value")) < parseInt($("input[name='rel_Amount']").eq(i).val())){
-			alert("재고수량보다 출고수량이 많은 아이템이 있습니다");
+		if(parseInt($("td[name='amount']").eq(i).attr("value")) < parseInt($("input[name='ret_Amount']").eq(i).val())){
+			alert("반납수량보다 재고수량이 많은 아이템이 있습니다");
 			return false;
 		}
 		item_No_List.push($("td[name='item_No']").eq(i).attr("value"));
 		amount_List.push($("td[name='amount']").eq(i).attr("value"));
-		rel_Amount_List.push($("input[name='rel_Amount']").eq(i).val());
+		ret_Amount_List.push($("input[name='ret_Amount']").eq(i).val());
 		
 	}
 
 	$.ajax({
 		type:"post",
-		url: "/app/manager/itemrelease.do",
+		url: "/app/store/itemreturn.do",
 		dataType:"json",
-		data: {"item_No_List":item_No_List,"amount_List":amount_List,"rel_Amount_List":rel_Amount_List, "store_No": store_No}, 
+		data: {"item_No_List":item_No_List,"amount_List":amount_List,"ret_Amount_List":ret_Amount_List}, 
 		success: function(data){
+			
 			alert(data.check);
 			location.reload();
+			
 		},
 	    error: function (jqXHR, Status, error){
-	          console.log("itemrelease Error!");
+	          console.log("itemreturn Error!");
 	    }
 		
 	});
@@ -95,7 +66,7 @@ $(document).on("click", "#release", function () {
 <body>
 
 
-	<p>Item release</p>
+	<p>Item return</p>
 
 	<div id="content">
 	
@@ -104,10 +75,6 @@ $(document).on("click", "#release", function () {
 			<table>
 				<tr>
 					<th colspan="2">출고상품 정보</th>
-					<th>
-						<select id="store">
-							<option>출고매장</option>
-						</select></th>
 				</tr>
 				<tr>
 					<td>상품번호</td>
@@ -116,7 +83,7 @@ $(document).on("click", "#release", function () {
 					<td>상품유형</td>
 					<td>재고수량</td>
 					<td>가격</td>
-					<td>출고수량</td>
+					<td>반납수량</td>
 				</tr>
 				<div id= "itemData">
 			<c:forEach var="vo" items= "${itemList}">
@@ -128,14 +95,14 @@ $(document).on("click", "#release", function () {
 					<td name = "amount" value="${vo.amount}">${vo.amount}</td>
 					<td>${vo.price}</td>
 					<td>
-						<input type="number" name = "rel_Amount" max="${vo.amount}" placeholder="재고수량 내로 입력해주세요">
+						<input type="number" name = "ret_Amount" max="${vo.amount}" placeholder="재고수량 내로 입력해주세요">
 					</td>
 				</tr>
 			</c:forEach>
 				</div>
 				<tr>
 					<td>
-						<input type = "button" id = "release" value="출고">
+						<input type = "button" id = "return" value="반납">
 					</td>
 				</tr>
 				

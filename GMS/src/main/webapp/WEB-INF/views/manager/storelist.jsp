@@ -45,7 +45,6 @@ $(document).ready(function(){
 			success:function(data){
 				$("#company").find("option").remove().end().append("<option value=''>생산업체</option>");
 				$.each(data, function(i){
-					console.log(data[i].company_No)
 					
 					$("#company").append("<option value='"+data[i].company_No+"'>"+data[i].company_Name+"</option>")
 					
@@ -67,7 +66,7 @@ $(document).ready(function(){
 				
 				$("#category").find("option").remove().end().append("<option value=''>상품유형</option>");
 				$.each(data, function(i){
-					console.log(data[i].category_no)
+					
 					$("#category").append("<option value='"+data[i].category_No+"'>"+data[i].category_Name+"</option>")
 				})
 			},
@@ -80,6 +79,20 @@ $(document).ready(function(){
 
 	
 })
+
+$(document).on("click","#return", function(){
+	var item_No_List = "";
+	var tempstr = "";
+	$("input[name=mycheck]:checked").each(function(){
+		tempstr += $(this).val()+":";
+	})
+
+	item_No_List = tempstr.substr(0, tempstr.length -1);
+	
+	window.open("${pageContext.servletContext.contextPath}/store/viewitemreturn?item_No_List="+item_No_List,"", "width=600, height=400");
+	
+})
+
 
 function selBtn(curPage){
 	
@@ -140,11 +153,11 @@ function selBtn(curPage){
 		data: source,
 		
 		success: function(data){
+
 			
-			alert("success");
+			var str = '<table id="itemTab"><tr><td>상품명</td><td>생산업체 명</td><td>카테고리 명</td><td>수량</td><td>입고일</td><td>반닙상품선택</td></tr>';
 			
-			var str = '<table id="itemTab"><tr><td>상품명</td><td>생산업체 명</td><td>카테고리 명</td><td>수량</td><td>입고일</td></tr>';
-			
+			alert(data.check);
 			values = data.list;
 			
 			$.each(values, function(i){
@@ -155,7 +168,7 @@ function selBtn(curPage){
 				str += "<td>"+values[i].category_Name+"</td>";
 				str += "<td>"+values[i].amount+"</td>";				
 				str += "<td>"+moment(values[i].carry_Date).format('YYYY-MM-DD')+"</td>";
-
+				str += '<td><input type="checkbox" name="mycheck" value="'+values[i].item_No+'">'+'</td>';
 				str += "</tr>"
 									
 			})
@@ -237,6 +250,11 @@ $(document).on("click",".paging",function(){
 				</tr>
 				<tr>
 					<td>
+						<input type="button" id= "return" value = "반납">
+					</td>
+				</tr>
+				<tr>
+					<td>
 						<select id="store">
 							<option>출고매장</option>
 						</select>
@@ -274,6 +292,7 @@ $(document).on("click",".paging",function(){
 								<td>카테고리 명</td>
 								<td>수량</td>
 								<td>입고일</td>
+								<td>반닙상품선택</td>
 					</tr>
 				</table>
 			</tbody>
