@@ -168,11 +168,34 @@ var myChart = new Chart(ctx, {
 								<td>${vo.manager_id}</td>
 								<td>${vo.board_date}</td>
 				</tr>
+<<<<<<< HEAD
 			</c:forEach>
 		</tbody>
 		
 	</table>
 </div>
+=======
+			</tbody>
+			<thead>
+				<tr>
+					<th colspan="7">인기상품</th>
+					<th>공지사항</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td colspan="7">인기상품1</td>
+					<td>공지사항1</td>
+				</tr>
+			</tbody>
+		</table>
+			
+
+
+		</form>
+
+
+>>>>>>> refs/heads/park
 </body>
 
 </html>

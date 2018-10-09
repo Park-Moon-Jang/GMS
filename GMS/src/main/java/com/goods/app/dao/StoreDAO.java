@@ -25,6 +25,27 @@ public class StoreDAO {
 		return ss.selectList("itemrank");
 	}
 	
+	public int getStoreCount(Map<String, Object> map) {
+		
+		return ss.selectOne("getStoreCount", map);
+	}
 	
-
+	public List<ItemVO> getStoreItem(Map<String, Object> map){
+		
+		return ss.selectList("getStoreItem", map);
+	}
+	
+	public int returnItem(Map<String, Object> map) {
+		
+		return ss.update("returnItem", map);
+	}
+	public int restedItem(Map<String, Object> map) {
+		
+		return ss.update("restedItem", map);
+	}
+	public ItemVO getStoreItemInfo(int item_No) {
+		
+		return ss.selectOne("getStoreItemInfo", item_No);
+	}
+	
 }

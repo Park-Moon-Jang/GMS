@@ -13,5 +13,193 @@
 		limit 5)t1, item t2
 		where t1.item_no=t2.item_no
 	</select>
+	
+	
+	<select id="getStoreCount" parameterType="java.util.Map" resultType="int">
+	
+	select count(*)
+	FROM gms_pj.item t1, gms_pj.manufacturer t2, gms_pj.item_category t3, gms_pj.store t4,
+		(
+		select *
+		from gms_pj.releaseditem
+		where store_no = ${store_No}
+		) A
+	where A.item_no = t1.item_no and t1.company_no = t2.company_no and t1.category_no = t3.category_no and A.store_no = t4.store_no
+	
+			<if test="item_Name == ''">
+			<choose>
+			<when test="company_No == 0 and category_No == 0">
+				and t1.carry_date between date_add(#{from_Date}, interval 1 day) 
+				and date_add(#{to_Date}, interval 1 day) 
+			</when>
+
+			<when test="company_No != 0 and category_No == 0">
+				and t1.company_no = #{company_No}
+				and t1.carry_date between date_add(#{from_Date}, interval 1 day) 
+				and date_add(#{to_Date}, interval 1 day)
+			</when>
+
+			<when test="company_No == 0 and category_No != 0">
+				and t1.category_no = #{category_No}
+				and t1.carry_date between date_add(#{from_Date}, interval 1 day) 
+				and date_add(#{to_Date}, interval 1 day)
+			</when>
+
+			<otherwise>
+				and t1.category_no = #{category_No} 
+				and t1.company_no = #{company_No} 
+				and t1.carry_date between date_add(#{from_Date}, interval 1 day) 
+				and date_add(#{to_Date}, interval 1 day) 
+			</otherwise>
+		</choose>
+		</if>
+		<if test="item_Name != ''">
+					<choose>
+			<when test="company_No == 0 and category_No == 0">
+				and t1.carry_date between date_add(#{from_Date}, interval 1 day) 
+				and date_add(#{to_Date}, interval 1 day)
+				and t1.item_name like CONCAT("%",#{item_Name},"%") 
+			</when>
+
+			<when test="company_No != 0 and category_No == 0">
+				and t1.company_no = #{company_No}
+				and t1.carry_date between date_add(#{from_Date}, interval 1 day) 
+				and date_add(#{to_Date}, interval 1 day)
+				and t1.item_name like CONCAT("%",#{item_Name},"%")
+			</when>
+
+			<when test="company_No == 0 and category_No != 0">
+				and t1.category_no = #{category_No}
+				and t1.carry_date between date_add(#{from_Date}, interval 1 day) 
+				and date_add(#{to_Date}, interval 1 day)
+				and t1.item_name like CONCAT("%",#{item_Name},"%")
+			</when>
+
+			<otherwise>
+				and t1.category_no = #{category_No} 
+				and t1.company_no = #{company_No} 
+				and t1.carry_date between date_add(#{from_Date}, interval 1 day) 
+				and date_add(#{to_Date}, interval 1 day)
+				and t1.item_name like CONCAT("%",#{item_Name},"%") 
+			</otherwise>
+		</choose>
+		</if>
+	</select>
+	
+	<select id ="getStoreItem" parameterType="java.util.Map" resultType="com.goods.app.vo.ItemVO">
+	<include refid="paging" />
+	select A.*, t1.item_name, t1.company_no, t2.company_name, t1.category_no, t3.category_name, t1.price, t1.carry_date, t4.store_name
+	FROM gms_pj.item t1, gms_pj.manufacturer t2, gms_pj.item_category t3, gms_pj.store t4,
+		(
+		select *
+		from gms_pj.releaseditem
+		where store_no = ${store_No}
+		) A
+	where A.item_no = t1.item_no and t1.company_no = t2.company_no and t1.category_no = t3.category_no and A.store_no = t4.store_no
+
+		<if test="item_Name != ''">
+			<choose>
+			<when test="company_No == 0 and category_No == 0">
+				and t1.carry_date between date_add(#{from_Date}, interval 1 day) 
+				and date_add(#{to_Date}, interval 1 day) 
+			</when>
+
+			<when test="company_No != 0 and category_No == 0">
+				and t1.company_no = #{company_No}
+				and t1.carry_date between date_add(#{from_Date}, interval 1 day) 
+				and date_add(#{to_Date}, interval 1 day)
+			</when>
+
+			<when test="company_No == 0 and category_No != 0">
+				and t1.category_no = #{category_No}
+				and t1.carry_date between date_add(#{from_Date}, interval 1 day) 
+				and date_add(#{to_Date}, interval 1 day)
+			</when>
+
+			<otherwise>
+				and t1.category_no = #{category_No} 
+				and t1.company_no = #{company_No} 
+				and t1.carry_date between date_add(#{from_Date}, interval 1 day) 
+				and date_add(#{to_Date}, interval 1 day) 
+			</otherwise>
+		</choose>
+		</if>
+		<if test="item_Name != ''">
+		<choose>
+			<when test="company_No == 0 and category_No == 0">
+				and t1.carry_date between date_add(#{from_Date}, interval 1 day) 
+				and date_add(#{to_Date}, interval 1 day)
+				and t1.item_name like CONCAT("%",#{item_Name},"%") 
+			</when>
+
+			<when test="company_No != 0 and category_No == 0">
+				and t1.company_no = #{company_No}
+				and t1.carry_date between date_add(#{from_Date}, interval 1 day) 
+				and date_add(#{to_Date}, interval 1 day)
+				and t1.item_name like CONCAT("%",#{item_Name},"%")
+			</when>
+
+			<when test="company_No == 0 and category_No != 0">
+				and t1.category_no = #{category_No}
+				and t1.carry_date between date_add(#{from_Date}, interval 1 day) 
+				and date_add(#{to_Date}, interval 1 day)
+				and t1.item_name like CONCAT("%",#{item_Name},"%")
+			</when>
+
+			<otherwise>
+				and t1.category_no = #{category_No} 
+				and t1.company_no = #{company_No} 
+				and t1.carry_date between date_add(#{from_Date}, interval 1 day) 
+				and date_add(#{to_Date}, interval 1 day)
+				and t1.item_name like CONCAT("%",#{item_Name},"%") 
+			</otherwise>
+		</choose>
+		</if>
+		
+		<include refid="paging2" />
+	</select>
+
+	<update id="returnItem" parameterType="java.util.Map">
+	update gms_pj.item
+	set amount = amount + #{ret_amount}
+	where item_no = #{item_No}
+	
+	</update>
+	
+	<update id="restedItem" parameterType = "java.util.Map">
+	update gms_pj.releaseditem
+	set amount = #{amount}
+	where item_no = #{item_No}
+	</update>
+
+<!-- 	<select id="getStoreItemInfo" parameterType="java.util.Map" resultType="com.goods.app.vo.ItemVO"> -->
+<!-- 	select A.*, t1.item_name, t1.company_no, t1. category_no, t1.price, t1.carry_date, t2.COMPANY_NAME, t3.Category_NAME, t4.store_name -->
+<!-- 	from gms_pj.item t1, gms_pj.manufacturer t2, gms_pj.item_category t3, gms_pj.store t4, -->
+<!-- 	( -->
+	
+<!-- 	select * -->
+<!-- 	from gms_pj.releaseditem -->
+<!-- 		where item_no = -->
+<!-- 	<foreach collection="numList" item="item" separator="or"> -->
+<!-- 	 #{item}  -->
+<!-- 	</foreach> -->
+<!-- 	) A -->
+	
+<!-- 	where A.item_no = t1.item_no and A.store_no = t4.store_no -->
+<!-- 	 and t1.company_no = t2.company_no and t1.category_no = t3.category_no -->
+	
+<!-- 	</select> -->
+
+	<select id="getStoreItemInfo" parameterType="int" resultType="com.goods.app.vo.ItemVO">
+	select A.*, t1.item_name, t1.company_no, t1. category_no, t1.price, t1.carry_date, t2.COMPANY_NAME, t3.Category_NAME, t4.store_name
+	from gms_pj.item t1, gms_pj.manufacturer t2, gms_pj.item_category t3, gms_pj.store t4,
+	(select *
+	from gms_pj.releaseditem
+	where item_no = #{item_No}) A
+	
+	where A.item_no = t1.item_no and A.store_no = t4.store_no
+	 and t1.company_no = t2.company_no and t1.category_no = t3.category_no
+	
+	</select>
 
 </mapper>

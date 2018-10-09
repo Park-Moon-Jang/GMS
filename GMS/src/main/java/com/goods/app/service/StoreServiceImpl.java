@@ -22,6 +22,36 @@ public class StoreServiceImpl implements StoreService {
 		return sdao.select();
 		
 	}
+
+	@Override
+	public int getStoreCount(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return sdao.getStoreCount(map);
+	}
+
+	@Override
+	public List<ItemVO> getStoreItem(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return sdao.getStoreItem(map);
+	}
+
+	@Override
+	public int returnItem(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return sdao.returnItem(map);
+	}
+
+	@Override
+	public int restedItem(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return sdao.restedItem(map);
+	}
+
+	@Override
+	public ItemVO getStoreItemInfo(int item_No) {
+		// TODO Auto-generated method stub
+		return sdao.getStoreItemInfo(item_No);
+	}
 	
 	
 
