@@ -1,7 +1,6 @@
 package com.goods.app.dao;
 
 
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,9 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.goods.app.vo.ItemVO;
+import com.goods.app.vo.PhotoVO;
+import com.goods.app.vo.SComentVO;
 import com.goods.app.vo.SPostVO;
 import com.goods.app.vo.UserVO;
 import com.goods.app.vo.comentVO;
+import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 
 @Repository
 public class UserDAO 
@@ -230,7 +232,39 @@ public class UserDAO
 	
 	public int delSPost(int spost_No) {
 		return ss.delete("delSPost", spost_No);
-
 	}
-
+	
+	public List<ItemVO> myScrap(String user_Id){
+		
+		return ss.selectList("MyScrapSelect",user_Id);
+	}
+	
+	public List selPhoto(List<Object> scrapArray){
+		Map<String, List<Object>> map = new HashMap();
+		map.put("scrapArray", scrapArray);
+		List<PhotoVO> PList = ss.selectList("SelectPhoto", map);
+		Map<String,Object> resultMap = new HashMap();
+		List list = new ArrayList();
+		for(PhotoVO e : PList) {
+			resultMap.put("item_No",e.getItem_No());
+			resultMap.put("photo_Data",Base64.encode(e.getPhoto_Data()));
+			list.add(resultMap);
+		}
+		
+		return list;
+	}
+	public List<SPostVO> mySPost(String user_Id) {
+		
+		return  ss.selectList("MySPostSelect",user_Id);
+	}
+	
+	public List<SComentVO> selectSPostComent(int spost_No) {
+		
+		return ss.selectList("SelectSComent",spost_No);
+	}
+	
+	public int delSComnet(int spost_No) {
+		return ss.delete("delSComent",spost_No);
+	}
+	
 }

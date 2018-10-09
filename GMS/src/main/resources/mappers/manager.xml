@@ -3,15 +3,88 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bit.app">
+	<select id="SelSPostManger2" resultType="com.goods.app.vo.SPostVO">
+   	select t1.* from gms_pj.spost as t1
+	LEFT JOIN gms_pj.spost_coment as t2 on t1.spost_no = t2.spost_no
+	where t2.spost_no is null  
+	order by spost_no desc limit 3
+   </select>
 
-   
+	<insert id="insertSPostComent" parameterType="Map">
+	 INSERT INTO gms_pj.spost_coment (spost_no, content, manager_id, write_date) 
+	 values (#{spost_No},#{coment},#{manager_Id},DATE_FORMAT(now(), '%Y-%m-%d %H:%i:%s'))
+
+	</insert>
+
+   <select id="SelSPostManger" resultType="com.goods.app.vo.SPostVO">
+   	select t1.* from gms_pj.spost as t1
+	LEFT JOIN gms_pj.spost_coment as t2 on t1.spost_no = t2.spost_no
+	where t2.spost_no is null  
+	order by spost_no limit 10 offset #{curPage}
+   </select>
+   <select id="getItemInfo" parameterType="int" resultType="com.goods.app.vo.ItemVO">
+		SELECT t1.*, t2.COMPANY_NAME, t3.Category_NAME
+		FROM gms_pj.item t1, gms_pj.manufacturer t2, gms_pj.item_category t3
+		where t1.company_no = t2.company_no and t1.category_no = t3.category_no
+				and t1.item_no = #{item_No}
+   </select>
+      <select id="getItemPhoto" parameterType="int" resultType="com.goods.app.vo.PhotoVO">
+		SELECT *
+		FROM gms_pj.photo
+		where item_no = #{item_No}
+   </select>
+   <delete id="deleteItem" parameterType="int">
+   delete from gms_pj.item
+   where item_no = #{item_No}
+   </delete>
+   <select id="SPostCount" resultType="int">
+   	select count(*) from gms_pj.spost as t1
+	LEFT JOIN gms_pj.spost_coment as t2 on t1.spost_no = t2.spost_no
+	where t2.spost_no is null 
+   </select>
    <insert id="registerItem" parameterType="com.goods.app.vo.PhotoVO">
+   
+	</insert>
+   <update id = "releaseItem" parameterType = "java.util.Map">
+  	update gms_pj.item
+  	set
+   			amount = #{amount}
+			where item_no = #{item_No}
+   </update>
+   
+	<insert id="storeItem" parameterType = "java.util.Map">
+	insert into gms_pj.releaseditem
+	values(#{item_No}, #{store_No}, #{rel_amount})
+	on duplicate key update item_no = #{item_No}, amount = amount + #{rel_amount}
+	</insert>
+
+   <update id="updateItem" parameterType="java.util.Map" >
+   update gms_pj.item
+	<choose>
+	   	<when test="ivo.item_No == ex_Item_No">
+	   	set item_name = #{ivo.item_Name}, company_no = ${ivo.company_No}, category_no = #{ivo.category_No}, amount = #{ivo.amount}, price = #{ivo.price}, carry_date = #{ivo.carry_Date}
+	   	</when>
+	   	
+	   	<otherwise>
+	   	set item_no = #{ivo.item_No}, item_name = #{ivo.item_Name}, company_no = #{ivo.company_No}, category_no = #{ivo.category_No}, amount = ${ivo.amount}, price = #{ivo.price}, carry_date = #{ivo.carry_Date}
+	   	</otherwise>
+	</choose>
+	where item_no = #{ex_Item_No}
+   </update>
+   
+   <update id="updatePhoto" parameterType="java.util.Map">
+   update gms_pj.photo
+   	set photo_name = #{pvo.photo_Name}, photo_data = #{pvo.photo_Data}
+   	where item_no = #{pvo.item_No}
+   </update>
+   
+   <insert id="registerItem" parameterType="com.goods.app.vo.ItemVO">
 	INSERT INTO gms_pj.item  (ITEM_NO, ITEM_NAME, COMPANY_NO, CATEGORY_NO, AMOUNT, PRICE, CARRY_DATE)
-	 VALUES (${item_No}, "${item_Name}", ${company_No}, ${category_No}, ${amount}, ${price}, "${carry_Date}")
+	 VALUES (#{item_No}, #{item_Name}, #{company_No}, #{category_No}, #{amount}, #{price}, #{carry_Date})
    </insert>
    <insert id="registerPhoto" parameterType="com.goods.app.vo.PhotoVO">
    insert into gms_pj.photo (item_no, photo_name, photo_data)
-   VALUES(#{item_No}, "${photo_Name}", #{photo_Data})
+   VALUES(#{item_No}, #{photo_Name}, #{photo_Data})
    </insert>
 	
 	<select id= "checkregiNum" resultType="int" parameterType="int">
@@ -183,14 +256,19 @@
 	<select id="categorySel" resultType="com.goods.app.vo.ItemVO">
 		select * from gms_pj.item_category 
 	</select>
+	
+	<select id="storeSel" resultType="com.goods.app.vo.ItemVO">
+		select * from gms_pj.store 
+	</select>
+	
 
 	<sql id="paging">
-	SELECT A.* FROM ( 
+	SELECT AA.* FROM ( 
 	</sql>
 
 	<sql id="paging2">
-	) A 
-	LIMIT ${sp.pageBegin-1}, 10 
+	) AA
+	LIMIT ${sp.pageBegin-1}, 10
 	</sql>
 
 </mapper>

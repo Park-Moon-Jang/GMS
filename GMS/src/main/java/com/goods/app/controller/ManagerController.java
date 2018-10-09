@@ -25,27 +25,44 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 
 import com.goods.app.service.ManagerService;
+import com.goods.app.service.UserService;
 import com.goods.app.vo.ItemVO;
 import com.goods.app.vo.M_boardVO;
 import com.goods.app.vo.Paging;
 
-
 import java.io.IOException;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
-import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
-
-
-
+import com.goods.app.service.ManagerService;
+import com.goods.app.vo.ItemVO;
+import com.goods.app.vo.M_boardVO;
+import com.goods.app.vo.Paging;
 import com.goods.app.vo.PhotoVO;
-
+import com.goods.app.vo.SComentVO;
+import com.goods.app.vo.SPostVO;
 import com.goods.app.vo.UserVO;
+import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
+
 
 
 @Controller
@@ -53,17 +70,10 @@ import com.goods.app.vo.UserVO;
 public class ManagerController {
 
 	@Autowired
-	MappingJackson2JsonView jsonView;
-	
-	
-	@Autowired
 	ManagerService ms;
 	
-	@RequestMapping("/viewitemreturned")
-	public String viewitemreturned (Model model) {
-		
-		return "manager/itemreturned";
-	}
+	@Autowired
+	UserService ser;
 	
 	@RequestMapping("/viewitemlist")
 	public String viewitemlist (Model model) {
@@ -71,6 +81,22 @@ public class ManagerController {
 		return "manager/itemlist";
 	}
 	
+	@SuppressWarnings("restriction")
+	@RequestMapping(value = "/viewitemupdate", method = RequestMethod.GET)
+	public String viewitemupdate (Model model, @RequestParam(value="item_No", required=false) int item_No, ItemVO ivo, PhotoVO pvo) {
+		
+		ivo = ms.getItemInfo(item_No);
+		pvo = ms.getItemPhoto(item_No);
+		
+		String encoded_Photo = Base64.encode(pvo.getPhoto_Data());
+		
+		model.addAttribute("ivo", ivo);
+		model.addAttribute("pvo", pvo);
+		model.addAttribute("encoded_Photo", encoded_Photo);		
+		return "manager/itemupdate";
+		
+	}
+
 	@ResponseBody
 	@RequestMapping(value="/itemlist", method=RequestMethod.POST)
 	public Map<String, Object> itemlist(@RequestParam Map<String,Object> map, 
@@ -88,12 +114,9 @@ public class ManagerController {
 		selInfo.put("to_Date", to_Date);
 		
 		int count = ms.getCount(selInfo);
-		System.out.println("카운트: " + count);
 		Paging sp = new Paging(count, curPage);
 
 		selInfo.put("sp", sp);
-
-		System.out.println("itemlist - vo info"+ vo.getItem_Name()+":"+vo.getCompany_No()+":"+vo.getCategory_No()+":"+from_Date+":"+to_Date);
 		
 		List<ItemVO> list = ms.getItemlist(selInfo);
 		
@@ -110,14 +133,50 @@ public class ManagerController {
 	}
 	
 	@ResponseBody
+	@RequestMapping("/itemdelete")
+	public Map<String, Object> itemdelete(@RequestParam("item_No") int item_No) {
+
+		System.out.println("itemdelete  ----item_No: "+item_No);
+		Map<String, Object> result = new HashMap<String, Object>();
+
+		if(ms.deleteItem(item_No) == 1) {
+			result.put("result", "삭제완료");
+			return result;	
+		}else {
+			result.put("result", "삭제실패");
+			return result;
+		}
+	}
+
+	@ResponseBody
+	@RequestMapping("/selectedRelease")
+	public String selectedRelease(Model model, @RequestParam(value="mycheck[]") List<Integer> No_List) {
+		System.out.println("폼 전송되긴 했다");
+		List<ItemVO> itemList = new ArrayList<ItemVO>();
+		for(int a : No_List) {
+			System.out.println(a);
+			itemList.add(ms.getItemInfo(a));
+		}
+		model.addAttribute("itemList", itemList);
+//		List<ItemVO> itemList = new ArrayList<ItemVO>();
+//		for(int a :checkArray) {
+//			System.out.println(a);
+//			itemList.add(ms.getItemInfo(a));
+//		}
+		
+//		model.addAttribute("itemList", itemList);
+		
+		return "manager/itemrelease";
+	}
+
+	
+	@ResponseBody
 	@RequestMapping(value="/itemstored", method=RequestMethod.POST)
 	public Map<String, Object> itemstored(@RequestParam Map<String,Object> map, 
 										ItemVO vo, 
 										@RequestParam("from_Date") java.sql.Date from_Date, 
 										@RequestParam("to_Date") java.sql.Date to_Date, 
 										@RequestParam(defaultValue = "1") int curPage) {
-		
-		System.out.println("현재 페이지 :"+curPage);
 		
 		Map<String, Object> selInfo = new HashMap<String, Object>();
 		
@@ -128,20 +187,11 @@ public class ManagerController {
 		selInfo.put("to_Date", to_Date);
 		
 		int count = ms.getCount(selInfo);
-		System.out.println("카운드 :"+ count);
 		Paging sp = new Paging(count, curPage);
 
 		selInfo.put("sp", sp);
-
-		System.out.println("itemstored - vo info"+ vo.getItem_Name()+":"+vo.getCompany_No()+":"+vo.getCategory_No()+":"+from_Date+":"+to_Date);
 		
 		List<ItemVO> list = ms.getItemlist(selInfo);
-		
-		for(ItemVO  v : list) {
-			
-			System.out.println(v.getItem_Name());
-			
-		}
 		
 		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("list", list);
@@ -155,6 +205,46 @@ public class ManagerController {
 		return "manager/itemregister";
 		
 	}
+
+
+	@RequestMapping(value = "/viewitemrelease", method = RequestMethod.GET)
+	public String viewitemrelease(Model model, @RequestParam(value="item_No_List", required=false) String item_No_List, ItemVO ivo, PhotoVO pvo) {
+		
+		String[] item_No_Array = item_No_List.split(":");
+		List<ItemVO> itemList = new ArrayList<ItemVO>();
+		for(String s: item_No_Array) {
+			itemList.add(ms.getItemInfo(Integer.parseInt(s)));
+		}
+		model.addAttribute("itemList", itemList);
+		
+		return "manager/itemrelease";
+	}
+	
+	@ResponseBody
+	@RequestMapping("/itemrelease.do")
+	public Map<String, Object> itemrelease(@RequestParam(value = "item_No_List[]") List<Integer> item_No_List,
+								@RequestParam(value = "amount_List[]") List<Integer> amount_List, 
+								@RequestParam(value = "rel_Amount_List[]") List<Integer> rel_Amount_List,
+								@RequestParam(value = "store_No") int store_No){
+	
+		System.out.println("itemrelease.do 왔다!");
+		System.out.println("넘어온 매장번호" + store_No);
+
+		Map<String, Object> tempMap = null;
+		Map<String, Object> result = new HashMap<String, Object>();
+		for(int i = 0 ; i< item_No_List.size() ; i++) {
+			tempMap = new HashMap<String, Object>();
+			tempMap.put("item_No", item_No_List.get(i));
+			tempMap.put("amount", amount_List.get(i) - rel_Amount_List.get(i));
+			tempMap.put("store_No", store_No);
+			tempMap.put("rel_amount", rel_Amount_List.get(i));
+			ms.releaseItem(tempMap);
+			ms.storeItem(tempMap);
+			
+		}	
+		result.put("check", "출고가 완료되었습니다");
+		return result;
+	}
 	
 	@ResponseBody
 	@RequestMapping("/itemregister.do")
@@ -164,13 +254,11 @@ public class ManagerController {
 		String checkStr	 = multi.getParameter("company") +multi.getParameter("category") + multi.getParameter("registerNum");
 		int checkNum = Integer.parseInt(checkStr);
 		
-		System.out.println(checkNum);
-		
 		if(ms.checkregiNum(checkNum) == 0) {
-			result.put("check", "입고등록");
+			result.put("check", "�엯怨좊벑濡�");
 			
 			ItemVO ivo = new ItemVO();
-			ivo.setItem_No(checkNum);  //여기 왜 널이지??
+			ivo.setItem_No(checkNum);  //�뿬湲� �솢 �꼸�씠吏�??
 			ivo.setItem_Name(multi.getParameter("item_Name"));
 			ivo.setCompany_No(Integer.parseInt(multi.getParameter("company")));
 			ivo.setCategory_No(Integer.parseInt(multi.getParameter("category")));
@@ -202,17 +290,121 @@ public class ManagerController {
 			}			
 
 			ms.registerPhoto(pvo);
-			System.out.println("pvo 성공");
 
 			return result;
 			
 		}else {
-			result.put("check", "입고번호 중복");
+			result.put("check", "�엯怨좊쾲�샇 以묐났");
 			return result;
 		}
 
 	}
 	
+	@ResponseBody
+	@RequestMapping("/itemupdate.do")
+	public Map<String, Object> itemupdate(MultipartHttpServletRequest multi) {
+		Map<String, Object> result = new HashMap<String, Object>();
+
+		String checkStr	 = multi.getParameter("company") +multi.getParameter("category") + multi.getParameter("registerNum");
+		int checkNum = Integer.parseInt(checkStr);
+		int ex_Item_No = Integer.parseInt(multi.getParameter("ex_Item_No"));
+
+		if(checkNum == ex_Item_No) {
+			result.put("check", "입고수정");
+			Map<String, Object> itemInfo = new HashMap<String, Object>();
+			
+			ItemVO ivo = new ItemVO();
+			ivo.setItem_No(checkNum);  
+			ivo.setItem_Name(multi.getParameter("item_Name"));
+			ivo.setCompany_No(Integer.parseInt(multi.getParameter("company")));
+			ivo.setCategory_No(Integer.parseInt(multi.getParameter("category")));
+			ivo.setAmount(Integer.parseInt(multi.getParameter("amount")));
+			ivo.setPrice(Integer.parseInt(multi.getParameter("price")));
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			java.util.Date date;
+			try {
+				date = sdf.parse(multi.getParameter("carry_Date"));
+				java.sql.Date sqlDate  =new java.sql.Date(date.getTime()); 
+				ivo.setCarry_Date(sqlDate);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			itemInfo.put("ivo", ivo);
+			itemInfo.put("ex_Item_No", ex_Item_No);
+			
+			ms.updateItem(itemInfo);
+			
+			PhotoVO pvo = new PhotoVO();
+			pvo.setItem_No(checkNum);
+			pvo.setPhoto_Name(multi.getParameter("photo_Name"));
+			try {
+				byte[] byteArray = multi.getFile("photo_Data").getBytes();
+				pvo.setPhoto_Data(byteArray);
+			
+			} catch (IOException e) {
+					// TODO Auto-generated catch block
+				e.printStackTrace();
+			}			
+			itemInfo.put("pvo", pvo);
+			ms.updatePhoto(itemInfo);
+
+			return result;
+			
+		}else {
+
+			if(ms.checkregiNum(checkNum) == 0) {
+				
+				result.put("check", "입고수정");
+				
+				Map<String, Object> itemInfo = new HashMap<String, Object>();
+				
+				ItemVO ivo = new ItemVO();
+				ivo.setItem_No(checkNum);  
+				ivo.setItem_Name(multi.getParameter("item_Name"));
+				ivo.setCompany_No(Integer.parseInt(multi.getParameter("company")));
+				ivo.setCategory_No(Integer.parseInt(multi.getParameter("category")));
+				ivo.setAmount(Integer.parseInt(multi.getParameter("amount")));
+				ivo.setPrice(Integer.parseInt(multi.getParameter("price")));
+				
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				java.util.Date date;
+				try {
+					date = sdf.parse(multi.getParameter("carry_Date"));
+					java.sql.Date sqlDate  =new java.sql.Date(date.getTime()); 
+					ivo.setCarry_Date(sqlDate);
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				itemInfo.put("ivo", ivo);
+				itemInfo.put("ex_Item_No", ex_Item_No);
+				
+				ms.updateItem(itemInfo);
+				
+				PhotoVO pvo = new PhotoVO();
+				pvo.setItem_No(checkNum);
+				pvo.setPhoto_Name(multi.getParameter("photo_Name"));
+				try {
+					byte[] byteArray = multi.getFile("photo_Data").getBytes();
+					pvo.setPhoto_Data(byteArray);
+				
+				} catch (IOException e) {
+						// TODO Auto-generated catch block
+					e.printStackTrace();
+				}		
+				itemInfo.put("pvo", pvo);
+				ms.updatePhoto(itemInfo);
+
+				return result;
+				
+			}else {
+				result.put("check", "입고번호 중복");
+				return result;
+			}
+		}
+	}
 	
 	@RequestMapping("/viewitemreleased")
 	public String viewitemreleased (Model model) {
@@ -255,6 +447,8 @@ public class ManagerController {
 		model.addAttribute("map", map);
 		List<M_boardVO> boardlist = ms.getBoardlist2();
 		map.put("boardlist", boardlist);
+		List<SPostVO> SList = ms.selectSPost();
+		model.addAttribute("SList",SList);
 		
 		return "manager/managerhome";
 		
@@ -283,8 +477,23 @@ public class ManagerController {
 		return mav;
 	}
 	
-	
+	@RequestMapping("/managerSPost")
+	public String managerSPost (Model model) {
+		return "manager/managerSPost";
+		
+	}
 
+	@RequestMapping(value= "/managerSPostDetail", method = RequestMethod.GET)
+	public String managerSPostDetail (Model model, HttpSession session, @RequestParam(value="spost_No") int spost_No) {
+		session.setAttribute("spost_No", spost_No);
+		List<SPostVO> SList = ser.selDetailSPost(spost_No);
+		List<SComentVO> Coment = ser.selectSPostComent(spost_No);
+		model.addAttribute("SList",SList);
+		model.addAttribute("Coment",Coment);
+		return "manager/managerSPostDetail";
+		
+	}
+	
 	@RequestMapping("/viewmanageuser")
 	public ModelAndView viewmanageuser (Model model) {
 		List<UserVO> userlist = ms.getUserlist();
@@ -344,16 +553,45 @@ public class ManagerController {
 	public List<ItemVO> categorySel(Model model, ItemVO vo){
 			
 			return ms.categorySel();
-			
 	}
 	@RequestMapping(value="/updateform", method = RequestMethod.POST)
 	public String updateform (@ModelAttribute M_boardVO vo){
 		ms.updateform(vo);
 		 
 		return "redirect:/manager/managerboard";
+
+	}
+	@ResponseBody
+	@RequestMapping(value="/storeSel", method = RequestMethod.POST)
+	public List<ItemVO> storeSel(Model model){
+			
+			return ms.storeSel();
+
+	}
+	@ResponseBody
+	@RequestMapping(value="/SPostList" , method = RequestMethod.POST)
+	public Map SPostList(Model model, HttpSession session, SPostVO SVO, @RequestParam("curPage") int curPage) { 
+		if(curPage==0) {
+			curPage = 1;
+		}
+		int count = ms.SPostCount();
+//		
+		Paging sp = new Paging(count, curPage);
+		List<SPostVO> SList = ms.selectSPost(curPage);
+		Map map = new HashMap();
+		map.put("sp", sp);
+		map.put("SList", SList);
+		return map;
 		
 	}
-	
+	@ResponseBody
+	@RequestMapping(value="/insertSPostComent", method = RequestMethod.POST)
+	public int insertSPostComent(Model model, HttpSession session, SPostVO SVO, @RequestParam("coment") String coment) {
+		int spost_No = (Integer) session.getAttribute("spost_No");
+		String manager_Id = session.getAttribute("session_manager").toString();
+		return ms.insertSPostComent(spost_No,coment,manager_Id);
+		
+	}
 }
 
 

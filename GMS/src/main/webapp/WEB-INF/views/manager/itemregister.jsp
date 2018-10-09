@@ -16,7 +16,7 @@ $(document).ready(function(){
 
 	companySel();
 	categorySel();
-	
+
 	function companySel(){
 		
 		$.ajax({
@@ -54,9 +54,36 @@ $(document).ready(function(){
 				console.log("category Error!");
 			}
 			
-		});
+		});		
+	};
+	
+	$(document).on("change", "#photo_Data", handleImgFileSelect);
+	
+	var sel_file;
+	
+	function  handleImgFileSelect(e){
+		
+		var files = e.target.files;
+		var filesArr = Array.prototype.slice.call(files);
+		
+		filesArr.forEach(function(f){
+			if(!f.type.match("image.*")){
+				alert("확장자는 이미지 확장자만 가능합니다.");
+				return;
+			}
+			sel_file = f;
+			
+			var reader = new FileReader();
+			reader.onload = function(e){
+				$("#img").attr("src", e.target.result);
+			}
+			reader.readAsDataURL(f);
+			
+		})
 	}
 })
+
+
 
 
 $(document).on("click", "#register", function () {
@@ -83,7 +110,6 @@ $(document).on("click", "#register", function () {
 		type: "POST", 
 		success: function(data){
 			alert("success"); 
-			alert(data.check);
 		},
 		error: function(){ 
 			alert("error");
@@ -99,6 +125,8 @@ $(document).on("click", "#register", function () {
 
 </head>
 <body>
+
+
 	<p>Item register</p>
 	
 	<div id="content">
@@ -156,7 +184,10 @@ $(document).on("click", "#register", function () {
 				<tr>
 					<td>
 					<input type= "text" name="photo_Name"><br>
-					<input type="file" name ="photo_Data">
+					<input type="file" name ="photo_Data" id= "photo_Data">
+					<br/>
+						<img id ="img" width="100" height="100"/>
+
 					</td>
 				</tr>
 				<tr>

@@ -11,6 +11,7 @@ import com.goods.app.vo.ItemVO;
 import com.goods.app.vo.M_boardVO;
 import com.goods.app.vo.ManagerVO;
 import com.goods.app.vo.PhotoVO;
+import com.goods.app.vo.SPostVO;
 import com.goods.app.vo.UserVO;
 
 @Service
@@ -72,6 +73,12 @@ public class ManagerServiceImpl implements ManagerService {
 		// TODO Auto-generated method stub
 		return mdao.categorySel();
 	}
+	
+	@Override
+	public List<ItemVO> storeSel() {
+		// TODO Auto-generated method stub
+		return mdao.storeSel();
+	}
 
 	@Override
 	public List<ItemVO> getstoredlist(Map<String, Object> map) {
@@ -117,6 +124,11 @@ public class ManagerServiceImpl implements ManagerService {
 		// TODO Auto-generated method stub
 		return mdao.registerItem(ivo);
 	}
+	@Override
+	public int updateItem(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return mdao.updateItem(map);
+	}
 
 	@Override
 	public int registerPhoto(PhotoVO pvo) {
@@ -135,6 +147,68 @@ public class ManagerServiceImpl implements ManagerService {
 	public List<M_boardVO> getBoardlist2() {
 		// TODO Auto-generated method stub
 		return mdao.getboardlist2();
+	}
+
+	@Override
+	public List<SPostVO> selectSPost(int curPage) {
+		// TODO Auto-generated method stub
+		return mdao.selectSPost(curPage);
+	}
+	
+	@Override
+	public List<SPostVO> selectSPost() {
+		// TODO Auto-generated method stub
+		return mdao.selectSPost();
+	}
+
+	@Override
+	public int SPostCount() {
+		// TODO Auto-generated method stub
+		return mdao.SPostCount();
+	}
+
+	@Override
+	public int insertSPostComent(int spost_No, String coment, String manager_Id) {
+		// TODO Auto-generated method stub
+		return mdao.insertSPostComent(spost_No,coment,manager_Id);
+
+	}
+
+	@Override
+	public ItemVO getItemInfo(int item_No) {
+		// TODO Auto-generated method stub
+		return mdao.getItemInfo(item_No);
+	}
+
+	@Override
+	public PhotoVO getItemPhoto(int item_No) {
+		// TODO Auto-generated method stub
+		return mdao.getItemPhoto(item_No);
+	}
+
+	@Override
+	public int updatePhoto(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return mdao.updatePhoto(map);
+	}
+
+	@Override
+	public int deleteItem(int item_No) {
+		// TODO Auto-generated method stub
+		return mdao.deleteItem(item_No);
+	}
+
+	@Override
+	public int releaseItem(Map<String, Object> map) {
+		
+		return mdao.releaseItem(map);
+	}
+
+	@Override
+	public int storeItem(Map<String, Object> map) {
+		
+		return mdao.storeItem(map);
+
 	}
 
 }
