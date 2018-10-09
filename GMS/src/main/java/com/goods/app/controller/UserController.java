@@ -56,7 +56,6 @@ public class UserController {
 		}
 
 		int count = ser.selectCount(IVO);
-		System.out.println(count);
 
 		Paging sp = new Paging(count, curPage);
 
@@ -241,7 +240,6 @@ public class UserController {
 	public List<ItemVO> itemDetalSel(Model model, HttpSession session) { 
 		
 
-//		System.out.println(session.getAttribute("item_No"));
 
 		int item_No = (Integer) session.getAttribute("session_Item_No");
 		List<ItemVO> IList = ser.itemDetalSel(item_No);
