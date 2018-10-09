@@ -264,6 +264,7 @@
 	SELECT AA.* FROM ( 
 	</sql>
 
+
 	<sql id="paging2">
 	) AA
 	LIMIT ${sp.pageBegin-1}, 10
