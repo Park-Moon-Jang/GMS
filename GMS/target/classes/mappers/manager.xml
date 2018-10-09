@@ -42,8 +42,7 @@
 	LEFT JOIN gms_pj.spost_coment as t2 on t1.spost_no = t2.spost_no
 	where t2.spost_no is null 
    </select>
-   <insert id="registerItem" parameterType="com.goods.app.vo.PhotoVO">
-	</insert>
+
    <update id = "releaseItem" parameterType = "java.util.Map">
   	update gms_pj.item
   	set
