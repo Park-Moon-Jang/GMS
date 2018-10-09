@@ -1,6 +1,7 @@
 package com.goods.app.dao;
 
 import java.sql.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +13,7 @@ import com.goods.app.vo.ItemVO;
 import com.goods.app.vo.M_boardVO;
 import com.goods.app.vo.ManagerVO;
 import com.goods.app.vo.PhotoVO;
+import com.goods.app.vo.SPostVO;
 import com.goods.app.vo.UserVO;
 
 
@@ -153,5 +155,25 @@ public class ManagerDAO {
 		return ss.selectList("storeSel");
 
 	}
-
+	public int SPostCount() {
+		return ss.selectOne("SPostCount");
+	}
+	public List<SPostVO> selectSPost(int curPage) {
+	
+		curPage = (curPage - 1 ) * 10;
+		
+		return ss.selectList("SelSPostManger",curPage);
+	}
+	public List<SPostVO> selectSPost() {
+		
+		return ss.selectList("SelSPostManger2");
+	}
+	
+	public int insertSPostComent(int spost_No, String coment, String manager_Id) {
+		Map map = new HashMap();
+		map.put("spost_No", spost_No);
+		map.put("coment", coment);
+		map.put("manager_Id", manager_Id);
+		return ss.insert("insertSPostComent",map);
+	}
 }

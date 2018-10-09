@@ -21,18 +21,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.util.JSONPObject;
-
+import com.goods.app.service.ManagerService;
 import com.goods.app.service.UserService;
 import com.goods.app.vo.ItemVO;
 import com.goods.app.vo.Paging;
-
-import com.goods.app.vo.UserVO;
-
+import com.goods.app.vo.PhotoVO;
+import com.goods.app.vo.SComentVO;
 import com.goods.app.vo.SPostVO;
 import com.goods.app.vo.UserVO;
 import com.goods.app.vo.comentVO;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +44,9 @@ public class UserController {
 	@Inject
 	UserService ser;
 
+	@Inject
+	ManagerService ms;
+	
 	@ResponseBody
 	@RequestMapping(value = "/selBtn", method = RequestMethod.POST)
 	public Map selBtn(Model model, ItemVO IVO, @RequestParam("curPage") int curPage) {
@@ -53,18 +56,14 @@ public class UserController {
 		}
 
 		int count = ser.selectCount(IVO);
-		System.out.println(count);
 
 		Paging sp = new Paging(count, curPage);
 
 		List<ItemVO> IList = ser.selBtn(IVO.getCompany_No(), IVO.getCategory_No(), IVO.getStore_Name(), curPage);
+		
 		Map map = new HashMap();
-//		for(ItemVO a : IList) {
-//			System.out.println("�귣�� : " + a.getItem_No());
-//		}
 		map.put("IList", IList);
 		map.put("sp", sp);
-
 		return map;
 
 	}
@@ -93,9 +92,11 @@ public class UserController {
 		return IList;
 	}
 
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String login() {
-		return "/user/userMain";
+
+	@RequestMapping(value = "/login" , method = RequestMethod.GET )
+	public String login() 
+	{
+		return "forward:/user/main"; 
 	}
 
 	@RequestMapping(value = "/loginPost", method = RequestMethod.POST)
@@ -147,6 +148,24 @@ public class UserController {
 		ser.updatePW(vo);
 		return "/home";
 	}
+	
+	@RequestMapping(value ="/main" )
+	public String test(HttpSession session, Model model)
+	{
+		String user_Id = session.getAttribute("session_user").toString();
+		List<ItemVO> IList = ser.myScrap(user_Id);
+		List<SPostVO> SList = ser.mySPost(user_Id);
+		model.addAttribute("IList", IList);
+		model.addAttribute("SList", SList);
+		List<ItemVO> itemlist = ms.getnewItemlist();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", itemlist);
+		model.addAttribute("itemlist", itemlist);
+		List<ItemVO>list = ms.selectList();
+		map.put("list", list);
+		model.addAttribute("map", map);
+		return "/user/userMain";
+	}
 
 	@RequestMapping(value = "/updatePost", method = RequestMethod.POST)
 	public String updatePost(@ModelAttribute UserVO vo, HttpSession session) throws Exception {
@@ -164,10 +183,6 @@ public class UserController {
 		return "redirect:/";
 	}
 
-	@RequestMapping(value = "/main")
-	public String test(Model model) {
-		return "/user/userMain";
-	}
 
 	@RequestMapping("/item")
 	public String item(Model model) {
@@ -186,10 +201,11 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/detailSPost", method = RequestMethod.GET)
-	public String detailSPost(Model model, @RequestParam(value="spost_No", required=false) int spost_No, HttpSession session) {
+	public String detailSPost(Model model, @RequestParam(value="spost_No") int spost_No, HttpSession session) {
 		session.setAttribute("session_spost", spost_No);
 		ser.updateHits(spost_No);
-		
+		List<SComentVO> SList = ser.selectSPostComent(spost_No);
+		model.addAttribute("SList",SList);
 		return "/user/userDetailSuggestions";
 	}
 	
@@ -224,7 +240,6 @@ public class UserController {
 	public List<ItemVO> itemDetalSel(Model model, HttpSession session) { 
 		
 
-//		System.out.println(session.getAttribute("item_No"));
 
 		int item_No = (Integer) session.getAttribute("session_Item_No");
 		List<ItemVO> IList = ser.itemDetalSel(item_No);
@@ -239,7 +254,10 @@ public class UserController {
 		String user_Id = session.getAttribute("session_user").toString();
 		
 		session.setAttribute("session_scrape", ser.selectScrap(item_No, user_Id));
-
+		List<Object> itemArray = new ArrayList();
+		itemArray.add(session.getAttribute("session_Item_No").toString());
+		List list = ser.selPhoto(itemArray);
+		model.addAttribute("list", list);
 		return "/user/userItemDetail";
 	}
 
@@ -285,7 +303,7 @@ public class UserController {
 		String user_Id = session.getAttribute("session_user").toString();
 		int count = ser.selectedScrapDelete(checkArray, user_Id);
 		
-		return 0;
+		return count;
 	}
 	
 	@ResponseBody
@@ -297,13 +315,19 @@ public class UserController {
 		String user_Id = session.getAttribute("session_user").toString();
 		
 		int count = ser.myScrapCount(user_Id);
-		System.out.println(count);
 		Paging sp2 = new Paging(count, curPage); 
 		
 		List<ItemVO> IList = ser.myScrapSel(user_Id, curPage);
+		List<Object> itemArray = new ArrayList();
+		String str = "";
+		for(ItemVO e : IList) {
+			itemArray.add(e.getItem_No());
+		}
+		List list = ser.selPhoto(itemArray);
 		Map map = new HashMap();
 		map.put("IList", IList);
 		map.put("sp", sp2);
+		map.put("list", list);
 		return map;
 	}
 
@@ -380,9 +404,7 @@ public class UserController {
 		if(curPage==0) {
 			curPage = 1;
 		}
-		System.out.println(curPage);
 		int count = ser.selectSPostCount();
-		System.out.println(count);
 //		
 		Paging sp4 = new Paging(count, curPage);
 		List<SPostVO> SList = ser.selectSPost(curPage);
@@ -410,6 +432,24 @@ public class UserController {
 		
 		
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="/photoSel" , method = RequestMethod.POST)
+	public List photoSel(Model model, @RequestParam(value = "scrapArray[]") List<Object> scrapArray) { 
+		
+		return ser.selPhoto(scrapArray);
+		
+		
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/delSComent" , method = RequestMethod.POST)
+	public int delSComent(Model model, @RequestParam(value = "spost_No") int spost_No) { 
+		return ser.delSComnet(spost_No);
+	}
+	
+	
+	
 }
 
 

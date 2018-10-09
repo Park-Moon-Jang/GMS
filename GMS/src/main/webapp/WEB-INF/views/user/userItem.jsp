@@ -90,7 +90,7 @@
 				$.each(data.IList, function(i){
 					str += "<tr id='"+i+"'>"
 					str += "<td>"+data.IList[i].category_Name+"</td>";
-					str += '<td><a href="javscript:;" class="itemClick"><input type="text" class="item_No" hidden="hidden" value="'+data.IList[i].item_No+'">'+data.IList[i].item_Name+'</td>';
+					str += '<td><a href="javscript:;" class="itemClick"><input type="text" class="item_No" hidden="hidden" value="'+data.IList[i].item_No+'">'+data.IList[i].item_Name+'['+data.IList[i].comentCount+']</td>';
 					str += "<td>"+data.IList[i].amount+"</td>";
 					str += "<td>"+data.IList[i].price+"</td>";
 					str += "</tr>"

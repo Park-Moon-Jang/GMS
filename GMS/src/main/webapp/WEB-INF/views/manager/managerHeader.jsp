@@ -57,7 +57,8 @@
 					href="${pageContext.servletContext.contextPath}/store/statistics">선호도통계</a></li>
 				<li class="gnb07"><a
 					href="${pageContext.servletContext.contextPath}/manager/managerboard">관리자 공지사항</a></li>
-	
+				<li class="gnb07"><a
+					href="${pageContext.servletContext.contextPath}/manager/managerSPost">건의사항</a></li>
 			</ul>
 		</nav>
 

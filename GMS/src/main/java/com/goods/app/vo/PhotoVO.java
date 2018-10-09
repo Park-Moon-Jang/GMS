@@ -1,14 +1,10 @@
 package com.goods.app.vo;
 
-import java.util.List;
-
 
 public class PhotoVO {
-
 	private int item_No;
 	private String photo_Name;
 	private byte[] photo_Data;
-	
 	
 	public int getItem_No() {
 		return item_No;
@@ -28,7 +24,4 @@ public class PhotoVO {
 	public void setPhoto_Data(byte[] photo_Data) {
 		this.photo_Data = photo_Data;
 	}
-
-
-	
 }

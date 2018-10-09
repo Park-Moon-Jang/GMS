@@ -121,15 +121,25 @@ var myChart = new Chart(ctx, {
 		<thead>
 			<tr>
 				<th colspan="7" style="width: 50%">건의사항</th>
-
 			</tr>
-
+				
 		</thead>
 		<tbody>
 			
 			<tr>
-			<td>건의사항</td>
+				<td>글번호</td>
+				<td>상품코드</td>
+				<td>제목</td>
+				<td>작성자</td>
 			</tr>
+			<c:forEach var="vo" items="${SList}" > 
+				<tr>
+								<td>${vo.spost_No}</td>
+								<td>${vo.category_No}</td>
+								<td><a href="${pageContext.servletContext.contextPath}/manager/managerSPostDetail?spost_No=${vo.spost_No}">${vo.title}</a></td>
+								<td>${vo.user_Id}</td>
+				</tr>
+			</c:forEach>
 		</tbody>
 	
 	</table>

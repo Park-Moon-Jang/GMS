@@ -26,26 +26,61 @@ $(document).ready(function(){
 				$.each(data.IList, function(i){
 					str += "<tr id='"+i+"'>"
 					str += '<td><input type="checkbox" name="mycheck" value="'+data.IList[i].item_No+'"></td>'
-					str += '<td id="img"></td>'
+					str += '<td id="img'+i+'">'
+					str += '</td>'
 					str += '<td><a href="javscript:;" class="itemClick"><input type="text" class="item_No" hidden="hidden" value="'+data.IList[i].item_No+'">'+data.IList[i].item_Name+'</td>';
 					str += '<td>'+data.IList[i].company_Name+'</td>';
 					str += "<td>"+data.IList[i].amount+"</td>";
 					str += "<td>"+data.IList[i].price+"</td>";
 					str += '<td><button onclick="deleteScrap('+data.IList[i].item_No+')">삭제</button></td>';
 					str += "</tr>"
-					
 				})
-				
+// 				$.each(data.list, function(i){
+// 						var str = data.list[i].photo_Data;
+// 						var id = "img"+i;
+// 						var img = document.createElement('img');
+// 						img.src='data:image/png;base64,'+str;
+// 						img.height='100';
+// 						img.width='100'
+// 						var td = document.getElementById(id);
+// 						console.log(td)
+					
+					
+// 				})
 				str += paging(data.sp)
 				str += "</table>";
 				$("#scrapPaging").html(str);
+				photo(data.list,data.IList.length,data.IList)
 			},
 			error: function (jqXHR, Status, error){
 				console.log("myScrap Error!");
 			}
 		}); 
 	}
-	
+	function photo(list,size,IList){
+		for(var j=0;j<list.length;j++){
+		for(var i=0;i<size;i++){
+			var id = "img"+i;
+			
+				if(list[j].item_No == IList[i].item_No){
+					var str = list[j].photo_Data;
+					var img = document.createElement('img');
+					
+					img.src='data:image/png;base64,'+str;
+					img.height='50';
+					img.width='50'
+					document.getElementById(id).appendChild(img);
+				}else{
+					var img = document.createElement('img');
+					
+					img.src='';
+					img.height='50';
+					img.width='50'
+					document.getElementById(id).appendChild(img);
+				}
+		}
+		}
+	}
 	//페이징 함수
 	function paging(sp){
 		var str = '<tr align="center"><td colspan="6">';

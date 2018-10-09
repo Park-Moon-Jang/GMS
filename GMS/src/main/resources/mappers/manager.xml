@@ -3,7 +3,25 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bit.app">
+	<select id="SelSPostManger2" resultType="com.goods.app.vo.SPostVO">
+   	select t1.* from gms_pj.spost as t1
+	LEFT JOIN gms_pj.spost_coment as t2 on t1.spost_no = t2.spost_no
+	where t2.spost_no is null  
+	order by spost_no desc limit 3
+   </select>
 
+	<insert id="insertSPostComent" parameterType="Map">
+	 INSERT INTO gms_pj.spost_coment (spost_no, content, manager_id, write_date) 
+	 values (#{spost_No},#{coment},#{manager_Id},DATE_FORMAT(now(), '%Y-%m-%d %H:%i:%s'))
+
+	</insert>
+
+   <select id="SelSPostManger" resultType="com.goods.app.vo.SPostVO">
+   	select t1.* from gms_pj.spost as t1
+	LEFT JOIN gms_pj.spost_coment as t2 on t1.spost_no = t2.spost_no
+	where t2.spost_no is null  
+	order by spost_no limit 10 offset #{curPage}
+   </select>
    <select id="getItemInfo" parameterType="int" resultType="com.goods.app.vo.ItemVO">
 		SELECT t1.*, t2.COMPANY_NAME, t3.Category_NAME
 		FROM gms_pj.item t1, gms_pj.manufacturer t2, gms_pj.item_category t3
@@ -19,7 +37,13 @@
    delete from gms_pj.item
    where item_no = #{item_No}
    </delete>
-   
+   <select id="SPostCount" resultType="int">
+   	select count(*) from gms_pj.spost as t1
+	LEFT JOIN gms_pj.spost_coment as t2 on t1.spost_no = t2.spost_no
+	where t2.spost_no is null 
+   </select>
+   <insert id="registerItem" parameterType="com.goods.app.vo.PhotoVO">
+	</insert>
    <update id = "releaseItem" parameterType = "java.util.Map">
   	update gms_pj.item
   	set
