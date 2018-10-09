@@ -66,7 +66,6 @@ item_name.push("${vo.item_Name}");
 item_amount.push("${vo.amount}");
 </c:forEach>
 var max_y = item_amount[0];
-
 var ctx = document.getElementById("myChart").getContext('2d');
 
 var myChart = new Chart(ctx, {
