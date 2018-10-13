@@ -13,7 +13,6 @@
 	<insert id="insertSPostComent" parameterType="Map">
 	 INSERT INTO gms_pj.spost_coment (spost_no, content, manager_id, write_date) 
 	 values (#{spost_No},#{coment},#{manager_Id},DATE_FORMAT(now(), '%Y-%m-%d %H:%i:%s'))
-
 	</insert>
 
    <select id="SelSPostManger" resultType="com.goods.app.vo.SPostVO">
@@ -28,11 +27,13 @@
 		where t1.company_no = t2.company_no and t1.category_no = t3.category_no
 				and t1.item_no = #{item_No}
    </select>
+   
       <select id="getItemPhoto" parameterType="int" resultType="com.goods.app.vo.PhotoVO">
 		SELECT *
 		FROM gms_pj.photo
 		where item_no = #{item_No}
    </select>
+   
    <delete id="deleteItem" parameterType="int">
    delete from gms_pj.item
    where item_no = #{item_No}
@@ -133,6 +134,14 @@
 		where t1.company_no = t2.company_no and t1.category_no = t3.category_no
 		order by carry_date desc limit 3 
 	</select>
+	
+	<select id="getnewPhotolist" resultType="com.goods.app.vo.PhotoVO">
+		SELECT t2.*, t1.item_Name
+		FROM gms_pj.item t1, gms_pj.photo t2
+		where t1.item_no = t2.item_no
+		order by t1.carry_date desc limit 3 
+	</select>
+	
 	<select id="getstoredlist" parameterType="java.util.Map" resultType="com.goods.app.vo.ItemVO">
 	<include refid="paging" />
 		SELECT t1.*, t2.COMPANY_NAME, t3.Category_NAME

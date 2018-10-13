@@ -30,6 +30,8 @@ import com.goods.app.vo.ItemVO;
 import com.goods.app.vo.M_boardVO;
 import com.goods.app.vo.Paging;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
+
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -62,8 +64,6 @@ import com.goods.app.vo.SComentVO;
 import com.goods.app.vo.SPostVO;
 import com.goods.app.vo.UserVO;
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
-
-
 
 @Controller
 @RequestMapping("/manager")
@@ -438,17 +438,28 @@ public class ManagerController {
 	@RequestMapping("/managerhome")
 	public String managerhome (Model model, HttpSession session) {
 	
-		List<ItemVO> itemlist = ms.getnewItemlist();
+
+		List<PhotoVO> photolist = ms.getnewPhotolist();
+		
+		for (PhotoVO pvo : photolist) {
+			
+			pvo.setEncoded_Data(Base64.encode(pvo.getPhoto_Data()));
+			
+		}
+		
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("list", itemlist);
-		model.addAttribute("itemlist", itemlist);
+		map.put("photolist", photolist);
+
 		List<ItemVO>list = ms.selectList();
 		map.put("list", list);
-		model.addAttribute("map", map);
+		
 		List<M_boardVO> boardlist = ms.getBoardlist2();
 		map.put("boardlist", boardlist);
+		
 		List<SPostVO> SList = ms.selectSPost();
-		model.addAttribute("SList",SList);
+		map.put("SList",SList);
+		
+		model.addAttribute("map", map);
 		
 		return "manager/managerhome";
 		

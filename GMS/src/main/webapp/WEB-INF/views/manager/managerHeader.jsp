@@ -5,30 +5,28 @@
 
 <div id="headwrap">
 
-	<header id="header">
+<header id="header">
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+
 <script type="text/javascript">
+
 	var id = "<%=(String)session.getAttribute("session_manager")%>";
 	windows.onload =function(){
-	if(id==null){
-		alert("로그인을 해주세요");
-		location.href="${pageContext.servletContext.contextPath}/"
+		if(id==null){
+			alert("로그인을 해주세요");
+			location.href="${pageContext.servletContext.contextPath}/"
+		}
 	}
-	}
-	</script>
-	
+</script>
+	<nav class ="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class = "navbar-header">
+				<a class = "navbar-brand" href="#">GMS</a>
+			</div>
+		<div id = "navbar" class="navbar-collapse collapse">
+			<ul class="nav navbar-nav navbar-right">
 
-
-<style>
-	ul{width:100%;height:30px;background:skyblue;list-style:none;padding-top:15px}
-	ul li{float:left;margin-right:10px;font-family:dotum;font-size:12px;color:white;font-weight:bold}
-	ul li a{float:center;font-size:12px;color:white;font-weight:bold;text-decoration:none}
-	.white a{color:#fff}
-</style>
-
-		<div class="util">
-			<ul class="menu">
-
-						<li>${session_manager}님</li>
+						<li><a>${session_manager}님</a></li>
 
 						<li><a
 							href="${pageContext.servletContext.contextPath}/manager/userpage">userpage</a></li>
@@ -39,29 +37,29 @@
 
 			</ul>
 		</div>
-
-		<div class="header_top"></div>
-
-		<nav id="gnb">
-			<ul class="depth1">
-				<li class="gnb01"><a 
+	</div>
+	</nav>
+		
+			
+		<div class = "col-sm-3 col-md-2 sidebar	" >
+			<ul class="nav nav-sidebar">
+				<li class="active"><a 
 					href="${pageContext.servletContext.contextPath}/manager/managerhome">HOME</a></li>
-				<li class="gnb02"><a
+				<li><a
 					href="${pageContext.servletContext.contextPath}/manager/viewitemlist">물품현황</a></li>
-				<li class="gnb03"><a
+				<li><a
 					href="${pageContext.servletContext.contextPath}/manager/viewitemstored">입고관리</a></li>
-				<li class="gnb04"><a
+				<li><a
 					href="${pageContext.servletContext.contextPath}/manager/viewitemreleased">출고관리</a></li>					
-				<li class="gnb05"><a
+				<li><a
 					href="${pageContext.servletContext.contextPath}/store/viewstore">매장관리</a></li>
-				<li class="gnb06"><a
+				<li><a
 					href="${pageContext.servletContext.contextPath}/store/statistics">선호도통계</a></li>
-				<li class="gnb07"><a
+				<li><a
 					href="${pageContext.servletContext.contextPath}/manager/managerboard">관리자 공지사항</a></li>
-				<li class="gnb07"><a
+				<li><a
 					href="${pageContext.servletContext.contextPath}/manager/managerSPost">건의사항</a></li>
 			</ul>
-		</nav>
-
+		</div>
 	</header>
 </div>

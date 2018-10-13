@@ -77,6 +77,12 @@ public class ManagerDAO {
 		
 		return ss.selectList("getnewItemlist");
 	}
+	
+	public List<PhotoVO> getnewPhotolist() {
+		
+		return ss.selectList("getnewPhotolist");
+	}
+	
 	public List<ItemVO> getstoredlist(Map<String, Object> map){
 		return ss.selectList("getstoredlist", map);
 	}

@@ -26,6 +26,13 @@ public class ManagerServiceImpl implements ManagerService {
 		
 		return mdao.getnewItemlist();
 	}
+	@Override
+	public List<PhotoVO> getnewPhotolist() {
+		// TODO Auto-generated method stub
+		
+		return mdao.getnewPhotolist();
+	}
+	
 	
 	@Override
 	public int getCount(Map<String, Object> map) {

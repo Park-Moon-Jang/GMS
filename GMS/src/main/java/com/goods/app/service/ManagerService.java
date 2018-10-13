@@ -47,6 +47,8 @@ public interface ManagerService {
 
 	public List<ItemVO> getnewItemlist();
 	
+	public List<PhotoVO> getnewPhotolist();
+	
 	public List<ItemVO> getstoredlist(Map<String, Object> map);
 	
 	public List<ItemVO> getItemlist(Map<String, Object> map);
